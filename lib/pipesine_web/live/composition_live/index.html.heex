@@ -1,0 +1,41 @@
+<h1>Listing Compositions</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.composition_index_path(@socket, :index)}>
+    <.live_component
+      module={PipesineWeb.CompositionLive.FormComponent}
+      id={@composition.id || :new}
+      title={@page_title}
+      action={@live_action}
+      composition={@composition}
+      return_to={Routes.composition_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Composer</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="compositions">
+    <%= for composition <- @compositions do %>
+      <tr id={"composition-#{composition.id}"}>
+        <td><%= composition.score %></td>
+        <td><%= composition.composer %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.composition_show_path(@socket, :show, composition) %></span>
+          <span><%= live_patch "Edit", to: Routes.composition_index_path(@socket, :edit, composition) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: composition.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Composition", to: Routes.composition_index_path(@socket, :new) %></span>

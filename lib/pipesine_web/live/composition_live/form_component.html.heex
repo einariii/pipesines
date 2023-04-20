@@ -1,0 +1,24 @@
+<div>
+  <h2><%= @title %></h2>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="composition-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save">
+  
+    <%= label f, :score %>
+    <%= textarea f, :score %>
+    <%= error_tag f, :score %>
+  
+    <%= label f, :composer %>
+    <%= text_input f, :composer %>
+    <%= error_tag f, :composer %>
+  
+    <div>
+      <%= submit "Save", phx_disable_with: "Saving..." %>
+    </div>
+  </.form>
+</div>

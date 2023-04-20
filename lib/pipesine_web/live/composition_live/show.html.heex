@@ -1,0 +1,31 @@
+<h1>Show Composition</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.composition_show_path(@socket, :show, @composition)}>
+    <.live_component
+      module={PipesineWeb.CompositionLive.FormComponent}
+      id={@composition.id}
+      title={@page_title}
+      action={@live_action}
+      composition={@composition}
+      return_to={Routes.composition_show_path(@socket, :show, @composition)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Score:</strong>
+    <%= @composition.score %>
+  </li>
+
+  <li>
+    <strong>Composer:</strong>
+    <%= @composition.composer %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.composition_show_path(@socket, :edit, @composition), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.composition_index_path(@socket, :index) %></span>
