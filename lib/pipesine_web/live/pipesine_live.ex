@@ -11,7 +11,7 @@ defmodule PipesineWeb.PipesineLive do
     <div id="container" phx-update="ignore" class="background" style="width: 1200px; height: 600px; border: 8px solid black"></div>
     <button id="click-hook" phx-hook="ClickHook">PERFORM</button>
     <div style="">
-      <.form let={f} for={:perform_form} phx-submit="submit">
+      <.form let={f} for={:perform_form} phx-submit="perform">
         <%= text_input f, :perform, id: "basic-play", phx_hook: "BasicPlay" %>
       </.form>
     </div>
