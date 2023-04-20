@@ -13,18 +13,14 @@
     <header class="background">
       <section>
         <a href="#">
-          <img src={Routes.static_path(@conn, "/images/pipesine_logo.svg")} alt="faek logo" width="800" height="400" style="border: 4px solid white"/>
+          <img src={Routes.static_path(@conn, "/images/pipesine_logo.svg")} alt="faek logo" width="400" height="200"/>
+          <p class="alata">PIPE/SINES. Code to music to.</p>
         </a>
 
-        <footer class="footer sharetechmono">
-          <ul>
-            <li><a href="https://tonejs.github.io/">SOUND SOURCE</a></li>
-            <li><a href="https://elixir-lang.org/">CODE SOURCE</a></li>
-          </ul>
-        </footer>
       </section>
     </header>
 
     <%= @inner_content %>
   </body>
+  <footer class="footer sharetechmono"><a href="https://tonejs.github.io/">SOUND SOURCE</a>/<a href="https://elixir-lang.org/">CODE SOURCE</a></footer>
 </html>

@@ -48,11 +48,15 @@ self.MonacoEnvironment = {
 	}
 };
 
-monaco.editor.create(document.getElementById('container'), {
+let editor = monaco.editor.create(document.getElementById('container'), {
 value: ['# PipeSines', '# software for writing music in pure Elixir', '# start coding/composing here'].join('\n'),
 language: 'elixir',
 theme: "vs-dark"
 });
+
+editor.onDidChangeModelContent(() => {
+  console.log(editor.getValue())
+})
 
 let Hooks = {
     BasicPlay: {
@@ -115,6 +119,13 @@ let Hooks = {
   
         this.el.addEventListener("input", () => {
         }) 
+      }
+    },
+    ClickHook: {
+      mounted() {
+        this.el.addEventListener("click", () => {
+          console.log(editor.getValue())
+        })
       }
     }
   }

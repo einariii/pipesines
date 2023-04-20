@@ -8,11 +8,10 @@ defmodule PipesineWeb.PipesineLive do
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
     ~H"""
-    <h2>Editor</h2>
-    <div id="container" phx-update="ignore" class="background" style="width: 800px; height: 600px; border: 8px solid white"></div>
+    <div id="container" phx-update="ignore" class="background" style="width: 1200px; height: 600px; border: 8px solid black"></div>
+    <button id="click-hook" phx-hook="ClickHook">PERFORM</button>
     <div style="">
-      Code to music to.
-      <.form let={f} for={:perform_form} phx-submit="perform">
+      <.form let={f} for={:perform_form} phx-submit="submit">
         <%= text_input f, :perform, id: "basic-play", phx_hook: "BasicPlay" %>
       </.form>
     </div>

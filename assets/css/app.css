@@ -45,11 +45,11 @@
 }
 .footer {
   position: fixed;
-  right: 5;
-  bottom: 5;
-  width: 100%;
-  color: #0E1116;
-  text-align: right;
+  left: 50;
+  bottom: 0;
+  width: 185%;
+  color: #0E1116;;
+  text-align: center;
 }
 .invalid-feedback {
   color: #a94442;
