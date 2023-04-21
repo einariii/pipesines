@@ -2,13 +2,13 @@ defmodule PipesineWeb.PipesineLive do
   use PipesineWeb, :live_view
 
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, assign(socket, :connected, connected?(socket))}
   end
 
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
     ~H"""
-    <div id="container" phx-update="ignore" class="background" style="width: 1200px; height: 600px; border: 8px solid black"></div>
+    <div id="container" class="background" style="width: 1200px; height: 600px; border: 8px solid black" phx-hook="Editor"></div>
     <button id="click-hook" phx-hook="ClickHook">PERFORM</button>
     <div style="">
       <.form let={f} for={:perform_form} phx-submit="perform">

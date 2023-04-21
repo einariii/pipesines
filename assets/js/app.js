@@ -30,33 +30,24 @@ import * as Tone from "../vendor/tone.js"
 
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
 
-self.MonacoEnvironment = {
-	getWorkerUrl: function (moduleId, label) {
-		if (label === 'json') {
-			return './vs/language/json/json.worker.js';
-		}
-		if (label === 'css' || label === 'scss' || label === 'less') {
-			return './vs/language/css/css.worker.js';
-		}
-		if (label === 'html' || label === 'handlebars' || label === 'razor') {
-			return './vs/language/html/html.worker.js';
-		}
-		if (label === 'typescript' || label === 'javascript') {
-			return './vs/language/typescript/ts.worker.js';
-		}
-		return './vs/editor/editor.worker.js';
-	}
-};
+// self.MonacoEnvironment = {
+// 	getWorkerUrl: function (moduleId, label) {
+// 		if (label === 'json') {
+// 			return './vs/language/json/json.worker.js';
+// 		}
+// 		if (label === 'css' || label === 'scss' || label === 'less') {
+// 			return './vs/language/css/css.worker.js';
+// 		}
+// 		if (label === 'html' || label === 'handlebars' || label === 'razor') {
+// 			return './vs/language/html/html.worker.js';
+// 		}
+// 		if (label === 'typescript' || label === 'javascript') {
+// 			return './vs/language/typescript/ts.worker.js';
+// 		}
+// 		return './vs/editor/editor.worker.js';
+// 	}
+// };
 
-let editor = monaco.editor.create(document.getElementById('container'), {
-value: ['# PipeSines', '# software for writing music in pure Elixir', '# start coding/composing here'].join('\n'),
-language: 'elixir',
-theme: "vs-dark"
-});
-
-editor.onDidChangeModelContent(() => {
-  console.log(editor.getValue())
-})
 
 let Hooks = {
     BasicPlay: {
@@ -87,14 +78,14 @@ let Hooks = {
           // delay.connect(reverb);
           // reverb.connect(compressor);
           compressor.toDestination();
-    
+          
           synth2.connect(delay);
           delay.connect(reverb);
           reverb.connect(compressor);
           compressor.toDestination();
   
           // synth.triggerAttackRelease(params.note1, "8t");
-  
+          
           const seq = new Tone.Sequence((time, note) => {
             synth.triggerAttackRelease(note, 0.1, time);
             // subdivisions are given as subarrays
@@ -106,11 +97,11 @@ let Hooks = {
           // synth2.triggerAttackRelease(params.note2, "4n", now + 0.3);
           // synth.triggerAttackRelease(params.note1, "2n", now + 0.5);
           // synth2.triggerAttackRelease(params.note2, "8t", now + 1.1);
-  
+          
           //LOOP
           // const loopA = new Tone.Loop(time => {
-          //   synth2.triggerAttackRelease(params.note2, "8t", time);
-          // }, "1n").start(0);
+            //   synth2.triggerAttackRelease(params.note2, "8t", time);
+            // }, "1n").start(0);
           // Tone.Transport.start();
           // Tone.Transport.bpm.rampTo(800, 20);
   
@@ -121,9 +112,23 @@ let Hooks = {
         }) 
       }
     },
-    ClickHook: {
+    // ClickHook: {
+    //   mounted() {
+    //     this.el.addEventListener("click", () => {
+    //       console.log(editor.getValue())
+    //     })
+    //   }
+    // },
+    Editor: {
       mounted() {
-        this.el.addEventListener("click", () => {
+        let editor = monaco.editor.create(this.el, {
+          value: ['# PipeSines', '# software for writing music in pure Elixir', '# start coding/composing here'].join('\n'),
+          language: 'elixir',
+          theme: "vs-dark"
+        });
+        
+        editor.onDidChangeModelContent(() => {
+          //* add push event here
           console.log(editor.getValue())
         })
       }
