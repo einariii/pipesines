@@ -114,8 +114,40 @@ let Hooks = {
       });
       
       this.handleEvent("update_score", (params) => {
-        const synth = new Tone.Synth().toDestination();
-        synth.triggerAttackRelease("C4", "8n");
+        const synth = new Tone.PolySynth();
+        const synth2 = new Tone.FMSynth();
+        const vibrato = new Tone.Vibrato(params.vibratoFrequency, params.vibratoDepth);
+        const chebyshev = new Tone.Chebyshev(params.chebyshev); // range 1-100
+        const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
+        const filter = new Tone.Filter(params.filterFrequency, params.filterType, params.filterRolloff); // rolloff -12/-24/-48/-96 types "lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
+        const panner = new Tone.Panner(params.panner); // -1 to 1
+        const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
+        const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
+        const compressor = new Tone.Compressor(-30, 4);
+
+        synth.connect(vibrato);
+        vibrato.connect(chebyshev);
+        chebyshev.connect(crusher);
+        crusher.connect(compressor);
+        compressor.toDestination();
+
+        synth2.connect(delay);
+        delay.connect(reverb);
+        reverb.connect(compressor);
+        compressor.toDestination();
+
+        const seq = new Tone.Sequence((time, note) => {
+          synth.triggerAttackRelease(note, 0.2, time);
+        }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2]).start(0);
+        Tone.Transport.start();
+
+        const seq2 = new Tone.Sequence((time, note) => {
+          synth2.triggerAttackRelease(note, 0.1, time);
+        }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
+        Tone.Transport.start();
+
+        // const synth = new Tone.Synth().toDestination();
+        // synth.triggerAttackRelease("C4", "8n");
         console.log("HE:LLO SUGCCCESSSS")
       })
     }
