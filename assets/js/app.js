@@ -35,7 +35,6 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
 // 	}
 // };
 
-
 let Hooks = {
   BasicPlay: {
     mounted() {
@@ -102,17 +101,29 @@ let Hooks = {
 
   Editor: {
     mounted() {
-        let editor = monaco.editor.create(this.el, {
+      let editor = monaco.editor.create(this.el, {
         value: ['# PipeSines', '# software for writing music in pure Elixir', '# start coding/composing here', '# ctrl + v to evaluate'].join('\n'),
         language: 'elixir',
         theme: "vs-light"
       });
 
-      editor.onDidPaste(() => {
-        console.log("BEING TRIGGERED")
-        this.pushEvent("perform", {score: editor.getValue()})
+      // editor.onDidPaste(() => {
+      //   console.log("BEING TRIGGERED")
+      //   this.pushEvent("perform", { score: editor.getValue() })
+      // });
+
+      editor.onKeyUp((event) => {
+        console.log("A KEY COMBO WAS PRESSED")
+        event.preventDefault();
+        
+        // my keyboard identifies "p" keycode as 46 but the internet states it should be 80
+        if (event.altKey && (event.keyCode == 46 || event.keyCode == 80))  {
+          this.pushEvent("perform", { score: editor.getValue() });
+        }
+        console.log(event.altKey)
+        console.log(event.keyCode)
       });
-      
+
       this.handleEvent("update_score", (params) => {
         const synth = new Tone.PolySynth();
         const synth2 = new Tone.FMSynth();
@@ -137,36 +148,20 @@ let Hooks = {
         compressor.toDestination();
 
         const seq = new Tone.Sequence((time, note) => {
-          synth.triggerAttackRelease(note, 0.2, time);
+          synth.triggerAttackRelease(note, 0.01, time);
         }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2]).start(0);
         Tone.Transport.start();
 
-        const seq2 = new Tone.Sequence((time, note) => {
-          synth2.triggerAttackRelease(note, 0.1, time);
+        const seq2 = new Tone.Sequence((time2, note) => {
+          synth2.triggerAttackRelease(note, 0.1, time2);
         }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
         Tone.Transport.start();
 
-        // const synth = new Tone.Synth().toDestination();
-        // synth.triggerAttackRelease("C4", "8n");
         console.log("HE:LLO SUGCCCESSSS")
       })
     }
   }
 }
-
-
-// editor.addEventListener("keydown", e => {
-//   e.preventDefault();
-
-//   if (
-//     e.key.toLowerCase() === "p"
-//     && e.ctrlKey
-//     && e.altKey
-//   ) {
-//   this.pushEvent("send-text", editor.getValue())
-//   }
-// });
-
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken }, hooks: Hooks })
