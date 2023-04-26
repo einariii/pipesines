@@ -53,11 +53,16 @@ defmodule PipesineWeb.PipesineLive do
         true -> 0.5
       end
 
+    panner = delay_feedback - 0.5
+    filter_frequency = 100 * crusher - characters
+
+    IO.inspect(characters, label: "CHARS")
     IO.inspect(pipes, label: "PIPES")
+    IO.inspect(crusher, label: "CRUSHES")
     IO.inspect(delay_time, label: "DELAYTIME")
     IO.inspect(delay_feedback, label: "DELAYFB")
     IO.inspect(chebyshev, label: "CHEBY")
-    IO.inspect(params)
+    IO.inspect(panner, label: "PANNY")
 
     note1 = seq_length / length_div * 100
     note2 = seq_length / length_div * 200
@@ -66,7 +71,7 @@ defmodule PipesineWeb.PipesineLive do
     note5 = seq_length / length_div * 500
 
 
-    {:noreply, push_event(socket, "update_score", %{note1: note1, note2: note2, note3: note3, note4: note4, note5: note5, crusher: crusher, chebyshev: chebyshev, delayTime: delay_time, delayFeedback: delay_feedback})}
+    {:noreply, push_event(socket, "update_score", %{filterFrequency: filter_frequency, note1: note1, note2: note2, note3: note3, note4: note4, note5: note5, pannerPan: panner, crusher: crusher, chebyshev: chebyshev, delayTime: delay_time, delayFeedback: delay_feedback})}
     # {:noreply, assign(socket, :score, params)}
   end
 
