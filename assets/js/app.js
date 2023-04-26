@@ -37,6 +37,23 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
 
 let Hooks = {
   Editor: {
+    getSynth(instrument) {
+      switch (instrument) {
+        case "AMSynth":
+          return new Tone.AMSynth();
+        case "FMSynth":
+          return new Tone.FMSynth();
+        case "MetalSynth":
+          return new Tone.MetalSynth();
+        case "NoiseSynth":
+          return new Tone.NoiseSynth();
+        case "PluckSynth":
+          return new Tone.PluckSynth();
+        default:
+          return new Tone.MembraneSynth();
+      }
+    },
+
     mounted() {
       let editor = monaco.editor.create(this.el, {
         value: ['# PipeSines', '# |> software for writing music in pure Elixir', '# |> start coding/composing here', '# |> use headphones please', '# |> ctrl + v to evaluate'].join('\n'),
@@ -54,7 +71,8 @@ let Hooks = {
 
       this.handleEvent("update_score", (params) => {
         const synth = new Tone.PolySynth();
-        const synth2 = new Tone.MembraneSynth();
+        const synth2 = this.getSynth(params.instrument2);
+        const synth3 = this.getSynth(params.instrument3);
         const vibrato = new Tone.Vibrato(params.vibratoFrequency, params.vibratoDepth);
         const chebyshev = new Tone.Chebyshev(params.chebyshev); // range 1-100
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
@@ -63,10 +81,9 @@ let Hooks = {
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const compressor = new Tone.Compressor(-30, 4);
-        
+
         // var lfo = new Tone.LFO("8n", params.filterFrequency, 1000);
         // lfo.connect(panner.pan);
-        // lfo.connect(filter.frequency);
 
         synth.connect(vibrato);
         vibrato.connect(chebyshev);
@@ -75,22 +92,34 @@ let Hooks = {
         filter.connect(compressor);
         compressor.toDestination();
 
-        synth2.connect(delay);
-        delay.connect(panner);
+        synth2.connect(panner);
         panner.connect(compressor);
         compressor.toDestination();
-
-
-        const seq = new Tone.Sequence((time, note) => {
-          synth.triggerAttackRelease(note, 0.1, time);
-        }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2]).start(0);
-        Tone.Transport.start();
         
-        const seq2 = new Tone.Sequence((time, note) => {
-          synth2.triggerAttackRelease(note, 0.1, time);
-        }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
-        // Tone.Transport.timeSignature = [7, 4];
-        Tone.Transport.start();
+        synth3.connect(delay);
+        delay.connect(compressor);
+        compressor.toDestination();
+
+        if (Tone.Transport.state == "started") {
+          Tone.Transport.stop();
+          Tone.Transport.cancel();
+          console.log(Tone.Transport.state)
+        } else {
+          // const seq = new Tone.Sequence((time, note) => {
+          //   synth.triggerAttackRelease(note, 0.1, time);
+          // }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2]).start(0);
+
+          // const seq2 = new Tone.Sequence((time, note) => {
+          //   synth2.triggerAttackRelease(note, 0.1, time);
+          // }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
+          // Tone.Transport.timeSignature = [7, 4];
+
+          const seq3 = new Tone.Sequence((time, note) => {
+            synth3.triggerAttackRelease(note, 0.1, time);
+          }, [params.note3, params.note5, params.note4]).start(0);
+
+          Tone.Transport.start();
+        }
       })
     }
   }

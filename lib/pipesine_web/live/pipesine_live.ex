@@ -19,8 +19,10 @@ defmodule PipesineWeb.PipesineLive do
     seq_length = Regex.scan(~r/\n/, score) |> Enum.count()
     digits = Regex.scan(~r/\d/, score) |> Enum.count()
     characters = Regex.scan(~r/\w/, score) |> Enum.count()
-    pipes = Regex.scan(~r/(?|>)/, score) |> Enum.count()
+    pipes = Regex.scan(~r/(?:\|>)/, score) |> Enum.count()
 
+    instrument2 = "AMSynth"
+    instrument3 = "AMSynth"
 
     length_div =
       case digits do
@@ -29,13 +31,14 @@ defmodule PipesineWeb.PipesineLive do
       end
 
     bits = abs(div(characters, 16))
+
     crusher =
       cond do
-        bits <= 16 && bits >=4 -> bits
+        bits <= 16 && bits >= 4 -> bits
         true -> 16
       end
 
-    chebyshev = pipes * characters + bits |> rem(100) |> abs()
+    chebyshev = (pipes * characters + bits) |> rem(100) |> abs()
 
     delay_time =
       cond do
@@ -70,9 +73,23 @@ defmodule PipesineWeb.PipesineLive do
     note4 = seq_length / length_div * 400
     note5 = seq_length / length_div * 500
 
+    {:noreply,
+     push_event(socket, "update_score", %{
+       filterFrequency: filter_frequency,
+       note1: note1,
+       note2: note2,
+       note3: note3,
+       note4: note4,
+       note5: note5,
+       pannerPan: panner,
+       crusher: crusher,
+       chebyshev: chebyshev,
+       delayTime: delay_time,
+       delayFeedback: delay_feedback,
+       instrument2: instrument2,
+       instrument3: instrument3,
+     })}
 
-    {:noreply, push_event(socket, "update_score", %{filterFrequency: filter_frequency, note1: note1, note2: note2, note3: note3, note4: note4, note5: note5, pannerPan: panner, crusher: crusher, chebyshev: chebyshev, delayTime: delay_time, delayFeedback: delay_feedback})}
     # {:noreply, assign(socket, :score, params)}
   end
-
 end
