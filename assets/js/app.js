@@ -107,21 +107,12 @@ let Hooks = {
         theme: "vs-light"
       });
 
-      // editor.onDidPaste(() => {
-      //   console.log("BEING TRIGGERED")
-      //   this.pushEvent("perform", { score: editor.getValue() })
-      // });
-
       editor.onKeyUp((event) => {
-        console.log("A KEY COMBO WAS PRESSED")
         event.preventDefault();
-        
         // my keyboard identifies "p" keycode as 46 but the internet states it should be 80
         if (event.altKey && (event.keyCode == 46 || event.keyCode == 80))  {
           this.pushEvent("perform", { score: editor.getValue() });
         }
-        console.log(event.altKey)
-        console.log(event.keyCode)
       });
 
       this.handleEvent("update_score", (params) => {
@@ -156,8 +147,6 @@ let Hooks = {
           synth2.triggerAttackRelease(note, 0.1, time2);
         }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
         Tone.Transport.start();
-
-        console.log("HE:LLO SUGCCCESSSS")
       })
     }
   }
