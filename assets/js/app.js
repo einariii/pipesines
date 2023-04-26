@@ -14,7 +14,6 @@ import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import * as Tone from "../vendor/tone.js"
 
-
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
 
 // self.MonacoEnvironment = {
@@ -105,14 +104,14 @@ let Hooks = {
           Tone.Transport.cancel();
           console.log(Tone.Transport.state)
         } else {
-          // const seq = new Tone.Sequence((time, note) => {
-          //   synth.triggerAttackRelease(note, 0.1, time);
-          // }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2]).start(0);
+          const seq = new Tone.Sequence((time, note) => {
+            synth.triggerAttackRelease(note, 0.1, time);
+          }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2]).start(0);
 
-          // const seq2 = new Tone.Sequence((time, note) => {
-          //   synth2.triggerAttackRelease(note, 0.1, time);
-          // }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
-          // Tone.Transport.timeSignature = [7, 4];
+          const seq2 = new Tone.Sequence((time, note) => {
+            synth2.triggerAttackRelease(note, 0.1, time);
+          }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
+          Tone.Transport.timeSignature = [7, 4];
 
           const seq3 = new Tone.Sequence((time, note) => {
             synth3.triggerAttackRelease(note, 0.1, time);
