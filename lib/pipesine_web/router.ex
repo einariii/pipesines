@@ -18,7 +18,7 @@ defmodule PipesineWeb.Router do
     pipe_through :browser
 
     # get "/", PageController, :index
-    live "/", PipesineLive
+    live "/", PipesineLive, :index
     live "/compositions", CompositionLive.Index, :index
     live "/compositions/new", CompositionLive.Index, :new
     live "/compositions/:id/edit", CompositionLive.Index, :edit

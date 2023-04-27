@@ -52,7 +52,7 @@
   bottom: 0;
   width: 185%;
   text-align: center;
-  font-size: 100%;
+  font-size: 125%;
   /* color: white; */
   /* color: #0E1116;; */
 }
@@ -120,6 +120,10 @@
   flex-grow: 3;
   position: fixed;
 } */
+
+.scaled {
+  transform: scale(0.75); /* Equal to scaleX(0.7) scaleY(0.7) */
+}
 
 .tag{
   color: white;
