@@ -75,9 +75,9 @@ let Hooks = {
         const vibrato = new Tone.Vibrato(params.vibratoFrequency, params.vibratoDepth);
         const chebyshev = new Tone.Chebyshev(params.chebyshev); // range 1-100
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
-        const filter = new Tone.Filter(params.filterFrequency, params.filterType, params.filterRolloff); // rolloff -12/-24/-48/-96 types "lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
+        // const filter = new Tone.Filter(params.filterFrequency, params.filterType, params.filterRolloff); // rolloff -12/-24/-48/-96 types "lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
         const panner = new Tone.Panner(params.panner); // -1 to 1
-        const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
+        // const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const compressor = new Tone.Compressor(-30, 4);
 
@@ -87,16 +87,17 @@ let Hooks = {
         synth.connect(vibrato);
         vibrato.connect(chebyshev);
         chebyshev.connect(crusher);
-        crusher.connect(filter);
-        filter.connect(compressor);
+        crusher.connect(compressor);
+        // filter.connect(compressor);
         compressor.toDestination();
 
         synth2.connect(panner);
         panner.connect(compressor);
         compressor.toDestination();
-        
-        synth3.connect(delay);
-        delay.connect(compressor);
+
+        synth3.connect(reverb);
+        reverb.connect(compressor);
+        // delay.connect(compressor);
         compressor.toDestination();
 
         if (Tone.Transport.state == "started") {
@@ -116,7 +117,7 @@ let Hooks = {
           const seq3 = new Tone.Sequence((time, note) => {
             synth3.triggerAttackRelease(note, 0.1, time);
           }, [params.note3, params.note5, params.note4]).start(0);
-
+      
           Tone.Transport.start();
         }
       })

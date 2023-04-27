@@ -9,14 +9,22 @@ defmodule Pipesine.Sound do
   alias Pipesine.Sound.Composition
 
   def compose_composition(score) do
-
     seq_length = Regex.scan(~r/\n/, score) |> Enum.count()
     digits = Regex.scan(~r/\d/, score) |> Enum.count()
     characters = Regex.scan(~r/\w/, score) |> Enum.count()
     pipes = Regex.scan(~r/(?:\|>)/, score) |> Enum.count()
+    defs = Regex.scan(~r/(?:def)/, score) |> Enum.count()
 
-    instrument2 = "AMSynth"
-    instrument3 = "PluckSynth"
+    instrument2 =
+      cond do
+        defs >= 5 -> "MembraneSynth"
+        defs == 4 -> "AMSynth"
+        defs == 3 -> "PluckSynth"
+        defs == 2 -> "MetalSynth"
+        defs <= 1 -> "NoiseSynth"
+      end
+    # instrument2 = Enum.find("AMSynth")
+    instrument3 = "MembraneSynth"
 
     length_div =
       case digits do
@@ -42,6 +50,7 @@ defmodule Pipesine.Sound do
         true -> 0.25
       end
 
+    # does this need its own defp? so that it can reset first?
     delay_feedback =
       cond do
         chebyshev >= 100 -> chebyshev * 0.001
@@ -53,27 +62,42 @@ defmodule Pipesine.Sound do
     panner = delay_feedback - 0.5
     filter_frequency = 100 * crusher - characters
 
-    note1 = seq_length / length_div * 100
-    note2 = seq_length / length_div * 200
-    note3 = seq_length / length_div * 300
-    note4 = seq_length / length_div * 400
-    note5 = seq_length / length_div * 500
+    reverb_decay = 0.2
+
+    reverb_wet = 0.3
+
+    note1 = seq_length / length_div * 146.30
+    note2 = seq_length / length_div * 292.61
+    note3 = seq_length / length_div * 438.91
+    note4 = seq_length / length_div * 585.22
+    note5 = seq_length / length_div * 731.63
+
+    IO.inspect(characters, label: "CHARS")
+    IO.inspect(pipes, label: "PIPES")
+    IO.inspect(crusher, label: "CRUSHES")
+    IO.inspect(delay_time, label: "DELAYTIME")
+    IO.inspect(delay_feedback, label: "DELAYFB")
+    IO.inspect(chebyshev, label: "CHEBY")
+    IO.inspect(panner, label: "PANNY")
+    IO.inspect(instrument2, label: "INST2")
 
     %{
-       filterFrequency: filter_frequency,
-       note1: note1,
-       note2: note2,
-       note3: note3,
-       note4: note4,
-       note5: note5,
-       pannerPan: panner,
-       crusher: crusher,
-       chebyshev: chebyshev,
-       delayTime: delay_time,
-       delayFeedback: delay_feedback,
-       instrument2: instrument2,
-       instrument3: instrument3,
-     }
+      filterFrequency: filter_frequency,
+      note1: note1,
+      note2: note2,
+      note3: note3,
+      note4: note4,
+      note5: note5,
+      pannerPan: panner,
+      crusher: crusher,
+      chebyshev: chebyshev,
+      reverbDecay: reverb_decay,
+      reverbWet: reverb_wet,
+      # delayTime: delay_time,
+      # delayFeedback: delay_feedback,
+      instrument2: instrument2,
+      instrument3: instrument3
+    }
   end
 
   @doc """
