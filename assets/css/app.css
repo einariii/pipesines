@@ -43,10 +43,12 @@
 }
 .background {
   background-color: #CB9CF2;
+  background: url("/images/pipesine_logo_shadow.png"), #CB9CF2;
+  background-blend-mode: luminosity;
 }
 .footer {
   position: fixed;
-  left: 50;
+  margin-right: 50;
   bottom: 0;
   width: 185%;
   text-align: center;
