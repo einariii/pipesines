@@ -57,7 +57,7 @@ let Hooks = {
       let editor = monaco.editor.create(this.el, {
         value: ['# PipeSines', '# |> software for writing music in pure Elixir', '# |> start coding/composing here', '# |> use headphones please', '# |> ctrl + v to evaluate'].join('\n'),
         language: 'elixir',
-        theme: "vs-light"
+        theme: "vs-dark"
       });
 
       editor.onKeyUp((event) => {
@@ -73,20 +73,21 @@ let Hooks = {
         const synth2 = this.getSynth(params.instrument2);
         const synth3 = this.getSynth(params.instrument3);
         const vibrato = new Tone.Vibrato(params.vibratoFrequency, params.vibratoDepth);
-        const chebyshev = new Tone.Chebyshev(params.chebyshev); // range 1-100
+        // const chebyshev = new Tone.Chebyshev(params.chebyshev); // range 1-100
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
         // const filter = new Tone.Filter(params.filterFrequency, params.filterType, params.filterRolloff); // rolloff -12/-24/-48/-96 types "lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
         const panner = new Tone.Panner(params.panner); // -1 to 1
         // const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const compressor = new Tone.Compressor(-30, 4);
+        Tone.Transport.timeSignature = 11;
 
-        // var lfo = new Tone.LFO("8n", params.filterFrequency, 1000);
-        // lfo.connect(panner.pan);
+        var lfo = new Tone.LFO("2n", params.filterFrequency, 1000);
+        lfo.connect(vibrato.frequency);
 
         synth.connect(vibrato);
-        vibrato.connect(chebyshev);
-        chebyshev.connect(crusher);
+        vibrato.connect(crusher);
+        // chebyshev.connect(crusher);
         crusher.connect(compressor);
         // filter.connect(compressor);
         compressor.toDestination();
@@ -106,13 +107,12 @@ let Hooks = {
           console.log(Tone.Transport.state)
         } else {
           const seq = new Tone.Sequence((time, note) => {
-            synth.triggerAttackRelease(note, 0.1, time);
-          }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2]).start(0);
+            synth.triggerAttackRelease(note, 0.25, time);
+          }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2, params.note3, params.note3]).start(0);
 
           const seq2 = new Tone.Sequence((time, note) => {
             synth2.triggerAttackRelease(note, 0.1, time);
           }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
-          Tone.Transport.timeSignature = [7, 4];
 
           const seq3 = new Tone.Sequence((time, note) => {
             synth3.triggerAttackRelease(note, 0.1, time);

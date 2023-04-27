@@ -8,7 +8,7 @@ defmodule PipesineWeb.PipesineLive do
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
     ~H"""
-      <div id="container" class="background" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
+      <div id="container" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
     """
   end
 

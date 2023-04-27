@@ -52,7 +52,7 @@ defmodule Pipesine.Sound do
 
     # does this need its own defp? so that it can reset first?
     delay_feedback =
-      cond do
+      cond do 
         chebyshev >= 100 -> chebyshev * 0.001
         chebyshev >= 10 -> chebyshev * 0.01
         chebyshev >= 1 -> chebyshev * 0.1

@@ -11,10 +11,10 @@
   </head>
   <body class="background">
     <header class="background">
-      <section>
+      <section class="footer">
         <a href="#">
-          <img src={Routes.static_path(@conn, "/images/pipesine_logo_copy.png")} alt="faek logo" width="400" height="200"/>
-          <p class="alata">PIPE/SINES. Code to music to.</p>
+          <img src={Routes.static_path(@conn, "/images/pipesine_wavy_farsi.png")} alt="faek logo" width="500" height="200"/>
+          <p class="tag use-local-font">pipesines. code to music to.</p>
         </a>
 
       </section>
@@ -22,5 +22,5 @@
 
     <%= @inner_content %>
   </body>
-  <footer class="footer sharetechmono"><a href="https://tonejs.github.io/">SOUND SOURCE</a>/<a href="https://elixir-lang.org/">CODE SOURCE</a></footer>
+  <p class="footer use-local-font"><a>built proudly with </a><a href="https://elixir-lang.org/">elixir </a><a>& </a><a href="https://tonejs.github.io/">tone.js</a></p>
 </html>
