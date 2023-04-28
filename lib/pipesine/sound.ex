@@ -52,7 +52,7 @@ defmodule Pipesine.Sound do
 
     # does this need its own defp? so that it can reset first?
     delay_feedback =
-      cond do 
+      cond do
         chebyshev >= 100 -> chebyshev * 0.001
         chebyshev >= 10 -> chebyshev * 0.01
         chebyshev >= 1 -> chebyshev * 0.1
@@ -62,15 +62,27 @@ defmodule Pipesine.Sound do
     panner = delay_feedback - 0.5
     filter_frequency = 100 * crusher - characters
 
-    reverb_decay = 0.2
+    reverb_decay = 0.1
 
     reverb_wet = 0.3
+
+    pattern = "randomWalk"
+    humanize = "4n"
 
     note1 = seq_length / length_div * 146.30
     note2 = seq_length / length_div * 292.61
     note3 = seq_length / length_div * 438.91
     note4 = seq_length / length_div * 585.22
     note5 = seq_length / length_div * 731.63
+
+    array2 = [note2, note3, note5]
+    array3 = [note1, note2]
+      # cond do
+      #   pipes >= 100 -> [note1, note2, note3, note4, note5]
+      #   pipes >= 10 -> [note1, note2, note3]
+      #   pipes >= 1 -> [note1]
+      #   true -> []
+      # end
 
     IO.inspect(characters, label: "CHARS")
     IO.inspect(pipes, label: "PIPES")
@@ -82,7 +94,7 @@ defmodule Pipesine.Sound do
     IO.inspect(instrument2, label: "INST2")
 
     %{
-      filterFrequency: filter_frequency,
+      # filterFrequency: filter_frequency,
       note1: note1,
       note2: note2,
       note3: note3,
@@ -96,7 +108,10 @@ defmodule Pipesine.Sound do
       # delayTime: delay_time,
       # delayFeedback: delay_feedback,
       instrument2: instrument2,
-      instrument3: instrument3
+      instrument3: instrument3,
+      pattern: pattern,
+      humanize: humanize,
+      array3: array3
     }
   end
 

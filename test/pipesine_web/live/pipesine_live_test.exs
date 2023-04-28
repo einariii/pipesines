@@ -13,19 +13,19 @@ defmodule PipesineWeb.PipesineLiveTest do
   describe "Main View" do
     # setup [:create_composition]
 
-    test "loads unmounted page", %{conn: conn} do
-      # html = get(conn, "/")
-      # assert html =~ "code to music to"
+    test "loads with disconnected mount", %{conn: conn} do
+      conn = get(conn, "/")
+      assert html_response(conn, 200) =~ "code to music to"
     end
 
     test "loads mounted page", %{conn: conn} do
       {:ok, _live, html} = live(conn, Routes.pipesine_path(conn, :index))
-      assert html =~ "code to music to"
+      IO.inspect(html)
+      assert html =~ "monaco-editor"
     end
 
     test "background renders correctly", %{conn: conn} do
       {:ok, _live, html} = live(conn, Routes.pipesine_path(conn, :index))
-      IO.inspect(html)
       assert html =~ "/images/pipesine_wavy_farsi.png"
       assert html =~ "background"
     end

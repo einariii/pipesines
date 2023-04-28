@@ -9,18 +9,32 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="background">
+  <body class="background grid justify-items-stretch">
     <header class="background">
       <section class="footer">
         <a href="#">
           <img src={Routes.static_path(@conn, "/images/pipesine_wavy_farsi.png")} alt="faek logo" width="500" height="200"/>
-          <p class="tag use-local-font text-xl">PIPESINES. code to music to.</p>
+          <p class="tag alata text-xl">PIPESINES. code to music to.</p>
         </a>
 
       </section>
     </header>
 
     <%= @inner_content %>
+    <div class="menu">
+      <nav class="">
+        <PipesineWeb.Components.link href="/instructions">INSTRUCTIONS</PipesineWeb.Components.link>
+      </nav>
+      <nav class="">
+        <PipesineWeb.Components.link href="/community">COMMUNITY</PipesineWeb.Components.link>
+      </nav>
+      <nav class="">
+        <PipesineWeb.Components.link href="/account">ON COMPUTING MUSIC</PipesineWeb.Components.link>
+      </nav>
+      <nav class="">
+        <PipesineWeb.Components.link href="/login">LOGIN</PipesineWeb.Components.link>
+      </nav>
+    </div>
   </body>
-  <p class="footer use-local-font scaled"><a>elegantly </a><a href="https://elixir-lang.org/">:elixir </a><a>, + </a><a href="https://tonejs.github.io/">:tone.js</a></p>
+  <p class="footer scaled"><a>elegantly </a><a href="https://elixir-lang.org/">:elixir </a><a>, + </a><a href="https://tonejs.github.io/">:tone.js</a></p>
 </html>

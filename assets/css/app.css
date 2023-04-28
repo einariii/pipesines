@@ -1,19 +1,21 @@
 /* This file is for your main application CSS */
 @import "./phoenix.css";
-@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
 
 @font-face {
-  font-family: 'alata';
-  src: local('/fonts/Alata-Regular.ttf'), url('https://fonts.googleapis.com/css2?family=Alata&display=swap'), format('ttf');
-  font-weight: normal;
-  font-style: normal
+  font-family: Alata;
+  src: local('/fonts/Alata-Regular.ttf'), format('ttf');
+  /* font-weight: normal;
+  font-style: normal */
 }
 
 /* Alerts and form errors used by phx.new */
-.use-local-font {
+/* .use-local-font {
   font-family: 'alata';
-}
+} */
 
+.alata {
+  font-family: "Alata";
+}
 .alert {
   padding: 15px;
   margin-bottom: 20px;
@@ -46,12 +48,21 @@
   background: url("/images/pipesine_logo_shadow.png"), #CB9CF2;
   background-blend-mode: luminosity;
 }
+/* .menu {
+  position: absolute;
+  margin-left: 50px;
+  top: 20px;
+  width: 100%;
+  text-align: right;
+  font-size: 125%;
+} */
 .footer {
   position: fixed;
   margin-right: 50;
   bottom: 0;
   width: 185%;
   text-align: center;
+  font-family: "Alata";
   font-size: 125%;
   /* color: white; */
   /* color: #0E1116;; */
@@ -113,13 +124,13 @@
   text-decoration: none;
   cursor: pointer;
 }
-/* 
+
 .shrink {
   display: flex;
-  flex-direction: row;
-  flex-grow: 3;
+  flex-direction: column;
+  flex-grow: 5;
   position: fixed;
-} */
+}
 
 .scaled {
   transform: scale(0.75); /* Equal to scaleX(0.7) scaleY(0.7) */

@@ -13,7 +13,7 @@ defmodule PipesineWeb.PipesineLive do
   end
 
   def handle_event("perform", params, socket) do
-    IO.inspect(params)
+    # IO.inspect(params)
     {:noreply, push_event(socket, "update_score", Pipesine.Sound.compose_composition(params["score"]))}
   end
 end

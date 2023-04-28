@@ -53,6 +53,17 @@ let Hooks = {
       }
     },
 
+    // insertNotes(notes) {
+    //   switch (notes) {
+    //     case "all_notes":
+    //       return [params.note1, params.note2, params.note3, params.note4, params.note5];
+    //     case "two_notes":
+    //       return [params.note3, params.note4];
+    //     default:
+    //       return [params.note1];
+    //   }
+    // },
+
     mounted() {
       let editor = monaco.editor.create(this.el, {
         value: ['# pipesines', '# |> software for writing music in pure Elixir', '# |> start coding/composing here', '# |> use headphones please', '# |> alt + p to perform'].join('\n'),
@@ -79,11 +90,23 @@ let Hooks = {
         const panner = new Tone.Panner(params.panner); // -1 to 1
         // const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
-        const compressor = new Tone.Compressor(-30, 4);
-        Tone.Transport.timeSignature = 11;
+        const limiter = new Tone.Limiter(-48);
+        const compressor = new Tone.Compressor(-24, 3);
+        // const humanize = new Tone.Pattern.humanize(params.humanize)
+        // const seq3 = new Tone.Pattern((time, note) => {
+        //   synth3.triggerAttackRelease(note, 0.12, time);
+        // }, [params.note3, params.note5, params.note4, params.note4], params.pattern);
+        // const array3 = new Array(params.array3);
+        const seq2 = new Tone.Sequence((time, note) => {
+          synth2.triggerAttackRelease(note, 0.2, time);
+        }, [params.array3, params.array2]);
+        const seq3 = new Tone.Pattern((time, note) => {
+          synth3.triggerAttackRelease(note, 0.05, time);
+        }, params.array3, params.pattern)
+        // Tone.Transport.timeSignature = 7;
 
-        var lfo = new Tone.LFO("2n", params.filterFrequency, 1000);
-        lfo.connect(vibrato.frequency);
+        // var lfo = new Tone.LFO("2n", params.filterFrequency, 1000);
+        // lfo.connect(vibrato.frequency);
 
         synth.connect(vibrato);
         vibrato.connect(crusher);
@@ -93,7 +116,8 @@ let Hooks = {
         compressor.toDestination();
 
         synth2.connect(panner);
-        panner.connect(compressor);
+        panner.connect(limiter);
+        limiter.connect(compressor);
         compressor.toDestination();
 
         synth3.connect(reverb);
@@ -106,18 +130,16 @@ let Hooks = {
           Tone.Transport.cancel();
           console.log(Tone.Transport.state)
         } else {
-          const seq = new Tone.Sequence((time, note) => {
-            synth.triggerAttackRelease(note, 0.25, time);
-          }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2, params.note3, params.note3]).start(0);
+          /* allow users to toggle? */
+          // const seq = new Tone.Sequence((time, note) => {
+          //   synth.triggerAttackRelease(note, 0.24, time);
+          // }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2, params.note3, params.note3]).start(0);
 
-          const seq2 = new Tone.Sequence((time, note) => {
-            synth2.triggerAttackRelease(note, 0.1, time);
-          }, [[params.note3, params.note5], params.note1, params.note1, params.note4]).start(0);
+          seq2.start(0);
 
-          const seq3 = new Tone.Sequence((time, note) => {
-            synth3.triggerAttackRelease(note, 0.1, time);
-          }, [params.note3, params.note5, params.note4]).start(0);
-      
+          seq3.start(0);
+
+          // console.log(array3)
           Tone.Transport.start();
         }
       })
