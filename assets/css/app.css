@@ -1,20 +1,20 @@
 /* This file is for your main application CSS */
 @import "./phoenix.css";
+@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap"); 
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
 
-@font-face {
+/* @font-face {
   font-family: Alata;
-  src: local('/fonts/Alata-Regular.ttf'), format('ttf');
-  /* font-weight: normal;
-  font-style: normal */
-}
-
-/* Alerts and form errors used by phx.new */
-/* .use-local-font {
-  font-family: 'alata';
+  src: local('/fonts/Alata-Regular.ttf') format('ttf');
 } */
 
+
+.sharetechmono {
+  font-family: 'Share Tech Mono', monospace;
+  color: white;
+}
 .alata {
-  font-family: "Alata";
+  font-family: 'Alata';
 }
 .alert {
   padding: 15px;
@@ -62,7 +62,7 @@
   bottom: 0;
   width: 185%;
   text-align: center;
-  font-family: "Alata";
+  font-family: 'Alata';
   font-size: 125%;
   /* color: white; */
   /* color: #0E1116;; */
@@ -71,9 +71,6 @@
   color: #a94442;
   display: block;
   margin: -1rem 0 2rem;
-}
-.sharetechmono {
-  font-family: url(/fonts/ShareTechMono-Regular.ttf);
 }
 
 /* LiveView specific classes for your customization */
@@ -139,6 +136,7 @@
 .tag{
   color: white;
 }
+
 
 .fade-in-scale {
   animation: 0.2s ease-in 0s normal forwards 1 fade-in-scale-keys;

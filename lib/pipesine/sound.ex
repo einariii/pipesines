@@ -77,6 +77,7 @@ defmodule Pipesine.Sound do
 
     array2 = [note2, note3, note5]
     array3 = [note1, note2]
+    
       # cond do
       #   pipes >= 100 -> [note1, note2, note3, note4, note5]
       #   pipes >= 10 -> [note1, note2, note3]

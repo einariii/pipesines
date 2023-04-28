@@ -92,17 +92,14 @@ let Hooks = {
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-48);
         const compressor = new Tone.Compressor(-24, 3);
-        // const humanize = new Tone.Pattern.humanize(params.humanize)
-        // const seq3 = new Tone.Pattern((time, note) => {
-        //   synth3.triggerAttackRelease(note, 0.12, time);
-        // }, [params.note3, params.note5, params.note4, params.note4], params.pattern);
-        // const array3 = new Array(params.array3);
         const seq2 = new Tone.Sequence((time, note) => {
           synth2.triggerAttackRelease(note, 0.2, time);
         }, [params.array3, params.array2]);
         const seq3 = new Tone.Pattern((time, note) => {
           synth3.triggerAttackRelease(note, 0.05, time);
-        }, params.array3, params.pattern)
+        }, params.array3, params.pattern);
+        Tone.Pattern.interval = "16n";
+        Tone.Pattern.humanize = 0.1;
         // Tone.Transport.timeSignature = 7;
 
         // var lfo = new Tone.LFO("2n", params.filterFrequency, 1000);
@@ -135,7 +132,7 @@ let Hooks = {
           //   synth.triggerAttackRelease(note, 0.24, time);
           // }, [params.note1, params.note1, params.note2, [params.note3, params.note5], params.note4, params.note2, params.note3, params.note3]).start(0);
 
-          seq2.start(0);
+          // seq2.start(0);
 
           seq3.start(0);
 

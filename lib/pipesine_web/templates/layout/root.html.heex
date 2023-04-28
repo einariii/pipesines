@@ -9,19 +9,8 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="background grid justify-items-stretch">
-    <header class="background">
-      <section class="footer">
-        <a href="#">
-          <img src={Routes.static_path(@conn, "/images/pipesine_wavy_farsi.png")} alt="faek logo" width="500" height="200"/>
-          <p class="tag alata text-xl">PIPESINES. code to music to.</p>
-        </a>
-
-      </section>
-    </header>
-
-    <%= @inner_content %>
-    <div class="menu">
+  <body class="background justify-items-stretch">
+  <div class="sharetechmono" style="">
       <nav class="">
         <PipesineWeb.Components.link href="/instructions">INSTRUCTIONS</PipesineWeb.Components.link>
       </nav>
@@ -35,6 +24,15 @@
         <PipesineWeb.Components.link href="/login">LOGIN</PipesineWeb.Components.link>
       </nav>
     </div>
+    <header class="background">
+      <section class="footer">
+        <a href="#">
+          <img src={Routes.static_path(@conn, "/images/pipesine_wavy_farsi.png")} alt="faek logo" width="500" height="200"/>
+          <p class="tag alata text-xl">PIPESINES. code to music to.</p>
+        </a>
+      </section>
+    </header>
+    <%= @inner_content %>
   </body>
   <p class="footer scaled"><a>elegantly </a><a href="https://elixir-lang.org/">:elixir </a><a>, + </a><a href="https://tonejs.github.io/">:tone.js</a></p>
 </html>
