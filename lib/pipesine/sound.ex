@@ -14,15 +14,47 @@ defmodule Pipesine.Sound do
     characters = Regex.scan(~r/\w/, score) |> Enum.count()
     pipes = Regex.scan(~r/(?:\|>)/, score) |> Enum.count()
     defs = Regex.scan(~r/(?:def)/, score) |> Enum.count()
+    # easter egg
+    specs = Regex.scan(~r/@/, score) |> Enum.count()
+    atoms = Regex.scan(~r/:/, score) |> Enum.count()
+
+
+    swing =
+      Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int -> int < 10 end) |> List.first() |> Kernel.*(0.1)
+
+    time_signature =
+      Enum.filter([seq_length, digits, characters, defs, atoms, pipes, specs], fn int -> int <= 11 end) |> List.first()
+
+    vibrato_frequency =
+      if specs > 0 do
+        specs * 200
+      else
+        5
+      end
+
+    vibrato_depth =
+      if vibrato_frequency > 400 do
+        0.9
+      else
+        0.05
+      end
 
     instrument2 =
       cond do
-        defs >= 5 -> "MembraneSynth"
-        defs == 4 -> "AMSynth"
-        defs == 3 -> "PluckSynth"
-        defs == 2 -> "MetalSynth"
-        defs <= 1 -> "NoiseSynth"
+        defs >= 4 ->
+          "MembraneSynth"
+
+        defs == 3 ->
+          "MetalSynth"
+
+        defs == 2 ->
+          "AMSynth"
+
+        defs <= 1 ->
+          "PluckSynth"
+          # defs <= 1 -> "NoiseSynth"
       end
+
     # instrument2 = Enum.find("AMSynth")
     instrument3 = "MembraneSynth"
 
@@ -60,11 +92,11 @@ defmodule Pipesine.Sound do
       end
 
     panner = delay_feedback - 0.5
-    filter_frequency = 100 * crusher - characters
+    # filter_frequency = 100 * crusher - characters
 
-    reverb_decay = 0.1
+    reverb_decay = abs(delay_feedback - delay_time)
 
-    reverb_wet = 0.3
+    reverb_wet = abs(delay_feedback * delay_time)
 
     pattern = "randomWalk"
     humanize = "4n"
@@ -75,15 +107,17 @@ defmodule Pipesine.Sound do
     note4 = seq_length / length_div * 585.22
     note5 = seq_length / length_div * 731.63
 
-    array2 = [note2, note3, note5]
-    array3 = [note1, note2]
-    
-      # cond do
-      #   pipes >= 100 -> [note1, note2, note3, note4, note5]
-      #   pipes >= 10 -> [note1, note2, note3]
-      #   pipes >= 1 -> [note1]
-      #   true -> []
-      # end
+    array2 = [note1, note2, note3, note4, note5]
+    array3 = [note1, note2, note4]
+
+    tempo = min(abs(note5 - note4) / 3, 400)
+
+    # cond do
+    #   pipes >= 100 -> [note1, note2, note3, note4, note5]
+    #   pipes >= 10 -> [note1, note2, note3]
+    #   pipes >= 1 -> [note1]
+    #   true -> []
+    # end
 
     IO.inspect(characters, label: "CHARS")
     IO.inspect(pipes, label: "PIPES")
@@ -92,6 +126,17 @@ defmodule Pipesine.Sound do
     IO.inspect(delay_feedback, label: "DELAYFB")
     IO.inspect(chebyshev, label: "CHEBY")
     IO.inspect(panner, label: "PANNY")
+    IO.inspect(defs, label: "DEFS")
+    IO.inspect(note1, label: "NOTE1")
+    IO.inspect(note2, label: "NOTE2")
+    IO.inspect(note3, label: "NOTE3")
+    IO.inspect(note4, label: "NOTE4")
+    IO.inspect(note5, label: "NOTE5")
+    IO.inspect(tempo, label: "TEMPO")
+    IO.inspect(swing, label: "SWING")
+    IO.inspect(time_signature, label: "TIMESIG")
+    IO.inspect(reverb_decay, label: "REVDECAY")
+    IO.inspect(reverb_wet, label: "REVWET")
     IO.inspect(instrument2, label: "INST2")
 
     %{
@@ -112,7 +157,13 @@ defmodule Pipesine.Sound do
       instrument3: instrument3,
       pattern: pattern,
       humanize: humanize,
-      array3: array3
+      array2: array2,
+      array3: array3,
+      swing: swing,
+      tempo: tempo,
+      timeSignature: time_signature,
+      vibratoFrequency: vibrato_frequency,
+      vibratoDepth: vibrato_depth
     }
   end
 

@@ -1,53 +1,82 @@
 /* This file is for your main application CSS */
 @import "./phoenix.css";
-@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap"); 
-@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
 
-/* @font-face {
+
+@font-face {
   font-family: Alata;
-  src: local('/fonts/Alata-Regular.ttf') format('ttf');
-} */
+  src: url('../fonts/Alata-Regular.ttf');
+}
 
+@font-face {
+  font-family: VT323;
+  src: url('../fonts/VT323-Regular.ttf');
+}
 
 .sharetechmono {
   font-family: 'Share Tech Mono', monospace;
   color: white;
 }
+
 .alata {
   font-family: 'Alata';
 }
+
+.vt323 {
+  font-family: 'VT323';
+}
+
+.xxlfont {
+  font-size: 4rem;
+}
+
+.menu {
+  display: inline-block;
+  padding-right: 8px;
+}
+
+.menuright {
+  padding-left: 1400px;
+}
+
 .alert {
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
 }
+
 .alert-info {
   color: #31708f;
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
+
 .alert-warning {
   color: #8a6d3b;
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
+
 .alert-danger {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
+
 .alert p {
   margin-bottom: 0;
 }
+
 .alert:empty {
   display: none;
 }
+
 .background {
   background-color: #CB9CF2;
   background: url("/images/pipesine_logo_shadow.png"), #CB9CF2;
   background-blend-mode: luminosity;
 }
+
 /* .menu {
   position: absolute;
   margin-left: 50px;
@@ -62,11 +91,18 @@
   bottom: 0;
   width: 185%;
   text-align: center;
-  font-family: 'Alata';
+  font-family: 'vt323';
   font-size: 125%;
-  /* color: white; */
-  /* color: #0E1116;; */
+  /* font-color: white; */
 }
+
+a:link,
+a:active,
+a:visited {
+  text-decoration: none;
+  color: white;
+}
+
 .invalid-feedback {
   color: #a94442;
   display: block;
@@ -84,12 +120,12 @@
   transition: opacity 1s ease-out;
 }
 
-.phx-loading{
+.phx-loading {
   cursor: wait;
 }
 
 .phx-modal {
-  opacity: 1!important;
+  opacity: 1 !important;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -97,7 +133,7 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .phx-modal-content {
@@ -130,13 +166,9 @@
 }
 
 .scaled {
-  transform: scale(0.75); /* Equal to scaleX(0.7) scaleY(0.7) */
+  transform: scale(0.75);
+  /* Equal to scaleX(0.7) scaleY(0.7) */
 }
-
-.tag{
-  color: white;
-}
-
 
 .fade-in-scale {
   animation: 0.2s ease-in 0s normal forwards 1 fade-in-scale-keys;
@@ -149,26 +181,51 @@
 .fade-in {
   animation: 0.2s ease-out 0s normal forwards 1 fade-in-keys;
 }
+
 .fade-out {
   animation: 0.2s ease-out 0s normal forwards 1 fade-out-keys;
 }
 
-@keyframes fade-in-scale-keys{
-  0% { scale: 0.95; opacity: 0; }
-  100% { scale: 1.0; opacity: 1; }
+@keyframes fade-in-scale-keys {
+  0% {
+    scale: 0.95;
+    opacity: 0;
+  }
+
+  100% {
+    scale: 1.0;
+    opacity: 1;
+  }
 }
 
-@keyframes fade-out-scale-keys{
-  0% { scale: 1.0; opacity: 1; }
-  100% { scale: 0.95; opacity: 0; }
+@keyframes fade-out-scale-keys {
+  0% {
+    scale: 1.0;
+    opacity: 1;
+  }
+
+  100% {
+    scale: 0.95;
+    opacity: 0;
+  }
 }
 
-@keyframes fade-in-keys{
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes fade-in-keys {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
-@keyframes fade-out-keys{
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+@keyframes fade-out-keys {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
