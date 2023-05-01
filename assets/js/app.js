@@ -90,35 +90,38 @@ let Hooks = {
         const panner = new Tone.Panner(params.panner); // -1 to 1
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         // const phaser = new Tone.Phaser({frequency: params.timeSignature, octaves: (params.timeSignature - 3), baseFrequency: params.note3})
-        const pitchShift = new Tone.PitchShift(params.timeSignature);
+        // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-48);
         const compressor = new Tone.Compressor(-24, 3);
         Tone.Transport.bpm.value = params.tempo;
         Tone.Transport.swing = params.swing;
-        //these aren't being picked up
         Tone.Transport.timeSignature = params.timeSignature;
-        // Tone.Pattern.interval.value = "1n";
-        
-        const seq = new Tone.Sequence((time, note) => {
-          synth.triggerAttackRelease(note, 0.24, time);
-        }, [[params.note1, params.note3, params.note5], [params.note1, params.note2]]);
-        
+        Tone.Context.lookAhead = 0;
+        var filter = new Tone.Filter(params.filterFrequency, "lowpass");
+        var lfo = new Tone.LFO(params.timeSignature, 600, 2000); // hertz, min, max
+        lfo.connect(filter.frequency);
+        lfo.start();
+        // Tone.Pattern.interval = "16n";
+
+        // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
+
+        const seq = new Tone.Pattern((time, note) => {
+          synth.triggerAttackRelease(note, 0.2, time);
+        }, [[params.note1, params.note3, params.note5], [params.note1, params.note2], params.note2], params.pattern);
+
         const seq2 = new Tone.Sequence((time, note) => {
           synth2.triggerAttackRelease(note, 0.2, time);
-        }, [params.array3, params.array2]);
-        
+        }, [params.phrase]);
+
         const seq3 = new Tone.Pattern((time, note) => {
           synth3.triggerAttackRelease(note, 0.05, time);
-        }, params.array3, params.pattern);
-        // Tone.Pattern.humanize = 0.1;
+        }, params.phrase3, params.pattern3);
 
-        // var lfo = new Tone.LFO("2n", params.filterFrequency, 1000);
-        // lfo.connect(vibrato.frequency);
-
-        synth.connect(vibrato);
-        vibrato.connect(pitchShift);
-        pitchShift.connect(crusher);
+        synth.connect(filter);
+        filter.connect(vibrato);
+        vibrato.connect(crusher);
+        // pitchShift.connect(crusher);
         // phaser.connect(crusher);
         crusher.connect(compressor);
         // filter.connect(compressor);
@@ -140,8 +143,8 @@ let Hooks = {
           console.log(Tone.Transport.state)
         } else {
           /* allow users to toggle? */
-          seq.start(0);
-          // seq2.start(0); 
+          // seq.start(0);
+          seq2.start(0);
           // seq3.start(0);
           Tone.Transport.start();
 
@@ -149,6 +152,7 @@ let Hooks = {
           console.log(Tone.Transport.timeSignature)
           console.log(params.reverbDecay)
           console.log(params.reverbWet)
+          console.log(params.panner)
         }
       })
     }

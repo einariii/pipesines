@@ -17,6 +17,7 @@ defmodule Pipesine.Sound do
     # easter egg
     specs = Regex.scan(~r/@/, score) |> Enum.count()
     atoms = Regex.scan(~r/:/, score) |> Enum.count()
+    parens = Regex.scan(~r/\(/, score) |> Enum.count()
 
 
     swing =
@@ -41,22 +42,30 @@ defmodule Pipesine.Sound do
 
     instrument2 =
       cond do
-        defs >= 4 ->
-          "MembraneSynth"
-
-        defs == 3 ->
-          "MetalSynth"
+        defs >= 3 ->
+          "FMSynth"
 
         defs == 2 ->
           "AMSynth"
 
         defs <= 1 ->
           "PluckSynth"
-          # defs <= 1 -> "NoiseSynth"
       end
 
-    # instrument2 = Enum.find("AMSynth")
-    instrument3 = "MembraneSynth"
+    instrument3 =
+      cond do
+        vibrato_frequency >= 600 ->
+          "MembraneSynth"
+
+        vibrato_frequency == 400 ->
+          "MetalSynth"
+
+        vibrato_frequency == 200 ->
+          "AMSynth"
+
+        vibrato_frequency <= 5 ->
+          "PluckSynth"
+      end
 
     length_div =
       case digits do
@@ -92,23 +101,48 @@ defmodule Pipesine.Sound do
       end
 
     panner = delay_feedback - 0.5
-    # filter_frequency = 100 * crusher - characters
+
+    filter_frequency = 100 * crusher + 2 * characters
 
     reverb_decay = abs(delay_feedback - delay_time)
 
     reverb_wet = abs(delay_feedback * delay_time)
 
-    pattern = "randomWalk"
-    humanize = "4n"
+    pattern =
+      cond do
+        parens >= 9 -> "alternateDown"
+        parens >= 7 -> "downUp"
+        parens >= 5 -> "upDown"
+        parens >= 3 -> "randomWalk"
+        parens <= 2 -> "down"
+      end
 
-    note1 = seq_length / length_div * 146.30
-    note2 = seq_length / length_div * 292.61
-    note3 = seq_length / length_div * 438.91
-    note4 = seq_length / length_div * 585.22
-    note5 = seq_length / length_div * 731.63
+    pattern3 = "upDown"
 
-    array2 = [note1, note2, note3, note4, note5]
-    array3 = [note1, note2, note4]
+    note1 = seq_length / length_div * 133.238 |> Float.round(0) |> trunc()
+    note2 = seq_length / length_div * 301.847 |> Float.round(0) |> trunc()
+    note3 = seq_length / length_div * 435.084 |> Float.round(0) |> trunc()
+    note4 = seq_length / length_div * 582.512 |> Float.round(0) |> trunc()
+    note5 = seq_length / length_div * 736.931 |> Float.round(0) |> trunc()
+    note6 = seq_length / length_div * 884.359 |> Float.round(0) |> trunc()
+    note7 = seq_length / length_div * 1017.596 |> Float.round(0) |> trunc()
+    note8 = seq_length / length_div * 1165.024 |> Float.round(0) |> trunc()
+    note9 = seq_length / length_div * 1319.443 |> Float.round(0) |> trunc()
+    note10 = seq_length / length_div * 1466.871 |> Float.round(0) |> trunc()
+
+    all_notes = [note1, note2, note3, note4, note5, note6, note7, note8, note9, note10]
+
+    # note1 = seq_length / length_div * 146.30
+    # note2 = seq_length / length_div * 292.61
+    # note3 = seq_length / length_div * 438.91
+    # note4 = seq_length / length_div * 585.22
+    # note5 = seq_length / length_div * 731.63
+
+    phrase =
+      Enum.filter(all_notes, fn note -> rem(note, 2) == 1 end)
+
+    phrase2 = [note1, note2, note3, note4, note5]
+    phrase3 = [note1, note2, note4]
 
     tempo = min(abs(note5 - note4) / 3, 400)
 
@@ -119,34 +153,26 @@ defmodule Pipesine.Sound do
     #   true -> []
     # end
 
-    IO.inspect(characters, label: "CHARS")
-    IO.inspect(pipes, label: "PIPES")
-    IO.inspect(crusher, label: "CRUSHES")
-    IO.inspect(delay_time, label: "DELAYTIME")
-    IO.inspect(delay_feedback, label: "DELAYFB")
-    IO.inspect(chebyshev, label: "CHEBY")
-    IO.inspect(panner, label: "PANNY")
-    IO.inspect(defs, label: "DEFS")
-    IO.inspect(note1, label: "NOTE1")
-    IO.inspect(note2, label: "NOTE2")
-    IO.inspect(note3, label: "NOTE3")
-    IO.inspect(note4, label: "NOTE4")
-    IO.inspect(note5, label: "NOTE5")
-    IO.inspect(tempo, label: "TEMPO")
-    IO.inspect(swing, label: "SWING")
-    IO.inspect(time_signature, label: "TIMESIG")
-    IO.inspect(reverb_decay, label: "REVDECAY")
-    IO.inspect(reverb_wet, label: "REVWET")
-    IO.inspect(instrument2, label: "INST2")
-
+    IO.inspect(filter_frequency, label: "FILTER FREQ")
+    IO.inspect(panner, label: "PANNER")
+    IO.inspect(parens, label: "PARNES")
+    IO.inspect(all_notes, label: "ALLNOTES")
+    IO.inspect(pattern, label: "PATTERN")
+    
     %{
-      # filterFrequency: filter_frequency,
+      filterFrequency: filter_frequency,
       note1: note1,
       note2: note2,
       note3: note3,
       note4: note4,
       note5: note5,
-      pannerPan: panner,
+      note6: note6,
+      note7: note7,
+      note8: note8,
+      note9: note9,
+      note10: note10,
+      all_notes: all_notes,
+      panner: panner,
       crusher: crusher,
       chebyshev: chebyshev,
       reverbDecay: reverb_decay,
@@ -156,9 +182,10 @@ defmodule Pipesine.Sound do
       instrument2: instrument2,
       instrument3: instrument3,
       pattern: pattern,
-      humanize: humanize,
-      array2: array2,
-      array3: array3,
+      pattern3: pattern3,
+      phrase: phrase,
+      phrase2: phrase2,
+      phrase3: phrase3,
       swing: swing,
       tempo: tempo,
       timeSignature: time_signature,
