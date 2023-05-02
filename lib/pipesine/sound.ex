@@ -128,16 +128,27 @@ defmodule Pipesine.Sound do
         enums < 3 -> "down"
       end
 
-    note1 = 133.238
-    note2 = 301.847
-    note3 = 435.084
-    note4 = 582.512
-    note5 = 736.931
-    note6 = 884.359
-    note7 = 1017.596
-    note8 = 1165.024
-    note9 = 1319.443
-    note10 = 1466.871
+    # note1 = seq_length / length_div * 100
+    # note2 = seq_length / length_div * 200
+    # note3 = seq_length / length_div * 300
+    # note4 = seq_length / length_div * 400
+    # note5 = seq_length / length_div * 500
+    # note6 = seq_length / length_div * 600
+    # note7 = seq_length / length_div * 700
+    # note8 = seq_length / length_div * 800
+    # note9 = seq_length / length_div * 900
+    # note10 = seq_length / length_div * 1000
+
+    note1 = seq_length / length_div * 133.238
+    note2 = seq_length / length_div * 301.847
+    note3 = seq_length / length_div * 435.084
+    note4 = seq_length / length_div * 582.512
+    note5 = seq_length / length_div * 736.931
+    note6 = seq_length / length_div * 884.359
+    note7 = seq_length / length_div * 1017.596
+    note8 = seq_length / length_div * 1165.024
+    note9 = seq_length / length_div * 1319.443
+    note10 = seq_length / length_div * 1466.871
 
     all_notes = Enum.map([note1, note2, note3, note4, note5, note6, note7, note8, note9, note10], fn each ->
       each
@@ -161,6 +172,7 @@ defmodule Pipesine.Sound do
     IO.inspect(parens, label: "PARNES")
     IO.inspect(all_notes, label: "ALLNOTES")
     IO.inspect(pattern, label: "PATTERN")
+    IO.inspect(pattern3, label: "PATTERN3")
     IO.inspect(phrase, label: "PHRS")
     IO.inspect(phrase2, label: "PHRS2")
     IO.inspect(phrase3, label: "PHRS3")

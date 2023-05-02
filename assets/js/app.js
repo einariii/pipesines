@@ -101,6 +101,7 @@ let Hooks = {
         var filter = new Tone.Filter(params.filterFrequency, "lowpass");
         var lfo = new Tone.LFO(params.timeSignature, 600, 2000); // hertz, min, max
         lfo.connect(filter.frequency);
+        lfo.connect(reverb.wet);
         lfo.start();
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
@@ -146,14 +147,6 @@ let Hooks = {
           seq2.start(0);
           seq3.start(0);
           Tone.Transport.start();
-
-          // console.log(array3)
-          console.log(Tone.Transport.timeSignature)
-          console.log(params.reverbDecay)
-          console.log(params.reverbWet)
-          console.log(params.panner)
-          console.log(params.instrument3)
-          console.log(params.filterFrequency)
         }
       })
     }
