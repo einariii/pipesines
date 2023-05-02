@@ -3,8 +3,8 @@ defmodule Pipesine.Sound.Composition do
   import Ecto.Changeset
 
   schema "compositions" do
-    field :composer, :string
     field :score, :string
+    belongs_to(:composer, Pipesine.Composers.Composer)
 
     timestamps()
   end
@@ -12,7 +12,8 @@ defmodule Pipesine.Sound.Composition do
   @doc false
   def changeset(composition, attrs) do
     composition
-    |> cast(attrs, [:score, :composer])
-    |> validate_required([:score, :composer])
+    |> cast(attrs, [:score, :composer_id])
+    |> validate_required([:score, :composer_id])
+    |> foreign_key_constraint(:composer_id)
   end
 end

@@ -35,4 +35,30 @@ defmodule PipesineWeb.ConnCase do
     Pipesine.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  @doc """
+  Setup helper that registers and logs in composers.
+
+      setup :register_and_log_in_composer
+
+  It stores an updated connection and a registered composer in the
+  test context.
+  """
+  def register_and_log_in_composer(%{conn: conn}) do
+    composer = Pipesine.ComposersFixtures.composer_fixture()
+    %{conn: log_in_composer(conn, composer), composer: composer}
+  end
+
+  @doc """
+  Logs the given `composer` into the `conn`.
+
+  It returns an updated `conn`.
+  """
+  def log_in_composer(conn, composer) do
+    token = Pipesine.Composers.generate_composer_session_token(composer)
+
+    conn
+    |> Phoenix.ConnTest.init_test_session(%{})
+    |> Plug.Conn.put_session(:composer_token, token)
+  end
 end

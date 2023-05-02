@@ -1,6 +1,8 @@
 defmodule PipesineWeb.Router do
   use PipesineWeb, :router
 
+  import PipesineWeb.ComposerAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +10,7 @@ defmodule PipesineWeb.Router do
     plug :put_root_layout, {PipesineWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_composer
   end
 
   pipeline :api do
@@ -59,5 +62,38 @@ defmodule PipesineWeb.Router do
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  ## Authentication routes
+
+  scope "/", PipesineWeb do
+    pipe_through [:browser, :redirect_if_composer_is_authenticated]
+
+    get "/composers/register", ComposerRegistrationController, :new
+    post "/composers/register", ComposerRegistrationController, :create
+    get "/composers/log_in", ComposerSessionController, :new
+    post "/composers/log_in", ComposerSessionController, :create
+    get "/composers/reset_password", ComposerResetPasswordController, :new
+    post "/composers/reset_password", ComposerResetPasswordController, :create
+    get "/composers/reset_password/:token", ComposerResetPasswordController, :edit
+    put "/composers/reset_password/:token", ComposerResetPasswordController, :update
+  end
+
+  scope "/", PipesineWeb do
+    pipe_through [:browser, :require_authenticated_composer]
+
+    get "/composers/settings", ComposerSettingsController, :edit
+    put "/composers/settings", ComposerSettingsController, :update
+    get "/composers/settings/confirm_email/:token", ComposerSettingsController, :confirm_email
+  end
+
+  scope "/", PipesineWeb do
+    pipe_through [:browser]
+
+    delete "/composers/log_out", ComposerSessionController, :delete
+    get "/composers/confirm", ComposerConfirmationController, :new
+    post "/composers/confirm", ComposerConfirmationController, :create
+    get "/composers/confirm/:token", ComposerConfirmationController, :edit
+    post "/composers/confirm/:token", ComposerConfirmationController, :update
   end
 end
