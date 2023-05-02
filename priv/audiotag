@@ -1,0 +1,76 @@
+# example pipesines paradigm
+
+defmodule APipesine do
+    @moduledoc """
+        software for writing music in pure Elixir
+        alt + P to stop/perform
+        sound is stereo. use headphones
+        may contain high frequencies. exercise caution
+        spend time exploring small changes
+    """
+
+    def ???? do
+        # do something here, or go tabula rasa
+    end
+end
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# example pipesines paradigm
+
+defmodule APipeASine do
+    @moduledoc """
+        software for writing music in pure Elixir
+        alt + P to stop/perform
+        sound is stereo. use headphones
+        may contain high frequencies. exercise caution
+        spend time exploring small changes
+    """
+
+    def test do
+        {:ok, binary} = File.read!("my_code")
+        :erlang.binary_to_term(binary)
+        |> String.contains?("435 hz vibrations")
+    end
+
+    def heard do
+        cond do
+            test() === :true ->
+                :erlang.binary_to_term(binary)
+                |> File.rename!("my_score")
+            true ->
+                IO.puts("type more closely")
+                |> Enum.count()
+                |> Enum.reduce()
+        end
+    end
+end
+
+
+
+
+
+
+# test project
+
+defmodule Pipesines.paradigm do
+    def first_pass do
+        {:ok, binary} = File.read!("my_code")
+        :erlang.binary_to_term(binary)
+        |> String.contains?("music => 1")
+        |> String.to_binary()
+        |> File.rename!("my_score")
+    end
+end

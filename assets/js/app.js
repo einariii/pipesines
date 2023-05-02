@@ -142,7 +142,7 @@ let Hooks = {
           console.log(Tone.Transport.state)
         } else {
           /* allow users to toggle? */
-          // seq.start(0);
+          seq.start(0);
           seq2.start(0);
           seq3.start(0);
           Tone.Transport.start();
@@ -153,6 +153,7 @@ let Hooks = {
           console.log(params.reverbWet)
           console.log(params.panner)
           console.log(params.instrument3)
+          console.log(params.filterFrequency)
         }
       })
     }

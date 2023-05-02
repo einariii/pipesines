@@ -19,6 +19,7 @@ defmodule Pipesine.Sound do
     atoms = Regex.scan(~r/:/, score) |> Enum.count()
     parens = Regex.scan(~r/\(/, score) |> Enum.count()
     hashes = Regex.scan(~r/#/, score) |> Enum.count()
+    enums = Regex.scan(~r/Enum/, score) |> Enum.count()
 
     swing =
       Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int -> int < 10 end) |> List.first() |> Kernel.*(0.1)
@@ -48,7 +49,7 @@ defmodule Pipesine.Sound do
         defs == 2 ->
           "AMSynth"
 
-        defs <= 1 ->
+        defs < 2 ->
           "PluckSynth"
       end
 
@@ -57,13 +58,13 @@ defmodule Pipesine.Sound do
         atoms >= 11 ->
           "MembraneSynth"
 
-        atoms >= 7 ->
+        atoms >= 7 or atoms > 11 ->
           "MetalSynth"
 
-        atoms >= 3 ->
+          atoms >= 3 or atoms > 7 ->
           "AMSynth"
 
-        atoms <= 1 ->
+        atoms < 3 ->
           "PluckSynth"
       end
 
@@ -102,7 +103,7 @@ defmodule Pipesine.Sound do
 
     panner = delay_feedback - 0.5
 
-    filter_frequency = 100 * crusher + 2 * characters
+    filter_frequency = 100 * atoms + 2 * characters
 
     reverb_decay = abs(delay_feedback - delay_time)
 
@@ -111,13 +112,20 @@ defmodule Pipesine.Sound do
     pattern =
       cond do
         parens >= 9 -> "alternateDown"
-        parens >= 7 -> "downUp"
-        parens >= 5 -> "upDown"
-        parens >= 3 -> "randomWalk"
-        parens <= 2 -> "down"
+        parens == 7 or parens == 8 -> "downUp"
+        parens == 5 or parens == 6 -> "upDown"
+        parens == 3 or parens == 4 -> "randomWalk"
+        parens < 3 -> "down"
       end
 
-    pattern3 = "upDown"
+    pattern3 =
+      cond do
+        enums >= 9 -> "alternateDown"
+        enums == 7 or enums == 8 -> "downUp"
+        enums == 5 or enums == 6 -> "upDown"
+        enums == 3 or enums == 4 -> "randomWalk"
+        enums < 3 -> "down"
+      end
 
     note1 = seq_length / length_div * 133.238
     note2 = seq_length / length_div * 301.847
@@ -156,6 +164,7 @@ defmodule Pipesine.Sound do
     IO.inspect(phrase2, label: "PHRS2")
     IO.inspect(phrase3, label: "PHRS3")
     IO.inspect(atoms, label: "ATOMS")
+    IO.inspect(enums, label: "ENUMS")
 
     %{
       atoms: atoms,
