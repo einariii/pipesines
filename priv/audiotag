@@ -1,3 +1,33 @@
+# a pipesine
+
+defmodule Pipesine.Example do
+    @moduledoc """
+        software for writing music in pure Elixir
+        alt + P to stop/perform
+        sound is stereo. use headphones
+        may contain high frequencies. exercise caution
+        spend time exploring small changes
+    """
+
+    def piping_test do
+        {:ok, binary} = File.read!("my_code")
+        :erlang.binary_to_term(binary)
+        |> String.contains?("435 hz vibrations")
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
 # example pipesines paradigm
 
 defmodule APipesine do
@@ -13,7 +43,7 @@ defmodule APipesine do
         # do something here, or go tabula rasa
     end
 end
-    
+
 
 
 
