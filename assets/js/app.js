@@ -88,8 +88,8 @@ let Hooks = {
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
         // const filter = new Tone.Filter(params.filterFrequency, params.filterType, params.filterRolloff); // rolloff -12/-24/-48/-96 types "lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
         const panner = new Tone.Panner(params.panner); // -1 to 1
-        const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
-        // const phaser = new Tone.Phaser({frequency: params.timeSignature, octaves: (params.timeSignature - 3), baseFrequency: params.note3})
+        // const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
+        const phaser = new Tone.Phaser({frequency: params.atoms, octaves: (params.atoms - 3), baseFrequency: params.note5})
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-48);
@@ -102,20 +102,19 @@ let Hooks = {
         var lfo = new Tone.LFO(params.timeSignature, 600, 2000); // hertz, min, max
         lfo.connect(filter.frequency);
         lfo.start();
-        // Tone.Pattern.interval = "16n";
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
 
         const seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, 0.2, time);
-        }, [[params.note1, params.note3, params.note5], [params.note1, params.note2], params.note2], params.pattern);
+        }, params.phrase, params.pattern);
 
         const seq2 = new Tone.Sequence((time, note) => {
-          synth2.triggerAttackRelease(note, 0.2, time);
-        }, [params.phrase]);
+          synth2.triggerAttackRelease(note, params.reverbWet, time);
+        }, params.phrase2);
 
         const seq3 = new Tone.Pattern((time, note) => {
-          synth3.triggerAttackRelease(note, 0.05, time);
+          synth3.triggerAttackRelease(note, params.reverbDecay, time);
         }, params.phrase3, params.pattern3);
 
         synth.connect(filter);
@@ -132,9 +131,9 @@ let Hooks = {
         limiter.connect(compressor);
         compressor.toDestination();
 
-        synth3.connect(reverb);
+        synth3.connect(phaser);
+        phaser.connect(reverb);
         reverb.connect(compressor);
-        // delay.connect(compressor);
         compressor.toDestination();
 
         if (Tone.Transport.state == "started") {
@@ -145,7 +144,7 @@ let Hooks = {
           /* allow users to toggle? */
           // seq.start(0);
           seq2.start(0);
-          // seq3.start(0);
+          seq3.start(0);
           Tone.Transport.start();
 
           // console.log(array3)
@@ -153,6 +152,7 @@ let Hooks = {
           console.log(params.reverbDecay)
           console.log(params.reverbWet)
           console.log(params.panner)
+          console.log(params.instrument3)
         }
       })
     }

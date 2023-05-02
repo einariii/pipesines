@@ -18,7 +18,7 @@ defmodule Pipesine.Sound do
     specs = Regex.scan(~r/@/, score) |> Enum.count()
     atoms = Regex.scan(~r/:/, score) |> Enum.count()
     parens = Regex.scan(~r/\(/, score) |> Enum.count()
-
+    hashes = Regex.scan(~r/#/, score) |> Enum.count()
 
     swing =
       Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int -> int < 10 end) |> List.first() |> Kernel.*(0.1)
@@ -54,16 +54,16 @@ defmodule Pipesine.Sound do
 
     instrument3 =
       cond do
-        vibrato_frequency >= 600 ->
+        atoms >= 11 ->
           "MembraneSynth"
 
-        vibrato_frequency == 400 ->
+        atoms >= 7 ->
           "MetalSynth"
 
-        vibrato_frequency == 200 ->
+        atoms >= 3 ->
           "AMSynth"
 
-        vibrato_frequency <= 5 ->
+        atoms <= 1 ->
           "PluckSynth"
       end
 
@@ -119,47 +119,46 @@ defmodule Pipesine.Sound do
 
     pattern3 = "upDown"
 
-    note1 = seq_length / length_div * 133.238 |> Float.round(0) |> trunc()
-    note2 = seq_length / length_div * 301.847 |> Float.round(0) |> trunc()
-    note3 = seq_length / length_div * 435.084 |> Float.round(0) |> trunc()
-    note4 = seq_length / length_div * 582.512 |> Float.round(0) |> trunc()
-    note5 = seq_length / length_div * 736.931 |> Float.round(0) |> trunc()
-    note6 = seq_length / length_div * 884.359 |> Float.round(0) |> trunc()
-    note7 = seq_length / length_div * 1017.596 |> Float.round(0) |> trunc()
-    note8 = seq_length / length_div * 1165.024 |> Float.round(0) |> trunc()
-    note9 = seq_length / length_div * 1319.443 |> Float.round(0) |> trunc()
-    note10 = seq_length / length_div * 1466.871 |> Float.round(0) |> trunc()
+    note1 = seq_length / length_div * 133.238
+    note2 = seq_length / length_div * 301.847
+    note3 = seq_length / length_div * 435.084
+    note4 = seq_length / length_div * 582.512
+    note5 = seq_length / length_div * 736.931
+    note6 = seq_length / length_div * 884.359
+    note7 = seq_length / length_div * 1017.596
+    note8 = seq_length / length_div * 1165.024
+    note9 = seq_length / length_div * 1319.443
+    note10 = seq_length / length_div * 1466.871
 
-    all_notes = [note1, note2, note3, note4, note5, note6, note7, note8, note9, note10]
-
-    # note1 = seq_length / length_div * 146.30
-    # note2 = seq_length / length_div * 292.61
-    # note3 = seq_length / length_div * 438.91
-    # note4 = seq_length / length_div * 585.22
-    # note5 = seq_length / length_div * 731.63
+    all_notes = Enum.map([note1, note2, note3, note4, note5, note6, note7, note8, note9, note10], fn each ->
+      each
+      |> Float.round(0)
+      |> trunc()
+    end)
 
     phrase =
-      Enum.filter(all_notes, fn note -> rem(note, 2) == 1 end)
+      Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
 
-    phrase2 = [note1, note2, note3, note4, note5]
-    phrase3 = [note1, note2, note4]
+    phrase2 =
+      Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end)
+
+    phrase3 =
+      Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end)
 
     tempo = min(abs(note5 - note4) / 3, 400)
-
-    # cond do
-    #   pipes >= 100 -> [note1, note2, note3, note4, note5]
-    #   pipes >= 10 -> [note1, note2, note3]
-    #   pipes >= 1 -> [note1]
-    #   true -> []
-    # end
 
     IO.inspect(filter_frequency, label: "FILTER FREQ")
     IO.inspect(panner, label: "PANNER")
     IO.inspect(parens, label: "PARNES")
     IO.inspect(all_notes, label: "ALLNOTES")
     IO.inspect(pattern, label: "PATTERN")
-    
+    IO.inspect(phrase, label: "PHRS")
+    IO.inspect(phrase2, label: "PHRS2")
+    IO.inspect(phrase3, label: "PHRS3")
+    IO.inspect(atoms, label: "ATOMS")
+
     %{
+      atoms: atoms,
       filterFrequency: filter_frequency,
       note1: note1,
       note2: note2,
