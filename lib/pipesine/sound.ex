@@ -69,7 +69,7 @@ defmodule Pipesine.Sound do
           "PluckSynth"
       end
 
-    length_div =
+    digits_div =
       case digits do
         0 -> 1
         _ -> digits
@@ -121,34 +121,34 @@ defmodule Pipesine.Sound do
 
     pattern3 =
       cond do
-        enums >= 9 -> "alternateDown"
-        enums == 7 or enums == 8 -> "downUp"
-        enums == 5 or enums == 6 -> "upDown"
-        enums == 3 or enums == 4 -> "randomWalk"
-        enums < 3 -> "down"
+        enums >= 7 -> "alternateDown"
+        enums == 5 or enums == 8 -> "downUp"
+        enums == 3 or enums == 6 -> "upDown"
+        enums == 2 or enums == 4 -> "randomWalk"
+        enums < 2 -> "down"
       end
 
-    # note1 = seq_length / length_div * 100
-    # note2 = seq_length / length_div * 200
-    # note3 = seq_length / length_div * 300
-    # note4 = seq_length / length_div * 400
-    # note5 = seq_length / length_div * 500
-    # note6 = seq_length / length_div * 600
-    # note7 = seq_length / length_div * 700
-    # note8 = seq_length / length_div * 800
-    # note9 = seq_length / length_div * 900
-    # note10 = seq_length / length_div * 1000
+    # note1 = seq_length / digits_div * 133.238
+    # note2 = seq_length / digits_div * 301.847
+    # note3 = seq_length / digits_div * 435.084
+    # note4 = seq_length / digits_div * 582.512
+    # note5 = seq_length / digits_div * 736.931
+    # note6 = seq_length / digits_div * 884.359
+    # note7 = seq_length / digits_div * 1017.596
+    # note8 = seq_length / digits_div * 1165.024
+    # note9 = seq_length / digits_div * 1319.443
+    # note10 = seq_length / digits_div * 1466.871
 
-    note1 = seq_length / length_div * 133.238
-    note2 = seq_length / length_div * 301.847
-    note3 = seq_length / length_div * 435.084
-    note4 = seq_length / length_div * 582.512
-    note5 = seq_length / length_div * 736.931
-    note6 = seq_length / length_div * 884.359
-    note7 = seq_length / length_div * 1017.596
-    note8 = seq_length / length_div * 1165.024
-    note9 = seq_length / length_div * 1319.443
-    note10 = seq_length / length_div * 1466.871
+    note1 = seq_length / digits_div * 133.238 * (27/25)
+    note2 = seq_length / digits_div * 133.238 * (25/21)
+    note3 = seq_length / digits_div * 301.847 * (9/7)
+    note4 = seq_length / digits_div * 301.847 * (7/5)
+    note5 = seq_length / digits_div * 435.084 * (75/49)
+    note6 = seq_length / digits_div * 435.084 * (5/3)
+    note7 = seq_length / digits_div * 582.512 * (9/5)
+    note8 = seq_length / digits_div * 736.931 * (49/25)
+    note9 = seq_length / digits_div * 884.359 * (15/7)
+    note10 = seq_length / digits_div * 1017.596 * (7/3)
 
     all_notes = Enum.map([note1, note2, note3, note4, note5, note6, note7, note8, note9, note10], fn each ->
       each
