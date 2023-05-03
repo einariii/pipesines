@@ -10,12 +10,25 @@ defmodule PipesineWeb.PipesineLive do
   def render(assigns) do
     ~H"""
       <div id="container" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
+      <button phx-click="save">SAVE</button>
     """
   end
 
   def handle_event("perform", params, socket) do
-    # IO.inspect(params)
+    IO.inspect(params, label: "PARAMS")
     {:noreply, push_event(socket, "update_score", Pipesine.Sound.compose_composition(params["score"]))}
+  end
+
+  def handle_event("save", params, socket) do
+    # IO.inspect(socket.assigns.composer_id, label: "COMPOSERID")
+    # if socket.assigns.composer_id do
+    #   Pipesine.Sound.create_composition(params["score"])
+    #   # Pipesine.Sound.compose_composition(%Composition{
+    #   #   score: socket.assigns.params["score"],
+    #   #   composer_id: socket.assigns.composer_id
+    #   # })
+    # end
+    # {:noreply, socket}
   end
 
   # def handle_event("toggle_modal", params, socket) do

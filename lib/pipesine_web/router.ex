@@ -20,7 +20,6 @@ defmodule PipesineWeb.Router do
   scope "/", PipesineWeb do
     pipe_through :browser
 
-    # get "/", PageController, :index
     live "/", PipesineLive, :index
     live "/compositions", CompositionLive.Index, :index
     live "/compositions/new", CompositionLive.Index, :new

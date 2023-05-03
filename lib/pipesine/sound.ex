@@ -25,7 +25,7 @@ defmodule Pipesine.Sound do
     conds = Regex.scan(~r/cond/, score) |> Enum.count()
     cases = Regex.scan(~r/case/, score) |> Enum.count()
     capts = Regex.scan(~r/(?:&\()/, score) |> Enum.count()
-    pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count()
+    pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count() |> max(1)
 
     touche =
       (genservers + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) / pchars
@@ -186,6 +186,8 @@ defmodule Pipesine.Sound do
     IO.inspect(phrase3, label: "PHRS3")
     IO.inspect(atoms, label: "ATOMS")
     IO.inspect(enums, label: "ENUMS")
+    IO.inspect(score, label: "SCOORA")
+    IO.inspect(pchars, label: "PCHARS")
 
     %{
       note1: note1,

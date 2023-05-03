@@ -146,6 +146,7 @@ let Hooks = {
           console.log(Tone.Transport.state)
         } else {
           /* allow users to toggle? */
+          // Tone.Transport.clear();
           seq.start(0);
           seq2.start(0);
           seq3.start(0);

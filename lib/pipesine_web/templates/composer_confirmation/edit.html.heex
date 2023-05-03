@@ -1,12 +1,12 @@
-<h1>Confirm account</h1>
+<h1>confirm account</h1>
 
 <.form let={_f} for={:composer} action={Routes.composer_confirmation_path(@conn, :update, @token)}>
   <div>
-    <%= submit "Confirm my account" %>
+    <%= submit "confirm my account" %>
   </div>
 </.form>
 
-<p>
-  <%= link "Register", to: Routes.composer_registration_path(@conn, :new) %> |
-  <%= link "Log in", to: Routes.composer_session_path(@conn, :new) %>
+<p class="vt323">
+  <%= link "register", to: Routes.composer_registration_path(@conn, :new) %> |
+  <%= link "log in", to: Routes.composer_session_path(@conn, :new) %>
 </p>

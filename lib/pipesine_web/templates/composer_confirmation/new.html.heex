@@ -1,15 +1,15 @@
-<h1>Resend confirmation instructions</h1>
+<h1>resend confirmation instructions</h1>
 
 <.form let={f} for={:composer} action={Routes.composer_confirmation_path(@conn, :create)}>
-  <%= label f, :email %>
+  <p class="vt323"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
 
-  <div>
-    <%= submit "Resend confirmation instructions" %>
+  <div class="vt323">
+    <%= submit "resend confirmation instructions" %>
   </div>
 </.form>
 
-<p>
-  <%= link "Register", to: Routes.composer_registration_path(@conn, :new) %> |
-  <%= link "Log in", to: Routes.composer_session_path(@conn, :new) %>
+<p class="vt323">
+  <%= link "register", to: Routes.composer_registration_path(@conn, :new) %> |
+  <%= link "log in", to: Routes.composer_session_path(@conn, :new) %>
 </p>
