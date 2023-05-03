@@ -32,10 +32,11 @@
 .menu {
   display: inline-block;
   padding-right: 8px;
+  padding-top: 4px;
 }
 
 .menuright {
-  padding-left: 1200px;
+  padding-left: 1375px;
   font-size: 120%;
 }
 
@@ -44,6 +45,7 @@
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .alert-info {
@@ -97,9 +99,18 @@
   /* font-color: white; */
 }
 
+h1 {
+  font-family: 'VT323';
+}
+
+h3 {
+  font-family: 'VT323';
+}
+
 a:link,
-a:active,
-a:visited {
+a:visited,
+a:hover,
+a:active {
   text-decoration: none;
   color: white;
 }
@@ -187,6 +198,10 @@ a:visited {
 
 .fade-out {
   animation: 0.2s ease-out 0s normal forwards 1 fade-out-keys;
+}
+
+:hover {
+  text-decoration: none black;
 }
 
 @keyframes fade-in-scale-keys {

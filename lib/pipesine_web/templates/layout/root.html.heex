@@ -15,12 +15,12 @@
         <PipesineWeb.Components.link href="/instructions">instructions.</PipesineWeb.Components.link>
         <PipesineWeb.Components.link href="/community">community.</PipesineWeb.Components.link>
         <PipesineWeb.Components.link href="/account">on computing/music.</PipesineWeb.Components.link>
-        <%= render "_composer_menu.html", assigns %>
+        <a class=""><%= render "_composer_menu.html", assigns %></a>
       </nav>
     </div>
     <header class="background">
       <section class="footer">
-        <a href="#">
+        <a href="/">
           <img src={Routes.static_path(@conn, "/images/pipesine_wavy_farsi.png")} alt="faek logo" width="600" height="200"/>
           <p class="vt323 xxlfont">PIPESINES. code to music to.</p>
         </a>

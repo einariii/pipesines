@@ -28,9 +28,9 @@ end
 
 
 
-# example pipesines paradigm
+# a pipesine
 
-defmodule APipesine do
+defmodule Pipesine.Example do
     @moduledoc """
         software for writing music in pure Elixir
         alt + P to stop/perform
@@ -43,7 +43,6 @@ defmodule APipesine do
         # do something here, or go tabula rasa
     end
 end
-
 
 
 

@@ -14,13 +14,21 @@ defmodule Pipesine.Sound do
     characters = Regex.scan(~r/\w/, score) |> Enum.count()
     pipes = Regex.scan(~r/(?:\|>)/, score) |> Enum.count()
     defs = Regex.scan(~r/(?:def)/, score) |> Enum.count()
-    # easter egg
     specs = Regex.scan(~r/@/, score) |> Enum.count()
     atoms = Regex.scan(~r/:/, score) |> Enum.count()
     parens = Regex.scan(~r/\(/, score) |> Enum.count()
     enums = Regex.scan(~r/Enum/, score) |> Enum.count()
-    hashes = Regex.scan(~r/#/, score) |> Enum.count()
+    hashes = Regex.scan(~r/(#)/, score) |> Enum.count() |> Kernel.*(5)
     kernels = Regex.scan(~r/Kernel/, score) |> Enum.count()
+    defstructs = Regex.scan(~r/(?:%\w)/, score) |> Enum.count()
+    genservers = Regex.scan(~r/Genserver/, score) |> Enum.count()
+    conds = Regex.scan(~r/cond/, score) |> Enum.count()
+    cases = Regex.scan(~r/case/, score) |> Enum.count()
+    capts = Regex.scan(~r/(?:&\()/, score) |> Enum.count()
+    pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count()
+
+    touche =
+      (genservers + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) / pchars
 
     swing =
       Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int -> int < 10 end) |> List.first() |> Kernel.*(0.1)
@@ -83,7 +91,7 @@ defmodule Pipesine.Sound do
         true -> 16
       end
 
-    chebyshev = (pipes * characters + bits) |> rem(100) |> abs()
+    chebyshev = (pipes * pchars + bits) |> rem(25) |> abs()
 
     delay_time =
       cond do
@@ -180,8 +188,6 @@ defmodule Pipesine.Sound do
     IO.inspect(enums, label: "ENUMS")
 
     %{
-      atoms: atoms,
-      filterFrequency: filter_frequency,
       note1: note1,
       note2: note2,
       note3: note3,
@@ -193,22 +199,29 @@ defmodule Pipesine.Sound do
       note9: note9,
       note10: note10,
       all_notes: all_notes,
-      panner: panner,
+      atoms: atoms,
+      conds: conds,
       crusher: crusher,
       chebyshev: chebyshev,
-      reverbDecay: reverb_decay,
-      reverbWet: reverb_wet,
+      defstructs: defstructs,
       # delayTime: delay_time,
       # delayFeedback: delay_feedback,
+      filterFrequency: filter_frequency,
+      hashes: hashes,
       instrument2: instrument2,
       instrument3: instrument3,
+      kernels: kernels,
+      panner: panner,
       pattern: pattern,
       pattern3: pattern3,
       phrase: phrase,
       phrase2: phrase2,
       phrase3: phrase3,
+      reverbDecay: reverb_decay,
+      reverbWet: reverb_wet,
       swing: swing,
       tempo: tempo,
+      touche: touche,
       timeSignature: time_signature,
       vibratoFrequency: vibrato_frequency,
       vibratoDepth: vibrato_depth

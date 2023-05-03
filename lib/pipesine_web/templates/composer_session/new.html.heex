@@ -1,4 +1,4 @@
-<h1>Log in</h1>
+<h1>log in</h1>
 
 <.form let={f} for={@conn} action={Routes.composer_session_path(@conn, :create)} as={:composer}>
   <%= if @error_message do %>
@@ -7,13 +7,13 @@
     </div>
   <% end %>
 
-  <%= label f, :email %>
+  <p class="vt323"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
 
-  <%= label f, :password %>
+  <p class="vt323"><%= label f, :password %></p>
   <%= password_input f, :password, required: true %>
 
-  <%= label f, :remember_me, "Keep me logged in for 60 days" %>
+  <p class="vt323"><%= label f, :remember_me, "Keep me logged in for 60 days" %></p>
   <%= checkbox f, :remember_me %>
 
   <div>
@@ -21,7 +21,7 @@
   </div>
 </.form>
 
-<p>
-  <%= link "Register", to: Routes.composer_registration_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.composer_reset_password_path(@conn, :new) %>
+<p class="vt323">
+  <%= link "register", to: Routes.composer_registration_path(@conn, :new) %> |
+  <%= link "forgot your password?", to: Routes.composer_reset_password_path(@conn, :new) %>
 </p>

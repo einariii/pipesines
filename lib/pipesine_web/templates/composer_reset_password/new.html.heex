@@ -1,15 +1,15 @@
-<h1>Forgot your password?</h1>
+<h1>forgot your password?</h1>
 
 <.form let={f} for={:composer} action={Routes.composer_reset_password_path(@conn, :create)}>
-  <%= label f, :email %>
+  <p class="vt323"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
 
-  <div>
-    <%= submit "Send instructions to reset password" %>
+  <div class="vt323">
+    <%= submit "send instructions to reset password" %>
   </div>
 </.form>
 
-<p>
+<p class="vt323">
   <%= link "Register", to: Routes.composer_registration_path(@conn, :new) %> |
   <%= link "Log in", to: Routes.composer_session_path(@conn, :new) %>
 </p>

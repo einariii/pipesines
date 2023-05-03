@@ -89,7 +89,7 @@ let Hooks = {
         // const filter = new Tone.Filter(params.filterFrequency, params.filterType, params.filterRolloff); // rolloff -12/-24/-48/-96 types "lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
         const panner = new Tone.Panner(params.panner); // -1 to 1
         // const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
-        const phaser = new Tone.Phaser({frequency: params.atoms, octaves: (params.atoms - 3), baseFrequency: params.note5})
+        const phaser = new Tone.Phaser({frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note5})
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-48);
@@ -99,10 +99,13 @@ let Hooks = {
         Tone.Transport.timeSignature = params.timeSignature;
         Tone.Context.lookAhead = 0;
         var filter = new Tone.Filter(params.filterFrequency, "lowpass");
-        var lfo = new Tone.LFO(params.timeSignature, 600, 2000); // hertz, min, max
+        var lfo = new Tone.LFO(params.timeSignature, 300, 2000); // hertz, min, max
+        var lfo2 = new Tone.LFO(params.hashes, 300, 2000); // hertz, min, max
         lfo.connect(filter.frequency);
         lfo.connect(reverb.wet);
         lfo.start();
+        lfo2.connect(phaser.frequency);
+        lfo2.start();
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
 
@@ -132,9 +135,9 @@ let Hooks = {
         limiter.connect(compressor);
         compressor.toDestination();
 
-        synth3.connect(phaser);
-        phaser.connect(reverb);
-        reverb.connect(compressor);
+        synth3.connect(reverb);
+        reverb.connect(phaser);
+        phaser.connect(compressor);
         compressor.toDestination();
 
         if (Tone.Transport.state == "started") {

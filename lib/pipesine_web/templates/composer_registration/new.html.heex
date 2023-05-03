@@ -1,4 +1,4 @@
-<h1>Register</h1>
+<h1>register</h1>
 
 <.form let={f} for={@changeset} action={Routes.composer_registration_path(@conn, :create)}>
   <%= if @changeset.action do %>
@@ -7,20 +7,20 @@
     </div>
   <% end %>
 
-  <%= label f, :email %>
+  <p class="vt323"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
   <%= error_tag f, :email %>
 
-  <%= label f, :password %>
+  <p class="vt323"><%= label f, :password %></p>
   <%= password_input f, :password, required: true %>
   <%= error_tag f, :password %>
 
-  <div>
-    <%= submit "Register" %>
+  <div class="vt323">
+    <%= submit "register" %>
   </div>
 </.form>
 
-<p>
-  <%= link "Log in", to: Routes.composer_session_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.composer_reset_password_path(@conn, :new) %>
+<p class="vt323">
+  <%= link "log in", to: Routes.composer_session_path(@conn, :new) %> |
+  <%= link "forgot your password?", to: Routes.composer_reset_password_path(@conn, :new) %>
 </p>
