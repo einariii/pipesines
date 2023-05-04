@@ -83,11 +83,11 @@ let Hooks = {
         const synth = new Tone.PolySynth();
         const synth2 = this.getSynth(params.instrument2);
         const synth3 = this.getSynth(params.instrument3);
-        const vibrato = new Tone.Vibrato(params.fundamental, params.vibratoDepth);
+        // const vibrato = new Tone.Vibrato(params.fundamental, params.vibratoDepth);
         // const chebyshev = new Tone.Chebyshev(params.chebyshev); // range 1-100
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
         const panner = new Tone.Panner(params.panner); // -1 to 1
-        // const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
+        const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const phaser = new Tone.Phaser({frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note5})
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
@@ -120,18 +120,19 @@ let Hooks = {
           synth3.triggerAttackRelease(note, params.reverbDecay, time);
         }, params.phrase3, params.pattern3);
 
-        synth.connect(filter);
-        vibrato.connect(crusher);
+        synth.connect(crusher);
+        // vibrato.connect(crusher);
         crusher.connect(compressor);
         compressor.toDestination();
         
         synth2.connect(panner);
-        panner.connect(limiter);
+        panner.connect(delay);
         // filter.connect(limiter);
+        delay.connect(limiter);
         limiter.connect(compressor);
         compressor.toDestination();
 
-        synth3.connect(vibrato);
+        synth3.connect(reverb);
         reverb.connect(phaser);
         phaser.connect(compressor);
         compressor.toDestination();

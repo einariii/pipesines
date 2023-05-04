@@ -15,11 +15,11 @@ defmodule PipesineWeb.PipesineLive do
   def render(assigns) do
     ~H"""
       <div id="container" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
-      <span><%= live_patch "New Composition", to: Routes.composition_index_path(@socket, :new) %></span>
+      <button phx-click="save">SAVE COMPOSITION</button>
       """
-  end
+    end
 
-  # <button phx-click="save">SAVE COMPOSITION</button>
+    # <span><%= live_patch "New Composition", to: Routes.composition_index_path(@socket, :new) %></span>
   # <%= @score %>
 
   def handle_event("perform", params, socket) do
@@ -28,14 +28,14 @@ defmodule PipesineWeb.PipesineLive do
   end
 
   def handle_event("save", params, socket) do
-    # IO.inspect(params["score"], label: "PARAMSSSAVE")
-    # if socket.assigns.composer_id do
-    #   Pipesine.Sound.create_composition(%{
-    #     score: socket.assigns.score,
-    #     composer_id: socket.assigns.composer_id,
-    #     composer_username: socket.assigns.composer_username
-    #   })
-    # end
+    IO.inspect(params["score"], label: "PARAMSSSAVE")
+    if socket.assigns.composer_id do
+      Pipesine.Sound.create_composition(%{
+        score: socket.assigns.score,
+        composer_id: socket.assigns.composer_id,
+        composer_username: socket.assigns.composer_username
+      })
+    end
     {:noreply, socket}
   end
 
