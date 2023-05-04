@@ -10,9 +10,16 @@ defmodule Pipesine.Example do
     """
 
     def piping_test do
-        {:ok, binary} = File.read!("my_code")
-        :erlang.binary_to_term(binary)
-        |> String.contains?("435 hz vibrations")
+        test_it =
+            {:ok, binary} = File.read!("my_code")
+            :erlang.binary_to_term(binary)
+            |> String.contains?("16/15 vibes")
+
+        if test_it do
+          File.rename!("my_score")
+        else
+            IO.puts("type more closely")
+        end
     end
 end
 

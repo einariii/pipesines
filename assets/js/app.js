@@ -83,10 +83,9 @@ let Hooks = {
         const synth = new Tone.PolySynth();
         const synth2 = this.getSynth(params.instrument2);
         const synth3 = this.getSynth(params.instrument3);
-        const vibrato = new Tone.Vibrato(params.vibratoFrequency, params.vibratoDepth);
+        const vibrato = new Tone.Vibrato(params.fundamental, params.vibratoDepth);
         // const chebyshev = new Tone.Chebyshev(params.chebyshev); // range 1-100
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
-        // const filter = new Tone.Filter(params.filterFrequency, params.filterType, params.filterRolloff); // rolloff -12/-24/-48/-96 types "lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
         const panner = new Tone.Panner(params.panner); // -1 to 1
         // const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const phaser = new Tone.Phaser({frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note5})
@@ -98,7 +97,7 @@ let Hooks = {
         Tone.Transport.swing = params.swing;
         Tone.Transport.timeSignature = params.timeSignature;
         Tone.Context.lookAhead = 0;
-        var filter = new Tone.Filter(params.filterFrequency, "lowpass");
+        var filter = new Tone.Filter(params.filterFrequency, "lowpass", -24);
         var lfo = new Tone.LFO(params.timeSignature, 300, 2000); // hertz, min, max
         var lfo2 = new Tone.LFO(params.hashes, 300, 2000); // hertz, min, max
         lfo.connect(filter.frequency);
@@ -110,7 +109,7 @@ let Hooks = {
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
 
         const seq = new Tone.Pattern((time, note) => {
-          synth.triggerAttackRelease(note, 0.2, time);
+          synth.triggerAttackRelease(note, params.delayFeedback, time);
         }, params.phrase, params.pattern);
 
         const seq2 = new Tone.Sequence((time, note) => {
@@ -122,20 +121,17 @@ let Hooks = {
         }, params.phrase3, params.pattern3);
 
         synth.connect(filter);
-        filter.connect(vibrato);
         vibrato.connect(crusher);
-        // pitchShift.connect(crusher);
-        // phaser.connect(crusher);
         crusher.connect(compressor);
-        // filter.connect(compressor);
         compressor.toDestination();
-
+        
         synth2.connect(panner);
         panner.connect(limiter);
+        // filter.connect(limiter);
         limiter.connect(compressor);
         compressor.toDestination();
 
-        synth3.connect(reverb);
+        synth3.connect(vibrato);
         reverb.connect(phaser);
         phaser.connect(compressor);
         compressor.toDestination();
@@ -151,6 +147,8 @@ let Hooks = {
           seq2.start(0);
           seq3.start(0);
           Tone.Transport.start();
+          console.log(params.fundamental)
+          console.log(params.vibratoFrequency)
         }
       })
     }

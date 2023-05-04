@@ -31,23 +31,31 @@ defmodule Pipesine.Sound do
       (genservers + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) / pchars
 
     swing =
-      Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int -> int < 10 end) |> List.first() |> Kernel.*(0.1)
+      Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int ->
+        int < 10
+      end)
+      |> List.first()
+      |> Kernel.*(0.1)
 
     time_signature =
-      Enum.filter([seq_length, digits, characters, defs, atoms, pipes, specs], fn int -> int <= 11 end) |> List.first()
+      Enum.filter([seq_length, digits, characters, defs, atoms, pipes, specs], fn int ->
+        int <= 11
+      end)
+      |> List.first()
+      |> max(4)
 
     vibrato_frequency =
       if specs > 0 do
         specs * 200
       else
-        5
+        1
       end
 
     vibrato_depth =
       if vibrato_frequency > 400 do
         0.9
       else
-        0.05
+        0.01
       end
 
     instrument2 =
@@ -70,7 +78,7 @@ defmodule Pipesine.Sound do
         atoms >= 7 or atoms > 11 ->
           "MetalSynth"
 
-          atoms >= 3 or atoms > 7 ->
+        atoms >= 3 or atoms > 7 ->
           "AMSynth"
 
         atoms < 3 ->
@@ -112,7 +120,7 @@ defmodule Pipesine.Sound do
 
     panner = delay_feedback - 0.5
 
-    filter_frequency = 100 * atoms + 2 * characters
+    filter_frequency = (100 * atoms) + (2 * characters)
 
     reverb_decay = abs(delay_feedback - delay_time)
 
@@ -136,44 +144,130 @@ defmodule Pipesine.Sound do
         enums < 2 -> "down"
       end
 
-    # note1 = seq_length / digits_div * 133.238
-    # note2 = seq_length / digits_div * 301.847
-    # note3 = seq_length / digits_div * 435.084
-    # note4 = seq_length / digits_div * 582.512
-    # note5 = seq_length / digits_div * 736.931
-    # note6 = seq_length / digits_div * 884.359
-    # note7 = seq_length / digits_div * 1017.596
-    # note8 = seq_length / digits_div * 1165.024
-    # note9 = seq_length / digits_div * 1319.443
-    # note10 = seq_length / digits_div * 1466.871
+    fundamental_init = seq_length * 432 / digits_div
 
-    note1 = seq_length / digits_div * 133.238 * (27/25)
-    note2 = seq_length / digits_div * 133.238 * (25/21)
-    note3 = seq_length / digits_div * 301.847 * (9/7)
-    note4 = seq_length / digits_div * 301.847 * (7/5)
-    note5 = seq_length / digits_div * 435.084 * (75/49)
-    note6 = seq_length / digits_div * 435.084 * (5/3)
-    note7 = seq_length / digits_div * 582.512 * (9/5)
-    note8 = seq_length / digits_div * 736.931 * (49/25)
-    note9 = seq_length / digits_div * 884.359 * (15/7)
-    note10 = seq_length / digits_div * 1017.596 * (7/3)
+    fundamental =
+      cond do
+        fundamental_init > 6000 -> fundamental_init / 12
+        fundamental_init > 5000 -> fundamental_init / 10
+        fundamental_init > 4000 -> fundamental_init / 8
+        fundamental_init > 3000 -> fundamental_init / 6
+        fundamental_init > 2000 -> fundamental_init / 4
+        fundamental_init > 1000 -> fundamental_init / 2
+        true -> fundamental_init / 1
+      end
 
-    all_notes = Enum.map([note1, note2, note3, note4, note5, note6, note7, note8, note9, note10], fn each ->
-      each
-      |> Float.round(0)
-      |> trunc()
-    end)
+    # Just Intonation from https://www.sfu.ca/sonic-studio-webdav/handbook/Just_Tuning.html
+    # note1 = fundamental * (16 / 15)
+    # note2 = fundamental * (10 / 9)
+    # note3 = fundamental * (9 / 8)
+    # note4 = fundamental * (6 / 5)
+    # note5 = fundamental * (5 / 4)
+    # note6 = fundamental * (4 / 3)
+    # note7 = fundamental * (45 / 32)
+    # note8 = fundamental * (64 / 45)
+    # note9 = fundamental * (3 / 2)
+    # note10 = fundamental * (8 / 5)
+    # note11 = fundamental * (5 / 3)
+    # note12 = fundamental * (7 / 4)
 
-    phrase =
-      Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
+    # Bohlen-Pierce from https://en.xen.wiki/w/Intervals_of_BP
+    # note1 = fundamental * (27/25)
+    # note2 = fundamental * (25/21)
+    # note3 = fundamental * (9/7)
+    # note4 = fundamental * (7/5)
+    # note5 = fundamental * (75/49)
+    # note6 = fundamental * (5/3)
+    # note7 = fundamental * (9/5)
+    # note8 = fundamental * (49/25)
+    # note9 = fundamental * (15/7)
+    # note10 = fundamental * (7/3)
+    # note11 = fundamental * (63/25)
+    # note12 = fundamental * (25/9)
 
-    phrase2 =
-      Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end)
+    # 7-limit tonality diamond from https://en.xen.wiki/w/Diamond7
+    note1 = fundamental * (8 / 7)
+    note2 = fundamental * (7 / 6)
+    note3 = fundamental * (6 / 5)
+    note4 = fundamental * (5 / 4)
+    note5 = fundamental * (4 / 3)
+    note6 = fundamental * (7 / 5)
+    note7 = fundamental * (10 / 7)
+    note8 = fundamental * (3 / 2)
+    note9 = fundamental * (8 / 5)
+    note10 = fundamental * (5 / 3)
+    note11 = fundamental * (12 / 7)
+    note12 = fundamental * (7 / 4)
 
-    phrase3 =
-      Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end)
+    # 22-edo from https://en.xen.wiki/w/22edo
+    # note1 = fundamental * (36 / 35)
+    # note2 = fundamental * (12 / 11)
+    # note3 = fundamental * (20 / 17)
+    # note4 = fundamental * (96 / 77)
+    # note5 = fundamental * (14 / 11)
+    # note6 = fundamental * (24 / 17)
+    # note7 = fundamental * (14 / 9)
+    # note8 = fundamental * (28 / 17)
+    # note9 = fundamental * (17 / 10)
+    # note10 = fundamental * (9 / 5)
+    # note11 = fundamental * (28 / 15)
+    # note12 = fundamental * (31 / 16)
 
-    tempo = min(abs(note5 - note4) / 3, 400)
+    # Pentatonic
+    # note1 = fundamental * (9 / 8)
+    # note2 = fundamental * (5 / 4)
+    # note3 = fundamental * (3 / 2)
+    # note4 = fundamental * (7 / 4)
+    # note5 = fundamental * (18 / 8)
+    # note6 = fundamental * (10 / 4)
+    # note7 = fundamental * (6 / 2)
+    # note8 = fundamental * (14 / 4)
+    # note9 = fundamental * (27 / 8)
+    # note10 = fundamental * (15 / 4)
+    # note11 = fundamental * (9 / 2)
+    # note12 = fundamental * (21 / 4)
+
+    all_notes =
+      Enum.map(
+        [
+          fundamental,
+          fundamental / 2,
+          fundamental / 4,
+          fundamental / 8,
+          note1,
+          note2,
+          note3,
+          note4,
+          note5,
+          note6,
+          note7,
+          note8,
+          note9,
+          note10,
+          note11,
+          note12,
+          fundamental * 2,
+          fundamental * 4
+        ],
+        fn each ->
+          each
+          |> Float.round(0)
+          |> trunc()
+        end
+      )
+
+    :rand.seed(:exsss, {4, 3, 5})
+
+    phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> Enum.shuffle()
+    # Enum.shuffle(all_notes)
+    # |> Enum.filter(fn note -> rem(note, 2) == 0 end)
+    # |> Enum.chunk_every(3, 2)
+
+    phrase2 = Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end)
+
+    phrase3 = Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end)
+
+    tempo = min(abs(fundamental) / 3, 400)
 
     IO.inspect(filter_frequency, label: "FILTER FREQ")
     IO.inspect(panner, label: "PANNER")
@@ -188,6 +282,12 @@ defmodule Pipesine.Sound do
     IO.inspect(enums, label: "ENUMS")
     IO.inspect(score, label: "SCOORA")
     IO.inspect(pchars, label: "PCHARS")
+    IO.inspect(fundamental, label: "fundamental")
+    IO.inspect(reverb_decay, label: "RVBDECAY")
+    IO.inspect(reverb_wet, label: "RVBWET")
+    IO.inspect(delay_time, label: "DLYTIME")
+    IO.inspect(vibrato_frequency, label: "VIBFREQ")
+    IO.inspect(vibrato_depth, label: "VIBDEP")
 
     %{
       note1: note1,
@@ -200,15 +300,18 @@ defmodule Pipesine.Sound do
       note8: note8,
       note9: note9,
       note10: note10,
+      note11: note11,
+      note12: note12,
       all_notes: all_notes,
       atoms: atoms,
       conds: conds,
       crusher: crusher,
       chebyshev: chebyshev,
       defstructs: defstructs,
-      # delayTime: delay_time,
-      # delayFeedback: delay_feedback,
+      delayTime: delay_time,
+      delayFeedback: delay_feedback,
       filterFrequency: filter_frequency,
+      fundamental: fundamental,
       hashes: hashes,
       instrument2: instrument2,
       instrument3: instrument3,
