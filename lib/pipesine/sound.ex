@@ -121,7 +121,7 @@ defmodule Pipesine.Sound do
 
     panner = delay_feedback - 0.5
 
-    filter_frequency = (100 * atoms) + (2 * characters)
+    filter_frequency = 100 * atoms + 2 * characters
 
     reverb_decay = abs(delay_feedback - delay_time)
 
@@ -158,6 +158,20 @@ defmodule Pipesine.Sound do
         true -> fundamental_init / 1
       end
 
+    # minor scale from https://en.xen.wiki/w/12edo
+    # note1 = fundamental * (8 / 7)
+    # note2 = fundamental * (8 / 7)
+    # note3 = fundamental * (7 / 6)
+    # note4 = fundamental * (7 / 6)
+    # note5 = fundamental * (4 / 3)
+    # note6 = fundamental * (4 / 3)
+    # note7 = fundamental * (3 / 2)
+    # note8 = fundamental * (3 / 2)
+    # note9 = fundamental * (5 / 3)
+    # note10 = fundamental * (5 / 3)
+    # note11 = fundamental * (15 / 8)
+    # note12 = fundamental * (15 / 8)
+
     # Just Intonation from https://www.sfu.ca/sonic-studio-webdav/handbook/Just_Tuning.html
     # note1 = fundamental * (16 / 15)
     # note2 = fundamental * (10 / 9)
@@ -173,18 +187,18 @@ defmodule Pipesine.Sound do
     # note12 = fundamental * (7 / 4)
 
     # Bohlen-Pierce from https://en.xen.wiki/w/Intervals_of_BP
-    # note1 = fundamental * (27/25)
-    # note2 = fundamental * (25/21)
-    # note3 = fundamental * (9/7)
-    # note4 = fundamental * (7/5)
-    # note5 = fundamental * (75/49)
-    # note6 = fundamental * (5/3)
-    # note7 = fundamental * (9/5)
-    # note8 = fundamental * (49/25)
-    # note9 = fundamental * (15/7)
-    # note10 = fundamental * (7/3)
-    # note11 = fundamental * (63/25)
-    # note12 = fundamental * (25/9)
+    note1 = fundamental * (27/25)
+    note2 = fundamental * (25/21)
+    note3 = fundamental * (9/7)
+    note4 = fundamental * (7/5)
+    note5 = fundamental * (75/49)
+    note6 = fundamental * (5/3)
+    note7 = fundamental * (9/5)
+    note8 = fundamental * (49/25)
+    note9 = fundamental * (15/7)
+    note10 = fundamental * (7/3)
+    note11 = fundamental * (63/25)
+    note12 = fundamental * (25/9)
 
     # 7-limit tonality diamond from https://en.xen.wiki/w/Diamond7
     # note1 = fundamental * (8 / 7)
@@ -215,18 +229,18 @@ defmodule Pipesine.Sound do
     # note12 = fundamental * (31 / 16)
 
     # Pentatonic
-    note1 = fundamental * (9 / 8)
-    note2 = fundamental * (5 / 4)
-    note3 = fundamental * (3 / 2)
-    note4 = fundamental * (7 / 4)
-    note5 = fundamental * (18 / 8)
-    note6 = fundamental * (10 / 4)
-    note7 = fundamental * (6 / 2)
-    note8 = fundamental * (14 / 4)
-    note9 = fundamental * (27 / 8)
-    note10 = fundamental * (15 / 4)
-    note11 = fundamental * (9 / 2)
-    note12 = fundamental * (21 / 4)
+    # note1 = fundamental * (9 / 8)
+    # note2 = fundamental * (5 / 4)
+    # note3 = fundamental * (3 / 2)
+    # note4 = fundamental * (7 / 4)
+    # note5 = fundamental * (18 / 8)
+    # note6 = fundamental * (10 / 4)
+    # note7 = fundamental * (6 / 2)
+    # note8 = fundamental * (14 / 4)
+    # note9 = fundamental * (27 / 8)
+    # note10 = fundamental * (15 / 4)
+    # note11 = fundamental * (9 / 2)
+    # note12 = fundamental * (21 / 4)
 
     all_notes =
       Enum.map(
@@ -260,9 +274,10 @@ defmodule Pipesine.Sound do
     :rand.seed(:exsss, {4, 3, 5})
 
     phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> Enum.shuffle()
-      # Enum.shuffle(all_notes)
-      # |> Enum.filter(fn note -> rem(note, 2) == 0 end)
-      # |> Enum.chunk_every(3, 2)
+    # phrase =
+    #   Enum.shuffle(all_notes)
+    #   |> Enum.filter(fn note -> rem(note, 2) == 0 end)
+    #   |> Enum.chunk_every(3, 2)
 
     phrase2 = Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end)
 

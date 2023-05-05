@@ -120,18 +120,18 @@ let Hooks = {
           synth3.triggerAttackRelease(note, params.reverbDecay, time);
         }, params.phrase3, params.pattern3);
 
-        synth.connect(filter);
-        filter.connect(crusher);
+        synth.connect(panner);
         // vibrato.connect(crusher);
+        panner.connect(crusher);
         crusher.connect(compressor);
         compressor.toDestination();
         
-        synth2.connect(panner);
-        panner.connect(limiter);
+        synth2.connect(filter);
         // delay.connect(limiter);
+        filter.connect(limiter);
         limiter.connect(compressor);
         compressor.toDestination();
-
+        
         synth3.connect(reverb);
         reverb.connect(phaser);
         phaser.connect(compressor);

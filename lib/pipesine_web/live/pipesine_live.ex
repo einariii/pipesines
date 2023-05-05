@@ -10,15 +10,16 @@ defmodule PipesineWeb.PipesineLive do
     # composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username
     # {:ok, assign(socket, score: params["score"], composer_id: composer_id, composer_username: composer_username)}
 
-    composer_id = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).id |> IO.inspect(label: "saD?JFHASDJFHSADFJHFDSA")
-    composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username |> IO.inspect(label: "MMMMMMMMMMMMMMMMMM")
+    composer_id = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).id |> IO.inspect(label: "COMPOSERID")
+    composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username |> IO.inspect(label: "USERNA<ME")
     score = params["score"]
+    {:ok, assign(socket, score: score, composer_id: composer_id, composer_username: composer_username)}
 
-    socket
-    |> assign(score: score)
-    |> assign(composer_id: composer_id)
-    |> assign(composer_username: composer_username)
-    |> IO.inspect(label: "SOKCKCKCETTTT")
+    # socket
+    # |> assign(score: score)
+    # |> assign(composer_id: composer_id)
+    # |> assign(composer_username: composer_username)
+    # |> IO.inspect(label: "SOKCKCKCETTTT")
 
     {:ok, socket}
   end
