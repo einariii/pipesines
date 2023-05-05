@@ -10,10 +10,21 @@ defmodule PipesineWeb.PipesineLive do
     # composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username
     # {:ok, assign(socket, score: params["score"], composer_id: composer_id, composer_username: composer_username)}
 
-    composer_id = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).id |> IO.inspect(label: "COMPOSERID")
-    composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username |> IO.inspect(label: "USERNA<ME")
+    composer_id =
+      if session["composer_token"],
+        do:
+          get_composer_by_session_token(session["composer_token"]).id
+          |> IO.inspect(label: "COMPOSERID")
+
+    composer_username =
+      if session["composer_token"],
+        do:
+          get_composer_by_session_token(session["composer_token"]).username
+          |> IO.inspect(label: "USERNA<ME")
+
     score = params["score"]
-    {:ok, assign(socket, score: score, composer_id: composer_id, composer_username: composer_username)}
+
+    # {:ok, assign(socket, score: score, composer_id: composer_id, composer_username: composer_username)}
 
     # socket
     # |> assign(score: score)
@@ -21,27 +32,37 @@ defmodule PipesineWeb.PipesineLive do
     # |> assign(composer_username: composer_username)
     # |> IO.inspect(label: "SOKCKCKCETTTT")
 
-    {:ok, socket}
+    {
+      :ok,
+      (socket
+      |> assign(score: score)
+      |> assign(composer_id: composer_id)
+      |> assign(composer_username: composer_username)
+      )
+    }
   end
 
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
     ~H"""
-      <div id="container" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
-      <button phx-click="save">SAVE COMPOSITION</button>
-      """
-    end
-
-    # <span><%= live_patch "New Composition", to: Routes.composition_index_path(@socket, :new) %></span>
-  # <%= @score %>
-
+    <div>
+    <div id="container" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
+    <button phx-click="save">SAVE COMPOSITION</button>
+    </div>
+    """
+  end
+  
   def handle_event("perform", params, socket) do
-    IO.inspect(params, label: "PARAMS")
-    {:noreply, push_event(socket, "update_score", Pipesine.Sound.compose_composition(params["score"]))}
+    score = Pipesine.Sound.compose_composition(params["score"])
+
+    {:noreply,
+    socket
+    |> assign(score: params["score"])
+    |> push_event("update_score", score)
+  }
   end
 
   def handle_event("save", params, socket) do
-    IO.inspect(params["score"], label: "PARAMSSSAVE")
     if socket.assigns.composer_id do
       Pipesine.Sound.create_composition(%{
         score: socket.assigns.score,
