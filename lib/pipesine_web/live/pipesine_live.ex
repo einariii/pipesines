@@ -3,12 +3,24 @@ defmodule PipesineWeb.PipesineLive do
   import Pipesine.Composers
 
   def mount(params, session, socket) do
+    # IO.inspect(params["score"], label: "PARAMSSINITAL")
     # {:ok, assign(socket, :connected, connected?(socket))}
     # {:ok, assign(socket, display_modal: false, connected: connected?(socket))}
-    IO.inspect(params["score"], label: "PARAMSSINITAL")
-    composer_id = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).id
-    composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username
-    {:ok, assign(socket, score: params["score"], composer_id: composer_id, composer_username: composer_username)}
+    # composer_id = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).id
+    # composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username
+    # {:ok, assign(socket, score: params["score"], composer_id: composer_id, composer_username: composer_username)}
+
+    composer_id = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).id |> IO.inspect(label: "saD?JFHASDJFHSADFJHFDSA")
+    composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username |> IO.inspect(label: "MMMMMMMMMMMMMMMMMM")
+    score = params["score"]
+
+    socket
+    |> assign(score: score)
+    |> assign(composer_id: composer_id)
+    |> assign(composer_username: composer_username)
+    |> IO.inspect(label: "SOKCKCKCETTTT")
+
+    {:ok, socket}
   end
 
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
@@ -35,6 +47,8 @@ defmodule PipesineWeb.PipesineLive do
         composer_id: socket.assigns.composer_id,
         composer_username: socket.assigns.composer_username
       })
+      else
+        IO.inspect("FECK WWHY DAMGIT")
     end
     {:noreply, socket}
   end

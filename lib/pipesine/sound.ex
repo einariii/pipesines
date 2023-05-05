@@ -159,18 +159,18 @@ defmodule Pipesine.Sound do
       end
 
     # Just Intonation from https://www.sfu.ca/sonic-studio-webdav/handbook/Just_Tuning.html
-    note1 = fundamental * (16 / 15)
-    note2 = fundamental * (10 / 9)
-    note3 = fundamental * (9 / 8)
-    note4 = fundamental * (6 / 5)
-    note5 = fundamental * (5 / 4)
-    note6 = fundamental * (4 / 3)
-    note7 = fundamental * (45 / 32)
-    note8 = fundamental * (64 / 45)
-    note9 = fundamental * (3 / 2)
-    note10 = fundamental * (8 / 5)
-    note11 = fundamental * (5 / 3)
-    note12 = fundamental * (7 / 4)
+    # note1 = fundamental * (16 / 15)
+    # note2 = fundamental * (10 / 9)
+    # note3 = fundamental * (9 / 8)
+    # note4 = fundamental * (6 / 5)
+    # note5 = fundamental * (5 / 4)
+    # note6 = fundamental * (4 / 3)
+    # note7 = fundamental * (45 / 32)
+    # note8 = fundamental * (64 / 45)
+    # note9 = fundamental * (3 / 2)
+    # note10 = fundamental * (8 / 5)
+    # note11 = fundamental * (5 / 3)
+    # note12 = fundamental * (7 / 4)
 
     # Bohlen-Pierce from https://en.xen.wiki/w/Intervals_of_BP
     # note1 = fundamental * (27/25)
@@ -215,18 +215,18 @@ defmodule Pipesine.Sound do
     # note12 = fundamental * (31 / 16)
 
     # Pentatonic
-    # note1 = fundamental * (9 / 8)
-    # note2 = fundamental * (5 / 4)
-    # note3 = fundamental * (3 / 2)
-    # note4 = fundamental * (7 / 4)
-    # note5 = fundamental * (18 / 8)
-    # note6 = fundamental * (10 / 4)
-    # note7 = fundamental * (6 / 2)
-    # note8 = fundamental * (14 / 4)
-    # note9 = fundamental * (27 / 8)
-    # note10 = fundamental * (15 / 4)
-    # note11 = fundamental * (9 / 2)
-    # note12 = fundamental * (21 / 4)
+    note1 = fundamental * (9 / 8)
+    note2 = fundamental * (5 / 4)
+    note3 = fundamental * (3 / 2)
+    note4 = fundamental * (7 / 4)
+    note5 = fundamental * (18 / 8)
+    note6 = fundamental * (10 / 4)
+    note7 = fundamental * (6 / 2)
+    note8 = fundamental * (14 / 4)
+    note9 = fundamental * (27 / 8)
+    note10 = fundamental * (15 / 4)
+    note11 = fundamental * (9 / 2)
+    note12 = fundamental * (21 / 4)
 
     all_notes =
       Enum.map(

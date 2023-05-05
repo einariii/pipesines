@@ -4,6 +4,7 @@ defmodule Pipesine.Sound.Composition do
 
   schema "compositions" do
     field :score, :string
+    field :title, :string
     belongs_to(:composer, Pipesine.Composers.Composer)
 
     timestamps()
@@ -12,7 +13,7 @@ defmodule Pipesine.Sound.Composition do
   @doc false
   def changeset(composition, attrs) do
     composition
-    |> cast(attrs, [:score, :composer_id])
+    |> cast(attrs, [:score, :title, :composer_id])
     |> validate_required([:score, :composer_id])
     |> foreign_key_constraint(:composer_id)
   end
