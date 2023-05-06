@@ -15,7 +15,7 @@ defmodule Pipesine.Sound do
     pipes = Regex.scan(~r/(?:\|>)/, score) |> Enum.count()
     defs = Regex.scan(~r/(?:def)/, score) |> Enum.count()
     specs = Regex.scan(~r/@/, score) |> Enum.count()
-    atoms = Regex.scan(~r/:/, score) |> Enum.count()
+    atoms = Regex.scan(~r/:\w/, score) |> Enum.count()
     parens = Regex.scan(~r/\(/, score) |> Enum.count()
     enums = Regex.scan(~r/Enum/, score) |> Enum.count()
     hashes = Regex.scan(~r/(#)/, score) |> Enum.count() |> Kernel.*(5)
@@ -44,30 +44,34 @@ defmodule Pipesine.Sound do
       |> List.first()
       |> max(4)
 
-    vibrato_frequency =
-      if specs > 0 do
-        specs * 200
-      else
-        1
-      end
+    instrument1 =
+      cond do
+        hashes >= 25 ->
+          "PluckSynth"
 
-    vibrato_depth =
-      if vibrato_frequency > 400 do
-        0.9
-      else
-        0.01
+        hashes == 20 ->
+          "FMSynth"
+
+        hashes == 15 ->
+          "MembraneSynth"
+
+        hashes < 15 ->
+          "PolySynth"
       end
 
     instrument2 =
       cond do
-        defs >= 3 ->
+        defs >= 6 ->
           "FMSynth"
 
-        defs == 2 ->
+        defs >= 4 ->
           "AMSynth"
 
-        defs < 2 ->
+        defs >= 2 ->
           "PluckSynth"
+
+        defs < 2 ->
+          "PolySynth"
       end
 
     instrument3 =
@@ -75,14 +79,17 @@ defmodule Pipesine.Sound do
         atoms >= 11 ->
           "MembraneSynth"
 
-        atoms >= 7 or atoms > 11 ->
+        atoms >= 7 ->
           "MetalSynth"
 
-        atoms >= 3 or atoms > 7 ->
+        atoms >= 3 ->
           "AMSynth"
 
-        atoms < 3 ->
+        atoms >= 2 ->
           "PluckSynth"
+
+        atoms < 2 ->
+          "PolySynth"
       end
 
     digits_div =
@@ -99,14 +106,14 @@ defmodule Pipesine.Sound do
         true -> 16
       end
 
-    chebyshev = (pipes * pchars + bits) |> rem(25) |> abs()
+    chebyshev = (pipes * pchars + bits) |> rem(15) |> abs()
 
     delay_time =
       cond do
         pipes >= 100 -> pipes * 0.001
         pipes >= 10 -> pipes * 0.01
         pipes >= 1 -> pipes * 0.1
-        true -> 0.25
+        true -> 0.0
       end
 
     # does this need its own defp? so that it can reset first?
@@ -117,15 +124,13 @@ defmodule Pipesine.Sound do
         chebyshev >= 1 -> chebyshev * 0.1
         true -> 0.05
       end
-      |> min(0.25)
+      |> min(0.75)
 
     panner = delay_feedback - 0.5
 
-    filter_frequency = 100 * atoms + 2 * characters
+    reverb_decay = abs(delay_feedback - delay_time) |> max(0.01)
 
-    reverb_decay = abs(delay_feedback - delay_time)
-
-    reverb_wet = abs(delay_feedback * delay_time)
+    reverb_wet = abs(delay_feedback * delay_time) |> max(0.01)
 
     pattern =
       cond do
@@ -173,32 +178,32 @@ defmodule Pipesine.Sound do
     # note12 = fundamental * (15 / 8)
 
     # Just Intonation from https://www.sfu.ca/sonic-studio-webdav/handbook/Just_Tuning.html
-    # note1 = fundamental * (16 / 15)
-    # note2 = fundamental * (10 / 9)
-    # note3 = fundamental * (9 / 8)
-    # note4 = fundamental * (6 / 5)
-    # note5 = fundamental * (5 / 4)
-    # note6 = fundamental * (4 / 3)
-    # note7 = fundamental * (45 / 32)
-    # note8 = fundamental * (64 / 45)
-    # note9 = fundamental * (3 / 2)
-    # note10 = fundamental * (8 / 5)
-    # note11 = fundamental * (5 / 3)
-    # note12 = fundamental * (7 / 4)
+    note1 = fundamental * (16 / 15)
+    note2 = fundamental * (10 / 9)
+    note3 = fundamental * (9 / 8)
+    note4 = fundamental * (6 / 5)
+    note5 = fundamental * (5 / 4)
+    note6 = fundamental * (4 / 3)
+    note7 = fundamental * (45 / 32)
+    note8 = fundamental * (64 / 45)
+    note9 = fundamental * (3 / 2)
+    note10 = fundamental * (8 / 5)
+    note11 = fundamental * (5 / 3)
+    note12 = fundamental * (7 / 4)
 
     # Bohlen-Pierce from https://en.xen.wiki/w/Intervals_of_BP
-    note1 = fundamental * (27/25)
-    note2 = fundamental * (25/21)
-    note3 = fundamental * (9/7)
-    note4 = fundamental * (7/5)
-    note5 = fundamental * (75/49)
-    note6 = fundamental * (5/3)
-    note7 = fundamental * (9/5)
-    note8 = fundamental * (49/25)
-    note9 = fundamental * (15/7)
-    note10 = fundamental * (7/3)
-    note11 = fundamental * (63/25)
-    note12 = fundamental * (25/9)
+    # note1 = fundamental * (27/25)
+    # note2 = fundamental * (25/21)
+    # note3 = fundamental * (9/7)
+    # note4 = fundamental * (7/5)
+    # note5 = fundamental * (75/49)
+    # note6 = fundamental * (5/3)
+    # note7 = fundamental * (9/5)
+    # note8 = fundamental * (49/25)
+    # note9 = fundamental * (15/7)
+    # note10 = fundamental * (7/3)
+    # note11 = fundamental * (63/25)
+    # note12 = fundamental * (25/9)
 
     # 7-limit tonality diamond from https://en.xen.wiki/w/Diamond7
     # note1 = fundamental * (8 / 7)
@@ -273,38 +278,37 @@ defmodule Pipesine.Sound do
 
     :rand.seed(:exsss, {4, 3, 5})
 
-    phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> Enum.shuffle()
-    # phrase =
-    #   Enum.shuffle(all_notes)
-    #   |> Enum.filter(fn note -> rem(note, 2) == 0 end)
-    #   |> Enum.chunk_every(3, 2)
+    # phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> Enum.shuffle()
+    phrase =
+      Enum.shuffle(all_notes)
+      |> Enum.filter(fn note -> rem(note, 2) == 0 end)
+      |> Enum.chunk_every(3, 2)
 
-    phrase2 = Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end)
+    phrase2 = Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end) |> Enum.shuffle()
 
-    phrase3 = Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end)
+    phrase3 = Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
 
     tempo = min(abs(fundamental) / 3, 400)
 
-    IO.inspect(filter_frequency, label: "FILTER FREQ")
-    IO.inspect(panner, label: "PANNER")
-    IO.inspect(parens, label: "PARNES")
-    IO.inspect(all_notes, label: "ALLNOTES")
-    IO.inspect(pattern, label: "PATTERN")
-    IO.inspect(pattern3, label: "PATTERN3")
-    IO.inspect(phrase, label: "PHRS")
-    IO.inspect(phrase2, label: "PHRS2")
-    IO.inspect(phrase3, label: "PHRS3")
-    IO.inspect(atoms, label: "ATOMS")
-    IO.inspect(enums, label: "ENUMS")
-    IO.inspect(score, label: "SCOORA")
-    IO.inspect(pchars, label: "PCHARS")
-    IO.inspect(fundamental, label: "fundamental")
-    IO.inspect(reverb_decay, label: "RVBDECAY")
-    IO.inspect(reverb_wet, label: "RVBWET")
-    IO.inspect(delay_time, label: "DLYTIME")
-    IO.inspect(delay_feedback, label: "DLYFBK")
-    IO.inspect(vibrato_frequency, label: "VIBFREQ")
-    IO.inspect(vibrato_depth, label: "VIBDEP")
+    vibrato_depth =
+      if fundamental > 435 do
+        0.99
+      else
+        0.0
+      end
+
+    vibrato_frequency =
+      if fundamental > 770 do
+        770
+      else
+        0.99
+      end
+
+    # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
+
+    filter_frequency = note4
+    filter2_frequency = note9
+    filter3_frequency = note4
 
     %{
       note1: note1,
@@ -328,8 +332,11 @@ defmodule Pipesine.Sound do
       delayTime: delay_time,
       delayFeedback: delay_feedback,
       filterFrequency: filter_frequency,
+      filter2Frequency: filter2_frequency,
+      filter3Frequency: filter3_frequency,
       fundamental: fundamental,
       hashes: hashes,
+      instrument1: instrument1,
       instrument2: instrument2,
       instrument3: instrument3,
       kernels: kernels,
@@ -347,7 +354,7 @@ defmodule Pipesine.Sound do
       timeSignature: time_signature,
       vibratoFrequency: vibrato_frequency,
       vibratoDepth: vibrato_depth
-    }
+    } |> IO.inspect(label: "DATA 4 JS")
   end
 
   @doc """
@@ -361,6 +368,7 @@ defmodule Pipesine.Sound do
   """
   def list_compositions do
     Repo.all(Composition)
+    |> Repo.preload([:composers])
   end
 
   @doc """

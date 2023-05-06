@@ -38,6 +38,8 @@
 .menuright {
   padding-left: 1375px;
   font-size: 120%;
+  white-space: normal;
+  flex: initial;
 }
 
 .alert {

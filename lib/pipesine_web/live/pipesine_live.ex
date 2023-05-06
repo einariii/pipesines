@@ -3,13 +3,6 @@ defmodule PipesineWeb.PipesineLive do
   import Pipesine.Composers
 
   def mount(params, session, socket) do
-    # IO.inspect(params["score"], label: "PARAMSSINITAL")
-    # {:ok, assign(socket, :connected, connected?(socket))}
-    # {:ok, assign(socket, display_modal: false, connected: connected?(socket))}
-    # composer_id = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).id
-    # composer_username = if session["composer_token"], do: get_composer_by_session_token(session["composer_token"]).username
-    # {:ok, assign(socket, score: params["score"], composer_id: composer_id, composer_username: composer_username)}
-
     composer_id =
       if session["composer_token"],
         do:
@@ -23,14 +16,6 @@ defmodule PipesineWeb.PipesineLive do
           |> IO.inspect(label: "USERNA<ME")
 
     score = params["score"]
-
-    # {:ok, assign(socket, score: score, composer_id: composer_id, composer_username: composer_username)}
-
-    # socket
-    # |> assign(score: score)
-    # |> assign(composer_id: composer_id)
-    # |> assign(composer_username: composer_username)
-    # |> IO.inspect(label: "SOKCKCKCETTTT")
 
     {
       :ok,
@@ -51,7 +36,7 @@ defmodule PipesineWeb.PipesineLive do
     </div>
     """
   end
-  
+
   def handle_event("perform", params, socket) do
     score = Pipesine.Sound.compose_composition(params["score"])
 
@@ -70,7 +55,7 @@ defmodule PipesineWeb.PipesineLive do
         composer_username: socket.assigns.composer_username
       })
       else
-        IO.inspect("FECK WWHY DAMGIT")
+        # put_flash
     end
     {:noreply, socket}
   end

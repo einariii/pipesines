@@ -6,7 +6,14 @@ defmodule PipesineWeb.CompositionLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :compositions, list_compositions())}
+    socket
+    |> assign(:compositions)
+    |> assign(:composers)
+    |> assign(list_compositions())
+
+    {:ok, socket}
+    # {:ok, assign(socket, :compositions, list_compositions())}
+
   end
 
   @impl true
