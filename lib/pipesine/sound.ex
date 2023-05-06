@@ -130,7 +130,7 @@ defmodule Pipesine.Sound do
 
     reverb_decay = abs(delay_feedback - delay_time) |> max(0.01)
 
-    reverb_wet = abs(delay_feedback * delay_time) |> max(0.01)
+    reverb_wet = abs(delay_feedback * delay_time) |> max(0.01) |> min(0.75)
 
     pattern =
       cond do
@@ -178,18 +178,18 @@ defmodule Pipesine.Sound do
     # note12 = fundamental * (15 / 8)
 
     # Just Intonation from https://www.sfu.ca/sonic-studio-webdav/handbook/Just_Tuning.html
-    note1 = fundamental * (16 / 15)
-    note2 = fundamental * (10 / 9)
-    note3 = fundamental * (9 / 8)
-    note4 = fundamental * (6 / 5)
-    note5 = fundamental * (5 / 4)
-    note6 = fundamental * (4 / 3)
-    note7 = fundamental * (45 / 32)
-    note8 = fundamental * (64 / 45)
-    note9 = fundamental * (3 / 2)
-    note10 = fundamental * (8 / 5)
-    note11 = fundamental * (5 / 3)
-    note12 = fundamental * (7 / 4)
+    # note1 = fundamental * (16 / 15)
+    # note2 = fundamental * (10 / 9)
+    # note3 = fundamental * (9 / 8)
+    # note4 = fundamental * (6 / 5)
+    # note5 = fundamental * (5 / 4)
+    # note6 = fundamental * (4 / 3)
+    # note7 = fundamental * (45 / 32)
+    # note8 = fundamental * (64 / 45)
+    # note9 = fundamental * (3 / 2)
+    # note10 = fundamental * (8 / 5)
+    # note11 = fundamental * (5 / 3)
+    # note12 = fundamental * (7 / 4)
 
     # Bohlen-Pierce from https://en.xen.wiki/w/Intervals_of_BP
     # note1 = fundamental * (27/25)
@@ -206,18 +206,18 @@ defmodule Pipesine.Sound do
     # note12 = fundamental * (25/9)
 
     # 7-limit tonality diamond from https://en.xen.wiki/w/Diamond7
-    # note1 = fundamental * (8 / 7)
-    # note2 = fundamental * (7 / 6)
-    # note3 = fundamental * (6 / 5)
-    # note4 = fundamental * (5 / 4)
-    # note5 = fundamental * (4 / 3)
-    # note6 = fundamental * (7 / 5)
-    # note7 = fundamental * (10 / 7)
-    # note8 = fundamental * (3 / 2)
-    # note9 = fundamental * (8 / 5)
-    # note10 = fundamental * (5 / 3)
-    # note11 = fundamental * (12 / 7)
-    # note12 = fundamental * (7 / 4)
+    note1 = fundamental * (8 / 7)
+    note2 = fundamental * (7 / 6)
+    note3 = fundamental * (6 / 5)
+    note4 = fundamental * (5 / 4)
+    note5 = fundamental * (4 / 3)
+    note6 = fundamental * (7 / 5)
+    note7 = fundamental * (10 / 7)
+    note8 = fundamental * (3 / 2)
+    note9 = fundamental * (8 / 5)
+    note10 = fundamental * (5 / 3)
+    note11 = fundamental * (12 / 7)
+    note12 = fundamental * (7 / 4)
 
     # 22-edo from https://en.xen.wiki/w/22edo
     # note1 = fundamental * (36 / 35)
@@ -250,10 +250,10 @@ defmodule Pipesine.Sound do
     all_notes =
       Enum.map(
         [
-          fundamental,
-          fundamental / 2,
-          fundamental / 4,
           fundamental / 8,
+          fundamental / 4,
+          fundamental / 2,
+          fundamental,
           note1,
           note2,
           note3,
@@ -278,17 +278,17 @@ defmodule Pipesine.Sound do
 
     :rand.seed(:exsss, {4, 3, 5})
 
-    # phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> Enum.shuffle()
-    phrase =
-      Enum.shuffle(all_notes)
-      |> Enum.filter(fn note -> rem(note, 2) == 0 end)
-      |> Enum.chunk_every(3, 2)
+    phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> Enum.shuffle()
+    # phrase =
+    #   Enum.shuffle(all_notes)
+    #   |> Enum.filter(fn note -> rem(note, 2) == 0 end)
+    #   |> Enum.chunk_every(3, 2)
 
     phrase2 = Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end) |> Enum.shuffle()
 
     phrase3 = Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
 
-    tempo = min(abs(fundamental) / 3, 400)
+    tempo = min(abs(fundamental) / 13, 400)
 
     vibrato_depth =
       if fundamental > 435 do
@@ -307,8 +307,8 @@ defmodule Pipesine.Sound do
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 
     filter_frequency = note4
-    filter2_frequency = note9
-    filter3_frequency = note4
+    filter2_frequency = note11
+    filter3_frequency = note9 * 2
 
     %{
       note1: note1,
