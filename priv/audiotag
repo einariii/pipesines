@@ -4,6 +4,9 @@ defmodule Pipesine.Example do
     @moduledoc """
         software for writing music in pure Elixir
         alt + P to stop/perform
+        if desired, set scale on the first line.
+            options: 22_edo; bohlen_pierce; sa_murcchana; tonality_diamond; just_intonation; pentatonic
+            default: superpyth
         sound is stereo. use headphones
         may contain high frequencies. exercise caution
         spend time exploring small changes
@@ -22,6 +25,8 @@ defmodule Pipesine.Example do
         end
     end
 end
+
+
 
 
 

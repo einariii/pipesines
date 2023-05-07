@@ -92,7 +92,7 @@ let Hooks = {
         var filter = new Tone.Filter(params.filterFrequency, "lowpass", -24);
         var filter2 = new Tone.Filter(params.filter2Frequency, "lowpass", -48);
         var filter3 = new Tone.Filter(params.filter3Frequency, "notch", -48);
-        var lfo = new Tone.LFO(params.timeSignature, 300, 1800); // hertz, min, max
+        var lfo = new Tone.LFO(params.timeSignature, 500, 600); // hertz, min, max
         var lfo2 = new Tone.LFO(params.hashes, 200, 1200); // hertz, min, max
         lfo.connect(filter.frequency);
         lfo.connect(reverb.wet);

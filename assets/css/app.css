@@ -12,6 +12,11 @@
   src: url('../fonts/VT323-Regular.ttf');
 }
 
+@font-face {
+  font-family: Pacifico;
+  src: url('../fonts/Pacifico-Regular.ttf');
+}
+
 .sharetechmono {
   font-family: 'Share Tech Mono', monospace;
   color: white;
@@ -19,6 +24,10 @@
 
 .alata {
   font-family: 'Alata';
+}
+
+.pacifico {
+  font-family: 'Pacifico';
 }
 
 .vt323 {
@@ -78,8 +87,9 @@
 
 .background {
   background-color: #CB9CF2;
-  background: url("/images/pipesine_logo_with_bg_2.png"), #CB9CF2;
-  background-blend-mode: soft-light;
+  background: url("/images/pipesine_logo_main.png"), url("/images/dotgrid-23G12-703496.svg"), #CB9CF2;
+  background-blend-mode: luminosity;
+  background-size: 103%;
 }
 
 /* .menu {
