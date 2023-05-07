@@ -27,6 +27,10 @@ defmodule Pipesine.Sound do
     capts = Regex.scan(~r/(?:&\()/, score) |> Enum.count()
     pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count() |> max(1)
 
+    scale =
+      Regex.run(~r/bohlen_pierce|tonality-diamond|pentatonic|sa_murcchana|just_intonation|22_edo|\w/, score)
+      |> List.first()
+
     touche =
       (genservers + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) / pchars
 
@@ -163,118 +167,213 @@ defmodule Pipesine.Sound do
         true -> fundamental_init / 1
       end
 
-    # minor scale from https://en.xen.wiki/w/12edo
-    # note1 = fundamental * (8 / 7)
-    # note2 = fundamental * (8 / 7)
-    # note3 = fundamental * (7 / 6)
-    # note4 = fundamental * (7 / 6)
-    # note5 = fundamental * (4 / 3)
-    # note6 = fundamental * (4 / 3)
-    # note7 = fundamental * (3 / 2)
-    # note8 = fundamental * (3 / 2)
-    # note9 = fundamental * (5 / 3)
-    # note10 = fundamental * (5 / 3)
-    # note11 = fundamental * (15 / 8)
-    # note12 = fundamental * (15 / 8)
-
-    # Just Intonation from https://www.sfu.ca/sonic-studio-webdav/handbook/Just_Tuning.html
-    # note1 = fundamental * (16 / 15)
-    # note2 = fundamental * (10 / 9)
-    # note3 = fundamental * (9 / 8)
-    # note4 = fundamental * (6 / 5)
-    # note5 = fundamental * (5 / 4)
-    # note6 = fundamental * (4 / 3)
-    # note7 = fundamental * (45 / 32)
-    # note8 = fundamental * (64 / 45)
-    # note9 = fundamental * (3 / 2)
-    # note10 = fundamental * (8 / 5)
-    # note11 = fundamental * (5 / 3)
-    # note12 = fundamental * (7 / 4)
-
-    # Bohlen-Pierce from https://en.xen.wiki/w/Intervals_of_BP
-    # note1 = fundamental * (27/25)
-    # note2 = fundamental * (25/21)
-    # note3 = fundamental * (9/7)
-    # note4 = fundamental * (7/5)
-    # note5 = fundamental * (75/49)
-    # note6 = fundamental * (5/3)
-    # note7 = fundamental * (9/5)
-    # note8 = fundamental * (49/25)
-    # note9 = fundamental * (15/7)
-    # note10 = fundamental * (7/3)
-    # note11 = fundamental * (63/25)
-    # note12 = fundamental * (25/9)
-
-    # 7-limit tonality diamond from https://en.xen.wiki/w/Diamond7
-    note1 = fundamental * (8 / 7)
-    note2 = fundamental * (7 / 6)
-    note3 = fundamental * (6 / 5)
-    note4 = fundamental * (5 / 4)
-    note5 = fundamental * (4 / 3)
-    note6 = fundamental * (7 / 5)
-    note7 = fundamental * (10 / 7)
-    note8 = fundamental * (3 / 2)
-    note9 = fundamental * (8 / 5)
-    note10 = fundamental * (5 / 3)
-    note11 = fundamental * (12 / 7)
-    note12 = fundamental * (7 / 4)
-
-    # 22-edo from https://en.xen.wiki/w/22edo
-    # note1 = fundamental * (36 / 35)
-    # note2 = fundamental * (12 / 11)
-    # note3 = fundamental * (20 / 17)
-    # note4 = fundamental * (96 / 77)
-    # note5 = fundamental * (14 / 11)
-    # note6 = fundamental * (24 / 17)
-    # note7 = fundamental * (14 / 9)
-    # note8 = fundamental * (28 / 17)
-    # note9 = fundamental * (17 / 10)
-    # note10 = fundamental * (9 / 5)
-    # note11 = fundamental * (28 / 15)
-    # note12 = fundamental * (31 / 16)
-
-    # Pentatonic
-    # note1 = fundamental * (9 / 8)
-    # note2 = fundamental * (5 / 4)
-    # note3 = fundamental * (3 / 2)
-    # note4 = fundamental * (7 / 4)
-    # note5 = fundamental * (18 / 8)
-    # note6 = fundamental * (10 / 4)
-    # note7 = fundamental * (6 / 2)
-    # note8 = fundamental * (14 / 4)
-    # note9 = fundamental * (27 / 8)
-    # note10 = fundamental * (15 / 4)
-    # note11 = fundamental * (9 / 2)
-    # note12 = fundamental * (21 / 4)
-
     all_notes =
-      Enum.map(
-        [
-          fundamental / 8,
-          fundamental / 4,
-          fundamental / 2,
-          fundamental,
-          note1,
-          note2,
-          note3,
-          note4,
-          note5,
-          note6,
-          note7,
-          note8,
-          note9,
-          note10,
-          note11,
-          note12,
-          fundamental * 2,
-          fundamental * 4
-        ],
-        fn each ->
-          each
-          |> Float.round(0)
-          |> trunc()
-        end
-      )
+      case scale do
+        "tonality_diamond" ->
+          Enum.map(
+            [
+              fundamental / 8,
+              fundamental / 4,
+              fundamental / 2,
+              fundamental,
+              fundamental * (8 / 7),
+              fundamental * (7 / 6),
+              fundamental * (6 / 5),
+              fundamental * (5 / 4),
+              fundamental * (4 / 3),
+              fundamental * (7 / 5),
+              fundamental * (10 / 7),
+              fundamental * (3 / 2),
+              fundamental * (8 / 5),
+              fundamental * (5 / 3),
+              fundamental * (12 / 7),
+              fundamental * (7 / 4),
+              fundamental * 2,
+              fundamental * 4
+            ],
+            fn each ->
+              each
+              |> Float.round(0)
+              |> trunc()
+            end
+          )
+
+        "bohlen_pierce" ->
+          Enum.map(
+            [
+              fundamental / 8,
+              fundamental / 4,
+              fundamental / 2,
+              fundamental,
+              fundamental * (27 / 25),
+              fundamental * (25 / 21),
+              fundamental * (9 / 7),
+              fundamental * (7 / 5),
+              fundamental * (75 / 49),
+              fundamental * (5 / 3),
+              fundamental * (9 / 5),
+              fundamental * (49 / 25),
+              fundamental * (15 / 7),
+              fundamental * (7 / 3),
+              fundamental * (63 / 25),
+              fundamental * (25 / 9),
+              fundamental * 2,
+              fundamental * 4
+            ],
+            fn each ->
+              each
+              |> Float.round(0)
+              |> trunc()
+            end
+          )
+
+          # https://bolprocessor.org/raga-intonation/
+        "sa_murcchana" ->
+          Enum.map(
+            [
+              fundamental / 8,
+              fundamental / 4,
+              fundamental / 2,
+              fundamental,
+              fundamental * (256 / 243),
+              fundamental * (10 / 9),
+              fundamental * (32 / 27),
+              fundamental * (5 / 4),
+              fundamental * (4 / 3),
+              fundamental * (45 / 32),
+              fundamental * (40 / 27),
+              fundamental * (128 / 81),
+              fundamental * (5 / 3),
+              fundamental * (16 / 9),
+              fundamental * (15 / 8),
+              fundamental * (15 / 8),
+              fundamental * 2,
+              fundamental * 4
+            ],
+            fn each ->
+              each
+              |> Float.round(0)
+              |> trunc()
+            end
+          )
+
+        "just_intonation" ->
+          Enum.map(
+            [
+              fundamental / 8,
+              fundamental / 4,
+              fundamental / 2,
+              fundamental,
+              fundamental * (16 / 15),
+              fundamental * (10 / 9),
+              fundamental * (9 / 8),
+              fundamental * (6 / 5),
+              fundamental * (5 / 4),
+              fundamental * (4 / 3),
+              fundamental * (45 / 32),
+              fundamental * (64 / 45),
+              fundamental * (3 / 2),
+              fundamental * (8 / 5),
+              fundamental * (5 / 3),
+              fundamental * (7 / 4),
+              fundamental * 2,
+              fundamental * 4
+            ],
+            fn each ->
+              each
+              |> Float.round(0)
+              |> trunc()
+            end
+          )
+
+        "22_edo" ->
+          Enum.map(
+            [
+              fundamental / 8,
+              fundamental / 4,
+              fundamental / 2,
+              fundamental,
+              fundamental * (36 / 35),
+              fundamental * (12 / 11),
+              fundamental * (20 / 17),
+              fundamental * (96 / 77),
+              fundamental * (14 / 11),
+              fundamental * (24 / 17),
+              fundamental * (14 / 9),
+              fundamental * (28 / 17),
+              fundamental * (17 / 10),
+              fundamental * (9 / 5),
+              fundamental * (28 / 15),
+              fundamental * (31 / 16),
+              fundamental * 2,
+              fundamental * 4
+            ],
+            fn each ->
+              each
+              |> Float.round(0)
+              |> trunc()
+            end
+          )
+
+        "pentatonic" ->
+          Enum.map(
+            [
+              fundamental / 8,
+              fundamental / 4,
+              fundamental / 2,
+              fundamental,
+              fundamental * (9 / 8),
+              fundamental * (5 / 4),
+              fundamental * (3 / 2),
+              fundamental * (7 / 4),
+              fundamental * (18 / 8),
+              fundamental * (10 / 4),
+              fundamental * (6 / 2),
+              fundamental * (14 / 4),
+              fundamental * (27 / 8),
+              fundamental * (15 / 4),
+              fundamental * (9 / 2),
+              fundamental * (21 / 4),
+              fundamental * 2,
+              fundamental * 4
+            ],
+            fn each ->
+              each
+              |> Float.round(0)
+              |> trunc()
+            end
+          )
+
+        # Superpyth Supra https://en.xen.wiki/w/Superpyth
+        _ ->
+          Enum.map(
+            [
+              fundamental / 8,
+              fundamental / 4,
+              fundamental / 2,
+              fundamental,
+              fundamental * (33 / 32),
+              fundamental * (12 / 11),
+              fundamental * (9 / 8),
+              fundamental * (7 / 6),
+              fundamental * (11 / 9),
+              fundamental * (14 / 11),
+              fundamental * (4 / 3),
+              fundamental * (11 / 8),
+              fundamental * (16 / 11),
+              fundamental * (18 / 11),
+              fundamental * (7 / 4),
+              fundamental * (27 / 14),
+              fundamental * 2,
+              fundamental * 4
+            ],
+            fn each ->
+              each
+              |> Float.round(0)
+              |> trunc()
+            end
+          )
+      end
 
     :rand.seed(:exsss, {4, 3, 5})
 
@@ -288,7 +387,7 @@ defmodule Pipesine.Sound do
 
     phrase3 = Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
 
-    tempo = min(abs(fundamental) / 13, 400)
+    tempo = min(abs(fundamental) / 3, 400)
 
     vibrato_depth =
       if fundamental > 435 do
@@ -306,23 +405,22 @@ defmodule Pipesine.Sound do
 
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 
+    note4 = Enum.fetch!(all_notes, 7)
+    note6 = Enum.fetch!(all_notes, 9)
+    note9 = Enum.fetch!(all_notes, 12)
+    note11 = Enum.fetch!(all_notes, 14)
+
     filter_frequency = note4
     filter2_frequency = note11
     filter3_frequency = note9 * 2
 
+    IO.inspect(scale, label: "SKAAAAAAAAAAAAAAL")
+
     %{
-      note1: note1,
-      note2: note2,
-      note3: note3,
       note4: note4,
-      note5: note5,
       note6: note6,
-      note7: note7,
-      note8: note8,
       note9: note9,
-      note10: note10,
       note11: note11,
-      note12: note12,
       all_notes: all_notes,
       atoms: atoms,
       conds: conds,
@@ -354,7 +452,8 @@ defmodule Pipesine.Sound do
       timeSignature: time_signature,
       vibratoFrequency: vibrato_frequency,
       vibratoDepth: vibrato_depth
-    } |> IO.inspect(label: "DATA 4 JS")
+    }
+    |> IO.inspect(label: "DATA 4 JS")
   end
 
   @doc """

@@ -38,6 +38,8 @@ let Hooks = {
   Editor: {
     getSynth(instrument) {
       switch (instrument) {
+        case "PolySynth":
+          return new Tone.PolySynth();
         case "AMSynth":
           return new Tone.AMSynth();
         case "FMSynth":
@@ -77,7 +79,7 @@ let Hooks = {
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
         const panner = new Tone.Panner(params.panner); // -1 to 1
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
-        const phaser = new Tone.Phaser({frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note5})
+        const phaser = new Tone.Phaser({frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note6})
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
@@ -100,7 +102,7 @@ let Hooks = {
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
         
-        const seq = new Tone.Sequence((time, note) => {
+        const seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, params.delayFeedback, time);
         }, params.phrase, params.pattern);
 

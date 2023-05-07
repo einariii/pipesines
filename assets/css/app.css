@@ -78,8 +78,8 @@
 
 .background {
   background-color: #CB9CF2;
-  background: url("/images/pipesine_logo_shadow.png"), #CB9CF2;
-  background-blend-mode: luminosity;
+  background: url("/images/pipesine_logo_with_bg_2.png"), #CB9CF2;
+  background-blend-mode: soft-light;
 }
 
 /* .menu {
