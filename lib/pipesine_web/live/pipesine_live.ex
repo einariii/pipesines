@@ -31,8 +31,10 @@ defmodule PipesineWeb.PipesineLive do
   def render(assigns) do
     ~H"""
     <div>
+    <button class="krub">AST version</button>
+    <button class="krub">REGEX version</button>
     <div id="container" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
-    <button phx-click="save">SAVE COMPOSITION</button>
+    <button class="krub" phx-click="save" style="margin-top: 8px">SAVE COMPOSITION</button>
     </div>
     """
   end

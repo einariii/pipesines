@@ -57,7 +57,7 @@ let Hooks = {
 
     mounted() {
       let editor = monaco.editor.create(this.el, {
-        value: ['# pipesines', '# |> software for writing music in pure Elixir', '# |> start coding/composing here', '# |> use headphones please', '# |> alt + p to perform'].join('\n'),
+        value: ['# pipesines v 0.1', '# |> software for writing music in pure Elixir', '# |> start coding/composing here', '# |> use headphones please', '# |> alt + p to perform'].join('\n'),
         language: 'elixir',
         theme: "vs-dark"
       });

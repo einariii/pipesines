@@ -10,7 +10,7 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body class="background justify-items-stretch">
-    <div class="vt323">
+    <div class="dotgothic16">
       <nav class="menuright">
         <PipesineWeb.Components.link href="/instructions">instructions.</PipesineWeb.Components.link>
         <PipesineWeb.Components.link href="/community">community.</PipesineWeb.Components.link>
@@ -18,13 +18,9 @@
         <a class=""><%= render "_composer_menu.html", assigns %></a>
       </nav>
     </div>
-    <header class="background">
-      <section class="footer">
         <a href="/">
-          <p class="vt323 xxlfont">PIPESINES. code to music to.</p>
+          <p class="dotgothic16 xxlfont title">p i p e _ s i n e s</p>
         </a>
-      </section>
-    </header>
     <%= @inner_content %>
   </body>
   <p class="footer scaled">elegantly <a href="https://elixir-lang.org/">:elixir </a>, + <a href="https://tonejs.github.io/">:tone.js</a></p>
