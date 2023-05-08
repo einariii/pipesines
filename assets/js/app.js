@@ -57,9 +57,37 @@ let Hooks = {
 
     mounted() {
       let editor = monaco.editor.create(this.el, {
-        value: ['# pipesines v 0.1', '# |> software for writing music in pure Elixir', '# |> start coding/composing here', '# |> use headphones please', '# |> alt + p to perform'].join('\n'),
+        value: [
+          '# binaural BEAM', 
+          '',
+          'defmodule Pipesine.Example do',
+          '    @moduledoc """',
+          '        software for writing music in pure Elixir', 
+          '        alt + P to perform/pause',
+          '        if desired, set scale on the first line.',
+          '            options = {',
+          '                22_edo,',
+          '                bohlen_pierce,',
+          '                sa_murcchana,',
+          '                tonality_diamond,',
+          '                just_intonation,',
+          '                pentatonic',
+          '            }',
+          '            default =',
+          '                superpyth',
+          '        sound is stereo. use headphones',
+          '        may contain high frequencies. exercise caution',
+          '        spend time exploring small changes!',
+          '    """',
+          '',
+          '    def ???? do',
+          '        # modify this code',
+          '        # or write your own',
+          '    end',
+          'end'
+        ].join('\n'),
         language: 'elixir',
-        theme: "vs-dark"
+        theme: "hc-black"
       });
 
       editor.onKeyUp((event) => {
@@ -79,7 +107,7 @@ let Hooks = {
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
         const panner = new Tone.Panner(params.panner); // -1 to 1
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
-        const phaser = new Tone.Phaser({frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note6})
+        const phaser = new Tone.Phaser({ frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note6 })
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
@@ -101,7 +129,7 @@ let Hooks = {
         lfo2.start();
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
-        
+
         const seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, params.delayFeedback, time);
         }, params.phrase, params.pattern);
@@ -121,14 +149,14 @@ let Hooks = {
         filter.connect(limiter2);
         limiter2.connect(compressor);
         compressor.toDestination();
-        
+
         synth2.connect(delay);
         delay.connect(chebyshev);
         chebyshev.connect(filter2);
         filter2.connect(limiter);
         limiter.connect(compressor);
         compressor.toDestination();
-        
+
         synth3.connect(filter3);
         filter3.connect(reverb);
         reverb.connect(phaser);

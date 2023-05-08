@@ -1,3 +1,44 @@
+# BEAMcore
+
+defmodule Pipesine.Example do
+    @moduledoc """
+        software for writing music in pure Elixir
+        alt + P to stop/perform
+        if desired, set scale on the first line.
+            options = {
+                22_edo,
+                bohlen_pierce,
+                sa_murcchana,
+                tonality_diamond,
+                just_intonation,
+                pentatonic
+            }
+            default =
+                superpyth
+        sound is stereo. use headphones
+        may contain high frequencies. exercise caution
+        spend time exploring small changes!
+    """
+
+    def ???? do
+        # do something here, or start fresh
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # a pipesine
 
 defmodule Pipesine.Example do
@@ -40,21 +81,6 @@ end
 
 
 
-# a pipesine
-
-defmodule Pipesine.Example do
-    @moduledoc """
-        software for writing music in pure Elixir
-        alt + P to stop/perform
-        sound is stereo. use headphones
-        may contain high frequencies. exercise caution
-        spend time exploring small changes
-    """
-
-    def ???? do
-        # do something here, or go tabula rasa
-    end
-end
 
 
 

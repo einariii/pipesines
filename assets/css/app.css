@@ -147,12 +147,22 @@
   text-align: center;
   font-family: 'dotgothic16';
   font-size: 120%;
-  /* font-color: white; */
+}
+.titleright {
+  position: fixed;
+  text-align: left;
+  margin-top: 70px;
+  display: inline-block;
+  font-family: 'dotgothic16';
+  font-size: 120%;
+  font-color: #957FEF;
 }
 
 .title {
   margin-left: 25px;
+  margin-right: 25px;
   font-size: 450%;
+  display: inline-block;
 }
 
 h1 {
