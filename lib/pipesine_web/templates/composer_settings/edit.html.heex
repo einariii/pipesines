@@ -11,15 +11,15 @@
 
   <%= hidden_input f, :action, name: "action", value: "update_email" %>
 
-  <p class="vt323"><%= label f, :email %></p>
+  <p class="dotgothic16"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
   <%= error_tag f, :email %>
 
-  <p class="vt323"><%= label f, :current_password, for: "current_password_for_email" %></p>
+  <p class="dotgothic16"><%= label f, :current_password, for: "current_password_for_email" %></p>
   <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email" %>
   <%= error_tag f, :current_password %>
 
-  <div class="vt323">
+  <div class="krub">
     <%= submit "change email" %>
   </div>
 </.form>

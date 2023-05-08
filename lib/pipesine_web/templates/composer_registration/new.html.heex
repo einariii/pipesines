@@ -7,20 +7,20 @@
     </div>
   <% end %>
 
-  <p class="vt323"><%= label f, :email %></p>
+  <p class="dotgothic16"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
   <%= error_tag f, :email %>
 
-  <p class="vt323"><%= label f, :password %></p>
+  <p class="dotgothic16"><%= label f, :password %></p>
   <%= password_input f, :password, required: true %>
   <%= error_tag f, :password %>
 
-  <div class="vt323">
+  <div class="krub">
     <%= submit "register" %>
   </div>
 </.form>
 
-<p class="vt323">
+<p class="dotgothic16">
   <%= link "log in", to: Routes.composer_session_path(@conn, :new) %> |
   <%= link "forgot your password?", to: Routes.composer_reset_password_path(@conn, :new) %>
 </p>

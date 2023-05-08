@@ -7,20 +7,20 @@
     </div>
   <% end %>
 
-  <p class="vt323"><%= label f, :password, "New password" %></p>
+  <p class="dotgothic16"><%= label f, :password, "New password" %></p>
   <%= password_input f, :password, required: true %>
   <%= error_tag f, :password %>
 
-  <p class="vt323"><%= label f, :password_confirmation, "Confirm new password" %></p>
+  <p class="dotgothic16"><%= label f, :password_confirmation, "Confirm new password" %></p>
   <%= password_input f, :password_confirmation, required: true %>
   <%= error_tag f, :password_confirmation %>
 
-  <div class="vt323">
+  <div class="krub">
     <%= submit "Reset password" %>
   </div>
 </.form>
 
-<p class="vt323">
+<p class="dotgothic16">
   <%= link "Register", to: Routes.composer_registration_path(@conn, :new) %> |
   <%= link "Log in", to: Routes.composer_session_path(@conn, :new) %>
 </p>

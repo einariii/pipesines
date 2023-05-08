@@ -127,6 +127,9 @@
   background-size: 104%;
 }
 
+.filtered {
+  filter: hue-rotate(-0.75turn);
+}
 /* background: url("/images/pipesine_logo_main.png"), url("/images/dotgrid-23G12-703496.svg"), #CB9CF2; */
 /* .menu {
   position: absolute;
@@ -153,11 +156,11 @@
 }
 
 h1 {
-  font-family: 'VT323';
+  font-family: 'Krub';
 }
 
 h3 {
-  font-family: 'VT323';
+  font-family: 'Krub';
 }
 
 a:link,
@@ -199,7 +202,7 @@ a:active {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
-  font-family: 'vt323';
+  font-family: 'Krub';
   font-size: 150%;
 }
 

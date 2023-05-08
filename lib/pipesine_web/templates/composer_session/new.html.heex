@@ -7,13 +7,13 @@
     </div>
   <% end %>
 
-  <p class="vt323"><%= label f, :email %></p>
+  <p class="dotgothic16"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
 
-  <p class="vt323"><%= label f, :password %></p>
+  <p class="dotgothic16"><%= label f, :password %></p>
   <%= password_input f, :password, required: true %>
 
-  <p class="vt323"><%= label f, :remember_me, "Keep me logged in for 60 days" %></p>
+  <p class="dotgothic16"><%= label f, :remember_me, "Keep me logged in for 60 days" %></p>
   <%= checkbox f, :remember_me %>
 
   <div>
@@ -21,7 +21,7 @@
   </div>
 </.form>
 
-<p class="vt323">
+<p class="dotgothic16">
   <%= link "register", to: Routes.composer_registration_path(@conn, :new) %> |
   <%= link "forgot your password?", to: Routes.composer_reset_password_path(@conn, :new) %>
 </p>
