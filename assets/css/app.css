@@ -87,6 +87,10 @@
   flex: initial;
 }
 
+.usermenu {
+  white-space: normal;
+}
+
 .alert {
   padding: 15px;
   margin-bottom: 20px;
@@ -148,9 +152,11 @@
   font-family: 'dotgothic16';
   font-size: 120%;
 }
+
+.inputcolor {
+  font-color: #DEC0F1;
+}
 .titleright {
-  position: fixed;
-  text-align: left;
   margin-top: 70px;
   display: inline-block;
   font-family: 'dotgothic16';

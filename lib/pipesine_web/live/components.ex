@@ -3,7 +3,7 @@ defmodule PipesineWeb.Components do
 
   def link(assigns) do
     ~H"""
-      <a href={@href} class="sm:px-24 rounded-full menu"><%= render_slot(@inner_block) %></a>
+      <a href={@href} class="rounded-full menu"><%= render_slot(@inner_block) %></a>
     """
   end
 end

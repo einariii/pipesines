@@ -49,15 +49,13 @@ defmodule PipesineWeb.PipesineLive do
   }
   end
 
-  def handle_event("save", params, socket) do
+  def handle_event("save", _params, socket) do
     if socket.assigns.composer_id do
       Pipesine.Sound.create_composition(%{
         score: socket.assigns.score,
         composer_id: socket.assigns.composer_id,
         composer_username: socket.assigns.composer_username
       })
-      else
-        # put_flash
     end
     {:noreply, socket}
   end

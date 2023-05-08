@@ -414,8 +414,6 @@ defmodule Pipesine.Sound do
     filter2_frequency = note11
     filter3_frequency = note9 * 2
 
-    IO.inspect(scale, label: "SKAAAAAAAAAAAAAAL")
-
     %{
       note4: note4,
       note6: note6,

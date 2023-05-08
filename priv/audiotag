@@ -1,4 +1,4 @@
-# BEAMcore
+# binaural BEAM
 
 defmodule Pipesine.Example do
     @moduledoc """
@@ -20,7 +20,7 @@ defmodule Pipesine.Example do
         spend time exploring small changes!
     """
 
-    def ???? do
+    def a_pipesine do
         # do something here, or start fresh
     end
 end
