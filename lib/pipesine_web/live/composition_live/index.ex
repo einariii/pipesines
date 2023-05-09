@@ -3,17 +3,17 @@ defmodule PipesineWeb.CompositionLive.Index do
 
   alias Pipesine.Sound
   alias Pipesine.Sound.Composition
+  alias Pipesine.Composers
 
   @impl true
   def mount(_params, _session, socket) do
-    socket
-    |> assign(:compositions)
-    |> assign(:composers)
-    |> assign(list_compositions())
+    # socket
+    # |> assign(:compositions, Sound.list_compositions())
+    # |> assign(:composers, Composers.list_composers())
+    # {:ok, socket}
 
-    {:ok, socket}
-    # {:ok, assign(socket, :compositions, list_compositions())}
-
+    {:ok, assign(socket, :compositions, Sound.list_compositions())}
+    # {:ok, assign(socket, :compositions, [])}
   end
 
   @impl true

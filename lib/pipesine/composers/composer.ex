@@ -9,6 +9,7 @@ defmodule Pipesine.Composers.Composer do
     field :confirmed_at, :naive_datetime
     field :username, :string
     field :introduction, :string
+    has_many(:compositions, Pipesine.Sound.Composition)
 
     timestamps()
   end

@@ -15,15 +15,22 @@ defmodule PipesineWeb.PipesineLive do
           get_composer_by_session_token(session["composer_token"]).username
           |> IO.inspect(label: "USERNA<ME")
 
+    composer_email =
+      if session["composer_token"],
+        do:
+          get_composer_by_session_token(session["composer_token"]).email
+          |> IO.inspect(label: "EMAIL")
+
     score = params["score"]
 
     {
       :ok,
-      (socket
+      socket
+      |> assign(display_modal: false)
       |> assign(score: score)
       |> assign(composer_id: composer_id)
       |> assign(composer_username: composer_username)
-      )
+      |> assign(composer_email: composer_email)
     }
   end
 
@@ -36,6 +43,7 @@ defmodule PipesineWeb.PipesineLive do
     <div id="container" class="filtered" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
     <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
     </div>
+    <span><%= live_patch "New Message", to: Routes.composition_index_path(@socket, :new) %></span>
     """
   end
 
@@ -43,10 +51,9 @@ defmodule PipesineWeb.PipesineLive do
     score = Pipesine.Sound.compose_composition(params["score"])
 
     {:noreply,
-    socket
-    |> assign(score: params["score"])
-    |> push_event("update_score", score)
-  }
+     socket
+     |> assign(score: params["score"])
+     |> push_event("update_score", score)}
   end
 
   def handle_event("save", _params, socket) do
@@ -54,9 +61,11 @@ defmodule PipesineWeb.PipesineLive do
       Pipesine.Sound.create_composition(%{
         score: socket.assigns.score,
         composer_id: socket.assigns.composer_id,
-        composer_username: socket.assigns.composer_username
+        composer_username: socket.assigns.composer_username,
+        composer_email: socket.assigns.composer_email
       })
     end
+
     {:noreply, socket}
   end
 

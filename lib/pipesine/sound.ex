@@ -464,6 +464,9 @@ defmodule Pipesine.Sound do
 
   """
   def list_compositions do
+    # Repo.all from p in Composition,
+    #     preload: [:composers]
+
     Repo.all(Composition)
     |> Repo.preload([:composers])
   end

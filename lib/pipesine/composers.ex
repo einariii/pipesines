@@ -26,6 +26,10 @@ defmodule Pipesine.Composers do
     Repo.get_by(Composer, email: email)
   end
 
+  def list_composers do
+    Repo.all(Composer)
+  end
+
   @doc """
   Gets a composer by email and password.
 
