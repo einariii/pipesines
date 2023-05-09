@@ -16,23 +16,26 @@ defmodule Pipesine.Sound do
     defs = Regex.scan(~r/(?:def)/, score) |> Enum.count()
     specs = Regex.scan(~r/@/, score) |> Enum.count()
     atoms = Regex.scan(~r/:\w/, score) |> Enum.count()
+    reduces = Regex.scan(~r/.reduce/, score) |> Enum.count()
+    oks = Regex.scan(~r/{:ok/, score) |> Enum.count()
     parens = Regex.scan(~r/\(/, score) |> Enum.count()
     enums = Regex.scan(~r/Enum/, score) |> Enum.count()
     hashes = Regex.scan(~r/(#)/, score) |> Enum.count() |> Kernel.*(5)
     kernels = Regex.scan(~r/Kernel/, score) |> Enum.count()
     defstructs = Regex.scan(~r/(?:%\w)/, score) |> Enum.count()
-    genservers = Regex.scan(~r/Genserver/, score) |> Enum.count()
+    gens = Regex.scan(~r/Genserver/, score) |> Enum.count()
     conds = Regex.scan(~r/cond/, score) |> Enum.count()
     cases = Regex.scan(~r/case/, score) |> Enum.count()
     capts = Regex.scan(~r/(?:&\()/, score) |> Enum.count()
     pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count() |> max(1)
+
 
     scale =
       Regex.run(~r/bohlen_pierce|tonality-diamond|pentatonic|sa_murcchana|just_intonation|22_edo|\w/, score)
       |> List.first()
 
     touche =
-      (genservers + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) / pchars
+      (gens + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) / max(pchars, 1)
 
     swing =
       Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int ->
@@ -40,6 +43,15 @@ defmodule Pipesine.Sound do
       end)
       |> List.first()
       |> Kernel.*(0.1)
+      |> Kernel.+(0.3)
+
+    swing_subdivision =
+      cond do
+        touche > 0.5 -> "4n"
+        touche > 0.3 -> "8n"
+        touche > 0.2 -> "16n"
+        true -> "32n"
+      end
 
     time_signature =
       Enum.filter([seq_length, digits, characters, defs, atoms, pipes, specs], fn int ->
@@ -107,7 +119,7 @@ defmodule Pipesine.Sound do
     crusher =
       cond do
         bits <= 16 && bits >= 4 -> bits
-        true -> 16
+        true -> 12
       end
 
     chebyshev = (pipes * pchars + bits) |> rem(15) |> abs()
@@ -128,7 +140,7 @@ defmodule Pipesine.Sound do
         chebyshev >= 1 -> chebyshev * 0.1
         true -> 0.05
       end
-      |> min(0.75)
+      |> min(0.5)
 
     panner = delay_feedback - 0.5
 
@@ -377,7 +389,12 @@ defmodule Pipesine.Sound do
 
     :rand.seed(:exsss, {4, 3, 5})
 
-    phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> Enum.shuffle()
+    indx = max(1, digits + atoms)
+
+      # melody (synth)
+    phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> List.insert_at(indx, fundamental/8) |> Enum.shuffle()
+
+    # harmony (synth)
     # phrase =
     #   Enum.shuffle(all_notes)
     #   |> Enum.filter(fn note -> rem(note, 2) == 0 end)
@@ -387,7 +404,7 @@ defmodule Pipesine.Sound do
 
     phrase3 = Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
 
-    tempo = min(abs(fundamental) / 3, 400)
+    tempo = min(abs(fundamental) / max(reduces + oks, 3), 400)
 
     vibrato_depth =
       if fundamental > 435 do
@@ -413,6 +430,8 @@ defmodule Pipesine.Sound do
     filter_frequency = note4
     filter2_frequency = note11
     filter3_frequency = note9 * 2
+
+    IO.inspect(indx, label: "INDX")
 
     %{
       note4: note4,
@@ -445,6 +464,7 @@ defmodule Pipesine.Sound do
       reverbDecay: reverb_decay,
       reverbWet: reverb_wet,
       swing: swing,
+      swingSubdivision: swing_subdivision,
       tempo: tempo,
       touche: touche,
       timeSignature: time_signature,
@@ -464,11 +484,8 @@ defmodule Pipesine.Sound do
 
   """
   def list_compositions do
-    # Repo.all from p in Composition,
-    #     preload: [:composers]
-
     Repo.all(Composition)
-    |> Repo.preload([:composers])
+    |> Repo.preload([:composer])
   end
 
   @doc """

@@ -26,7 +26,7 @@
     <%= for composition <- @compositions do %>
       <tr id={"composition-#{composition.id}"}>
         <td><%= composition.score %></td>
-        <td><%= composition.composer %></td>
+        <td><%= composition.composer.username %></td>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.composition_show_path(@socket, :show, composition) %></span>

@@ -112,10 +112,11 @@ let Hooks = {
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
-        const limiter2 = new Tone.Limiter(-36);
+        const limiter2 = new Tone.Limiter(-72);
         const compressor = new Tone.Compressor(-24, 3);
         Tone.Transport.bpm.value = params.tempo;
         Tone.Transport.swing.value = params.swing;
+        Tone.Transport.swingSubdivision.value = params.swingSubdivision;
         Tone.Transport.timeSignature = params.timeSignature;
         Tone.Context.lookAhead = 0;
         var filter = new Tone.Filter(params.filterFrequency, "lowpass", -24);
@@ -145,17 +146,17 @@ let Hooks = {
 
         synth.connect(panner)
         // vibrato.connect(panner);
-        panner.connect(crusher);
-        crusher.connect(filter);
-        filter.connect(limiter2);
-        limiter2.connect(compressor);
+        panner.connect(filter);
+        filter.connect(crusher);
+        crusher.connect(limiter2);
+        limiter.connect(compressor);
         compressor.toDestination();
 
         synth2.connect(delay);
         delay.connect(chebyshev);
         chebyshev.connect(filter2);
         filter2.connect(limiter);
-        limiter.connect(compressor);
+        limiter2.connect(compressor);
         compressor.toDestination();
 
         synth3.connect(filter3);

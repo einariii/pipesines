@@ -11,10 +11,10 @@ defmodule Pipesine.Sound.Composition do
   end
 
   @doc false
-  def changeset(composition, attrs, composer \\ []) do
+  def changeset(composition, attrs) do
     composition
     |> cast(attrs, [:score, :title, :composer_id])
-    |> put_assoc(:composer, composer)
+    # |> put_assoc(:composer, composer)
     |> validate_required([:score, :composer_id])
     |> foreign_key_constraint(:composer_id)
   end
