@@ -131,6 +131,9 @@
   background-size: 104%;
 }
 
+.actions {
+  margin-left: 400px;
+}
 .filtered {
   filter: hue-rotate(-0.75turn);
 }

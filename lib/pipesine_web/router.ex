@@ -24,6 +24,7 @@ defmodule PipesineWeb.Router do
     live "/compositions", CompositionLive.Index, :index
     live "/compositions/new", CompositionLive.Index, :new
     live "/compositions/:id/edit", CompositionLive.Index, :edit
+    live "/instructions", CompositionLive.Index, :instructions
 
     live "/compositions/:id", CompositionLive.Show, :show
     live "/compositions/:id/show/edit", CompositionLive.Show, :edit

@@ -62,7 +62,7 @@ defmodule PipesineWeb.PipesineLive do
     if socket.assigns.composer_id do
       Pipesine.Sound.create_composition(%{
         score: socket.assigns.score,
-        composer_id: socket.assigns.composer_id,
+        composer_id: socket.assigns.composer_id
         # composer_username: socket.assigns.composer_username,
         # composer_email: socket.assigns.composer_email
       })

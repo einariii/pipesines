@@ -112,8 +112,9 @@ let Hooks = {
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
-        const limiter2 = new Tone.Limiter(-72);
-        const compressor = new Tone.Compressor(-24, 3);
+        const limiter2 = new Tone.Limiter(-48);
+        const vol = new Tone.Volume(-9);
+        const compressor = new Tone.Compressor(-18, 3);
         Tone.Transport.bpm.value = params.tempo;
         Tone.Transport.swing.value = params.swing;
         Tone.Transport.swingSubdivision.value = params.swingSubdivision;
@@ -149,7 +150,8 @@ let Hooks = {
         panner.connect(filter);
         filter.connect(crusher);
         crusher.connect(limiter2);
-        limiter.connect(compressor);
+        limiter.connect(vol);
+        vol.connect(compressor);
         compressor.toDestination();
 
         synth2.connect(delay);
@@ -168,7 +170,6 @@ let Hooks = {
         if (Tone.Transport.state == "started") {
           Tone.Transport.stop();
           Tone.Transport.cancel();
-          console.log(Tone.Transport.state)
         } else {
           /* allow users to toggle? */
           // Tone.Transport.clear();

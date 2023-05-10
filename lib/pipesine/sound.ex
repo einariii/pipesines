@@ -29,7 +29,6 @@ defmodule Pipesine.Sound do
     capts = Regex.scan(~r/(?:&\()/, score) |> Enum.count()
     pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count() |> max(1)
 
-
     scale =
       Regex.run(~r/bohlen_pierce|tonality-diamond|pentatonic|sa_murcchana|just_intonation|22_edo|\w/, score)
       |> List.first()
@@ -520,6 +519,7 @@ defmodule Pipesine.Sound do
     %Composition{}
     |> Composition.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:composition_created)
   end
 
   @doc """
@@ -567,5 +567,15 @@ defmodule Pipesine.Sound do
   """
   def change_composition(%Composition{} = composition, attrs \\ %{}) do
     Composition.changeset(composition, attrs)
+  end
+
+  def subscribe do
+    Phoenix.PubSub.subscribe(Pipesine.PubSub, "compositions")
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+  defp broadcast({:ok, composition}, event) do
+    Phoenix.PubSub.broadcast(Pipesine.PubSub, "compositions", {event, composition})
+    {:ok, composition}
   end
 end
