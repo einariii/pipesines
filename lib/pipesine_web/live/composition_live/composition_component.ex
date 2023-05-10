@@ -9,7 +9,7 @@ defmodule PipesineWeb.CompositionLive.CompositionComponent do
           <div class="composer-avatar"></div>
         </div>
         <div class="column column-90 composition-score dotgothic16">
-          <b>username: <%= @composition.username %></b>
+          <b>composition by: <%= @composition.username %></b>
           <br/>
           <%= @composition.score %>
         </div>

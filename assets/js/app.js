@@ -112,7 +112,7 @@ let Hooks = {
         // const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
-        const limiter2 = new Tone.Limiter(-48);
+        // const limiter2 = new Tone.Limiter(-36);
         const vol = new Tone.Volume(-9);
         const compressor = new Tone.Compressor(-18, 3);
         Tone.Transport.bpm.value = params.tempo;
@@ -132,16 +132,21 @@ let Hooks = {
         lfo2.start();
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
+        console.log(this.seq)
+        console.log(this.seq2)
+        console.log(this.seq3)
+        
+        this.seq && this.seq.dispose();
+        this.seq2 && this.seq2.dispose();
+        this.seq3 && this.seq3.dispose();
 
-        const seq = new Tone.Pattern((time, note) => {
+        this.seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, params.delayFeedback, time);
         }, params.phrase, params.pattern);
-
-        const seq2 = new Tone.Sequence((time, note) => {
+        this.seq2 = new Tone.Sequence((time, note) => {
           synth2.triggerAttackRelease(note, params.reverbWet, time);
         }, params.phrase2);
-
-        const seq3 = new Tone.Pattern((time, note) => {
+        this.seq3 = new Tone.Pattern((time, note) => {
           synth3.triggerAttackRelease(note, params.reverbDecay, time);
         }, params.phrase3, params.pattern3);
 
@@ -149,16 +154,15 @@ let Hooks = {
         // vibrato.connect(panner);
         panner.connect(filter);
         filter.connect(crusher);
-        crusher.connect(limiter2);
-        limiter.connect(vol);
-        vol.connect(compressor);
+        crusher.connect(limiter);
+        limiter.connect(compressor);
         compressor.toDestination();
-
+        
         synth2.connect(delay);
         delay.connect(chebyshev);
         chebyshev.connect(filter2);
-        filter2.connect(limiter);
-        limiter2.connect(compressor);
+        filter2.connect(vol);
+        vol.connect(compressor);
         compressor.toDestination();
 
         synth3.connect(filter3);
@@ -173,9 +177,9 @@ let Hooks = {
         } else {
           /* allow users to toggle? */
           // Tone.Transport.clear();
-          seq.start(0);
-          seq2.start(0);
-          seq3.start(0);
+          this.seq.start(0);
+          this.seq2.start(0);
+          this.seq3.start(0);
           Tone.Transport.start();
         }
       })

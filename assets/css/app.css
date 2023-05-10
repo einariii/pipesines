@@ -81,10 +81,15 @@
 }
 
 .menuright {
-  padding-left: 1375px;
-  font-size: 90%;
+  padding-left: 1225px;
+  font-size: 100%;
   white-space: normal;
   flex: initial;
+}
+
+.modaldesign {
+  color: #EFD9CE;
+  font-family: 'dotgothic16'
 }
 
 .usermenu {
@@ -159,6 +164,7 @@
 .inputcolor {
   font-color: #DEC0F1;
 }
+
 .titleright {
   margin-top: 70px;
   display: inline-block;
@@ -217,20 +223,21 @@ a:active {
   z-index: 1;
   left: 0;
   top: 0;
-  width: 100%;
+  width: 110%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-  font-family: 'Krub';
-  font-size: 150%;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .phx-modal-content {
-  background-color: #fefefe;
+  background-color: #DEC0F1;
+  display: opaque;
+  font-size: 125%;
   margin: 15vh auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  font-family: 'Krub';
 }
 
 .phx-modal-close {

@@ -5,24 +5,25 @@ defmodule PipesineWeb.PipesineLive do
   def mount(params, session, socket) do
     composer_id =
       if session["composer_token"],
-        do:
-          get_composer_by_session_token(session["composer_token"]).id
+      do:
+      get_composer_by_session_token(session["composer_token"]).id
           |> IO.inspect(label: "COMPOSERID")
 
     composer_username =
       if session["composer_token"],
+      do:
+      get_composer_by_session_token(session["composer_token"]).username
+      |> IO.inspect(label: "USERNA<ME")
+
+      composer_email =
+        if session["composer_token"],
         do:
-          get_composer_by_session_token(session["composer_token"]).username
-          |> IO.inspect(label: "USERNA<ME")
+        get_composer_by_session_token(session["composer_token"]).email
+        |> IO.inspect(label: "EMAIL")
 
-    composer_email =
-      if session["composer_token"],
-        do:
-          get_composer_by_session_token(session["composer_token"]).email
-          |> IO.inspect(label: "EMAIL")
+        score = params["score"]
 
-    score = params["score"]
-
+        IO.inspect(binding(), label: "SOCKET")
     {
       :ok,
       socket
@@ -43,7 +44,9 @@ defmodule PipesineWeb.PipesineLive do
     <div id="container" class="filtered" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
     <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
     </div>
-    <button class="krub" phx-click="toggle_modal" style="margin-top: 8px">instructions</button>
+    <.modal>
+    <.live_component module={PipesineWeb.CompositionLive.InstructionsComponent} id={@composer_id} />
+  </.modal>
     """
   end
 
@@ -51,7 +54,6 @@ defmodule PipesineWeb.PipesineLive do
 
   def handle_event("perform", params, socket) do
     score = Pipesine.Sound.compose_composition(params["score"])
-
     {:noreply,
      socket
      |> assign(score: params["score"])
