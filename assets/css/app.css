@@ -223,21 +223,22 @@ a:active {
   z-index: 1;
   left: 0;
   top: 0;
-  width: 110%;
+  width: 100%;
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
 .phx-modal-content {
-  background-color: #DEC0F1;
-  display: opaque;
+  background-color: #7161EF;
   font-size: 125%;
+  color: #EFD9CE;
   margin: 15vh auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  font-family: 'Krub';
+  padding: 32px;
+  border: 2px solid #EFD9CE;
+  width: 50%;
+  font-family: 'Alata';
+  text-align: justify;
 }
 
 .phx-modal-close {

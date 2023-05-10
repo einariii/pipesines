@@ -23,7 +23,6 @@ defmodule PipesineWeb.PipesineLive do
 
         score = params["score"]
 
-        IO.inspect(binding(), label: "SOCKET")
     {
       :ok,
       socket
@@ -45,8 +44,8 @@ defmodule PipesineWeb.PipesineLive do
     <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
     </div>
     <.modal>
-    <.live_component module={PipesineWeb.CompositionLive.InstructionsComponent} id={@composer_id} />
-  </.modal>
+      <.live_component module={PipesineWeb.CompositionLive.InstructionsComponent} id={@composer_id} />
+    </.modal>
     """
   end
 
