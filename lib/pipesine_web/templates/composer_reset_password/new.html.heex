@@ -1,10 +1,11 @@
-<h1 class="dotgothic16">forgot your password? |></h1>
+<h1 class="krub">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;ʕっ•ᴥ•ʔっ</h1>
+<h2 class="krub">&emsp;&emsp;it's ok you forgot your password. just don't forget us!</h2>
 
 <.form let={f} for={:composer} action={Routes.composer_reset_password_path(@conn, :create)}>
   <p class="dotgothic16"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
 
-  <div class="krub">
+  <div>
     <%= submit "send instructions to reset password" %>
   </div>
 </.form>

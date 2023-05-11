@@ -1,4 +1,4 @@
-<h1 class="dotgothic16">reset password |></h1>
+<h1 class="krub">reset password.</h1>
 
 <.form let={f} for={@changeset} action={Routes.composer_reset_password_path(@conn, :update, @token)}>
   <%= if @changeset.action do %>
@@ -15,7 +15,7 @@
   <%= password_input f, :password_confirmation, required: true %>
   <%= error_tag f, :password_confirmation %>
 
-  <div class="krub">
+  <div>
     <%= submit "Reset password" %>
   </div>
 </.form>

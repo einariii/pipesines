@@ -1,10 +1,11 @@
-<h1 class="dotgothic16">resend confirmation instructions |></h1>
+<h1 class="krub">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;(ღ˘⌣˘ღ)</h1>
+<h2 class="krub">&ensp;sometimes we need to try a couple times. that's how we learn!</h2>
 
 <.form let={f} for={:composer} action={Routes.composer_confirmation_path(@conn, :create)}>
   <p class="dotgothic16"><%= label f, :email %></p>
   <%= email_input f, :email, required: true %>
 
-  <div class="krub">
+  <div>
     <%= submit "resend confirmation instructions" %>
   </div>
 </.form>

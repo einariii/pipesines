@@ -67,6 +67,7 @@ let Hooks = {
           '        pipesines v0.1.0 (REGEX version only)',
           '        software for writing music in pure Elixir', 
           '        alt + P to perform/pause',
+          '        in the event of audio glitch, refresh the page',
           '        if desired, set scale on the first line.',
           '            options = {',
           '                22_edo,',
