@@ -22,8 +22,11 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git curl \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN apt-get install nodejs
 
 # prepare build dir
 WORKDIR /app
@@ -40,13 +43,6 @@ COPY mix.exs mix.lock ./
 RUN mix deps.get --only $MIX_ENV
 RUN mkdir config
 
-# Install / update  JavaScript dependencies
-RUN npm install --prefix ./assets
-
-# Compile assets
-RUN npm run deploy --prefix ./assets
-RUN mix phx.digest
-
 # copy compile-time config files before we compile dependencies
 # to ensure any relevant config change will trigger the dependencies
 # to be re-compiled.
@@ -58,6 +54,9 @@ COPY priv priv
 COPY lib lib
 
 COPY assets assets
+
+# Install / update  JavaScript dependencies
+RUN npm install --prefix ./assets
 
 # compile assets
 RUN mix assets.deploy
