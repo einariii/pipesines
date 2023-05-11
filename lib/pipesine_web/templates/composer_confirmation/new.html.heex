@@ -1,0 +1,15 @@
+<h1 class="dotgothic16">resend confirmation instructions |></h1>
+
+<.form let={f} for={:composer} action={Routes.composer_confirmation_path(@conn, :create)}>
+  <p class="dotgothic16"><%= label f, :email %></p>
+  <%= email_input f, :email, required: true %>
+
+  <div class="krub">
+    <%= submit "resend confirmation instructions" %>
+  </div>
+</.form>
+
+<p class="dotgothic16">
+  <%= link "register", to: Routes.composer_registration_path(@conn, :new) %> |
+  <%= link "log in", to: Routes.composer_session_path(@conn, :new) %>
+</p>

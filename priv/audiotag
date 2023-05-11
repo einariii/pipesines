@@ -1,0 +1,143 @@
+# binaural BEAM
+
+defmodule Pipesine.Example do
+    @moduledoc """
+        software for writing music in pure Elixir
+        alt + P to stop/perform
+        if desired, set scale on the first line.
+            options = {
+                22_edo,
+                bohlen_pierce,
+                sa_murcchana,
+                tonality_diamond,
+                just_intonation,
+                pentatonic
+            }
+            default =
+                superpyth
+        sound is stereo. use headphones
+        may contain high frequencies. exercise caution
+        spend time exploring small changes!
+    """
+
+    def a_pipesine do
+        # do something here, or start fresh
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# a pipesine
+
+defmodule Pipesine.Example do
+    @moduledoc """
+        software for writing music in pure Elixir
+        alt + P to stop/perform
+        if desired, set scale on the first line.
+            options: 22_edo; bohlen_pierce; sa_murcchana; tonality_diamond; just_intonation; pentatonic
+            default: superpyth
+        sound is stereo. use headphones
+        may contain high frequencies. exercise caution
+        spend time exploring small changes
+    """
+
+    def piping_test do
+        test_it =
+            {:ok, binary} = File.read!("my_code")
+            :erlang.binary_to_term(binary)
+            |> String.contains?("16/15 vibes")
+
+        if test_it do
+          File.rename!("my_score")
+        else
+            IO.puts("type more closely")
+        end
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# example pipesines paradigm
+
+defmodule APipeASine do
+    @moduledoc """
+        software for writing music in pure Elixir
+        alt + P to stop/perform
+        sound is stereo. use headphones
+        may contain high frequencies. exercise caution
+        spend time exploring small changes
+    """
+
+    def test do
+        {:ok, binary} = File.read!("my_code")
+        :erlang.binary_to_term(binary)
+        |> String.contains?("435 hz vibrations")
+    end
+
+    def heard do
+        cond do
+            test() === :true ->
+                :erlang.binary_to_term(binary)
+                |> File.rename!("my_score")
+            true ->
+                IO.puts("type more closely")
+                |> Enum.count()
+                |> Enum.reduce()
+        end
+    end
+end
+
+
+
+
+
+
+# test project
+
+defmodule Pipesines.paradigm do
+    def first_pass do
+        {:ok, binary} = File.read!("my_code")
+        :erlang.binary_to_term(binary)
+        |> String.contains?("music => 1")
+        |> String.to_binary()
+        |> File.rename!("my_score")
+    end
+end

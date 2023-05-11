@@ -1,0 +1,12 @@
+<h1 class="dotgothic16">confirm account |></h1>
+
+<.form let={_f} for={:composer} action={Routes.composer_confirmation_path(@conn, :update, @token)}>
+  <div>
+    <%= submit "confirm my account" %>
+  </div>
+</.form>
+
+<p class="dotgothic16">
+  <%= link "register", to: Routes.composer_registration_path(@conn, :new) %> |
+  <%= link "log in", to: Routes.composer_session_path(@conn, :new) %>
+</p>
