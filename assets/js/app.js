@@ -14,7 +14,9 @@ import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import * as Tone from "../vendor/tone.js"
 
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
+// import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
+import * as monaco from 'monaco-editor';
+
 
 // self.MonacoEnvironment = {
 // 	getWorkerUrl: function (moduleId, label) {

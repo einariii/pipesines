@@ -40,6 +40,13 @@ COPY mix.exs mix.lock ./
 RUN mix deps.get --only $MIX_ENV
 RUN mkdir config
 
+# Install / update  JavaScript dependencies
+RUN npm install --prefix ./assets
+
+# Compile assets
+RUN npm run deploy --prefix ./assets
+RUN mix phx.digest
+
 # copy compile-time config files before we compile dependencies
 # to ensure any relevant config change will trigger the dependencies
 # to be re-compiled.
