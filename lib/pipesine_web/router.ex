@@ -21,6 +21,8 @@ defmodule PipesineWeb.Router do
     pipe_through :browser
 
     live "/", PipesineLive, :index
+    live "/about", PipesineLive, :about
+    live "/manifesto", PipesineLive, :manifesto
     live "/compositions", CompositionLive.Index, :index
     live "/compositions/new", CompositionLive.Index, :new
     live "/compositions/:id/edit", CompositionLive.Index, :edit

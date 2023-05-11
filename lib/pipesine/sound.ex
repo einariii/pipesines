@@ -62,15 +62,21 @@ defmodule Pipesine.Sound do
     instrument1 =
       cond do
         hashes >= 25 ->
-          "PluckSynth"
-
-        hashes == 20 ->
           "FMSynth"
 
-        hashes == 15 ->
+        hashes >= 20 ->
+          "PolySynth"
+
+        hashes >= 15 ->
+          "PluckSynth"
+
+        hashes >= 10 ->
+          "FMSynth"
+
+        hashes >= 5 ->
           "MembraneSynth"
 
-        hashes < 15 ->
+        hashes < 5 ->
           "PolySynth"
       end
 
@@ -92,10 +98,10 @@ defmodule Pipesine.Sound do
     instrument3 =
       cond do
         atoms >= 11 ->
-          "MembraneSynth"
+          "FMSynth"
 
         atoms >= 7 ->
-          "MetalSynth"
+          "MembraneSynth"
 
         atoms >= 3 ->
           "AMSynth"
@@ -134,12 +140,11 @@ defmodule Pipesine.Sound do
     # does this need its own defp? so that it can reset first?
     delay_feedback =
       cond do
-        chebyshev >= 100 -> chebyshev * 0.001
-        chebyshev >= 10 -> chebyshev * 0.01
-        chebyshev >= 1 -> chebyshev * 0.1
+        chebyshev >= 10 -> chebyshev * 0.04
+        chebyshev >= 5 -> chebyshev * 0.03
+        chebyshev >= 1 -> chebyshev * 0.02
         true -> 0.05
       end
-      |> min(0.5)
 
     panner = delay_feedback - 0.5
 

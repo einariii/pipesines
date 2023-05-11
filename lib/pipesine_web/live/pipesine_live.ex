@@ -41,14 +41,24 @@ defmodule PipesineWeb.PipesineLive do
     <button class="krub">AST version</button>
     <button class="krub">REGEX version</button>
     <div id="container" class="filtered" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
-    <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
+      <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
     </div>
-    <.modal>
-      <.live_component module={PipesineWeb.CompositionLive.InstructionsComponent} id={@composer_id} />
-    </.modal>
+    <%= if @live_action == :about do %>
+      <.modal>
+        <.live_component module={PipesineWeb.PipesineLive.AboutComponent} id={@display_modal} />
+      </.modal>
+    <% end %>
+    <%= if @live_action == :manifesto do %>
+      <.modal>
+        <.live_component module={PipesineWeb.PipesineLive.ManifestoComponent} id={@display_modal} />
+      </.modal>
+    <% end %>
     """
   end
 
+  # <.modal>
+  #         <.live_component module={PipesineWeb.CompositionLive.InstructionsComponent} id={@composer_id} />
+  #       </.modal>
   # <span><%= live_patch "New Message", to: Routes.composition_index_path(@socket, :new) %></span>
 
   def handle_event("perform", params, socket) do

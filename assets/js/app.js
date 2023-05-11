@@ -62,7 +62,7 @@ let Hooks = {
           '',
           'defmodule Pipesine.Example do',
           '    @moduledoc """',
-          '        pipesines v0.1 (REGEX version only)',
+          '        pipesines v0.1.0 (REGEX version only)',
           '        software for writing music in pure Elixir', 
           '        alt + P to perform/pause',
           '        if desired, set scale on the first line.',
