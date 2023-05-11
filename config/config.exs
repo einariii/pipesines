@@ -34,7 +34,7 @@ config :esbuild,
   version: "0.14.29",
   default: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/* --loader:.ttf=file),
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/monaco-editor/esm/vs/editor/editor.main.js --external:/fonts/* --external:/images/* --loader:.ttf=file),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
