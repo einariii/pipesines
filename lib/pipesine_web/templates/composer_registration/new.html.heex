@@ -1,0 +1,26 @@
+<h1 class="dotgothic16">register |></h1>
+
+<.form let={f} for={@changeset} action={Routes.composer_registration_path(@conn, :create)}>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <p class="dotgothic16"><%= label f, :email %></p>
+  <%= email_input f, :email, required: true %>
+  <%= error_tag f, :email %>
+
+  <p class="dotgothic16"><%= label f, :password %></p>
+  <%= password_input f, :password, required: true %>
+  <%= error_tag f, :password %>
+
+  <div class="krub">
+    <%= submit "register" %>
+  </div>
+</.form>
+
+<p class="dotgothic16">
+  <%= link "log in", to: Routes.composer_session_path(@conn, :new) %> |
+  <%= link "forgot your password?", to: Routes.composer_reset_password_path(@conn, :new) %>
+</p>

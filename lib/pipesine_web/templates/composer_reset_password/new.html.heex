@@ -1,0 +1,15 @@
+<h1 class="dotgothic16">forgot your password? |></h1>
+
+<.form let={f} for={:composer} action={Routes.composer_reset_password_path(@conn, :create)}>
+  <p class="dotgothic16"><%= label f, :email %></p>
+  <%= email_input f, :email, required: true %>
+
+  <div class="krub">
+    <%= submit "send instructions to reset password" %>
+  </div>
+</.form>
+
+<p class="dotgothic16">
+  <%= link "Register", to: Routes.composer_registration_path(@conn, :new) %> |
+  <%= link "Log in", to: Routes.composer_session_path(@conn, :new) %>
+</p>

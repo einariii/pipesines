@@ -9,22 +9,21 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="background">
-    <header class="background">
-      <section>
-        <a href="#">
-          <img src={Routes.static_path(@conn, "/images/pipesine_logo.svg")} alt="faek logo" width="800" height="400" style="border: 4px solid white"/>
+  <body class="background justify-items-stretch">
+    <div class="dotgothic16">
+      <nav class="menuright">
+        <PipesineWeb.Components.link href="/about">about.</PipesineWeb.Components.link>
+        <PipesineWeb.Components.link href="/compositions">compositions.</PipesineWeb.Components.link>
+        <PipesineWeb.Components.link href="/manifesto">on computing/music.</PipesineWeb.Components.link>
+        <a class=""><%= render "_composer_menu.html", assigns %></a>
+      </nav>
+    </div>
+    <div>
+    </div>
+        <a href="/">
+          <p class="dotgothic16 xxlfont title">p i p e _ s i n e s</p><p class="titleright scaled">v0.1.0</p>
         </a>
-
-        <footer class="footer sharetechmono">
-          <ul>
-            <li><a href="https://tonejs.github.io/">SOUND SOURCE</a></li>
-            <li><a href="https://elixir-lang.org/">CODE SOURCE</a></li>
-          </ul>
-        </footer>
-      </section>
-    </header>
-
     <%= @inner_content %>
   </body>
+  <p class="footer scaled">elegantly <a href="https://elixir-lang.org/">:elixir </a>, + <a href="https://tonejs.github.io/">:tone.js</a></p>
 </html>

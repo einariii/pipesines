@@ -1,54 +1,88 @@
 defmodule PipesineWeb.PipesineLive do
   use PipesineWeb, :live_view
+  import Pipesine.Composers
 
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(params, session, socket) do
+    composer_id =
+      if session["composer_token"],
+      do:
+      get_composer_by_session_token(session["composer_token"]).id
+          |> IO.inspect(label: "COMPOSERID")
+
+    composer_username =
+      if session["composer_token"],
+      do:
+      get_composer_by_session_token(session["composer_token"]).username
+      |> IO.inspect(label: "USERNA<ME")
+
+      composer_email =
+        if session["composer_token"],
+        do:
+        get_composer_by_session_token(session["composer_token"]).email
+        |> IO.inspect(label: "EMAIL")
+
+        score = params["score"]
+
+    {
+      :ok,
+      socket
+      |> assign(display_modal: false)
+      |> assign(score: score)
+      |> assign(composer_id: composer_id)
+      # |> assign(composer_username: composer_username)
+      # |> assign(composer_email: composer_email)
+    }
   end
 
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
     ~H"""
-    <h2>Editor</h2>
-    <div id="container" phx-update="ignore" class="background" style="width: 800px; height: 600px; border: 8px solid white"></div>
-    <div style="">
-      Code to music to.
-      <.form let={f} for={:perform_form} phx-submit="perform">
-        <%= text_input f, :perform, id: "basic-play", phx_hook: "BasicPlay" %>
-      </.form>
+    <div>
+    <button class="krub">AST version</button>
+    <button class="krub">REGEX version</button>
+    <div id="container" class="filtered" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
+      <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
     </div>
+    <%= if @live_action == :about do %>
+      <.modal>
+        <.live_component module={PipesineWeb.PipesineLive.AboutComponent} id={@display_modal} />
+      </.modal>
+    <% end %>
+    <%= if @live_action == :manifesto do %>
+      <.modal>
+        <.live_component module={PipesineWeb.PipesineLive.ManifestoComponent} id={@display_modal} />
+      </.modal>
+    <% end %>
     """
   end
 
-  # def handle_event("ping", _params, socket) do
-  #   {:noreply, push_event(socket, "pong", %{})}
-  # end
-
-  # def handle_event("perform", %{"perform_form" => %{"perform" => perform}}, socket) do
-  #   {:noreply, push_event(socket, :perform, params)}
-  # end
+  # <.modal>
+  #         <.live_component module={PipesineWeb.CompositionLive.InstructionsComponent} id={@composer_id} />
+  #       </.modal>
+  # <span><%= live_patch "New Message", to: Routes.composition_index_path(@socket, :new) %></span>
 
   def handle_event("perform", params, socket) do
-    metascore = params["perform_form"]
-    score = metascore["perform"]
-
-    scanned_score = Regex.scan(~r/\w/, score)
-    flat_scan = List.flatten(scanned_score)
-
-    bits = abs(Enum.count(flat_scan) - 16)
-    crusher =
-      cond do
-        bits <= 16 && bits >=4 -> bits
-        true -> 16
-      end
-
-    chebs = List.last(flat_scan)
-    # note2 = "F3"
-
-    IO.inspect(flat_scan)
-    IO.inspect(chebs)
-
-    {:noreply, push_event(socket, "update_score", %{note1: ["Eb3", "Gb3", "C4"], note2: "F3", crusher: crusher, delayTime: 0.4, delayFeedback: 0.6})}
-    # {:noreply, assign(socket, :score, params)}
+    score = Pipesine.Sound.compose_composition(params["score"])
+    {:noreply,
+     socket
+     |> assign(score: params["score"])
+     |> push_event("update_score", score)}
   end
 
+  def handle_event("save", _params, socket) do
+    if socket.assigns.composer_id do
+      Pipesine.Sound.create_composition(%{
+        score: socket.assigns.score,
+        composer_id: socket.assigns.composer_id
+        # composer_username: socket.assigns.composer_username,
+        # composer_email: socket.assigns.composer_email
+      })
+    end
+
+    {:noreply, socket}
+  end
+
+  def handle_event("toggle_modal", params, socket) do
+    {:noreply, assign(socket, :display_modal, !socket.assigns.display_modal)}
+  end
 end

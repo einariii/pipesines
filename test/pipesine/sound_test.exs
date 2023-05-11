@@ -1,6 +1,6 @@
 defmodule Pipesine.SoundTest do
   use Pipesine.DataCase
-
+  import Pipesine.ComposersFixtures
   alias Pipesine.Sound
 
   describe "compositions" do
@@ -21,10 +21,12 @@ defmodule Pipesine.SoundTest do
     end
 
     test "create_composition/1 with valid data creates a composition" do
-      valid_attrs = %{composer: "some composer", score: "some score"}
+      composer = composer_fixture()
+
+      valid_attrs = %{composer_id: composer.id, score: "some score"}
 
       assert {:ok, %Composition{} = composition} = Sound.create_composition(valid_attrs)
-      assert composition.composer == "some composer"
+      assert Repo.preload(composition, :composer).composer == composer
       assert composition.score == "some score"
     end
 

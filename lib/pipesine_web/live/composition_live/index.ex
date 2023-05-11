@@ -3,10 +3,16 @@ defmodule PipesineWeb.CompositionLive.Index do
 
   alias Pipesine.Sound
   alias Pipesine.Sound.Composition
+  alias Pipesine.Composers
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :compositions, list_compositions())}
+    # socket
+    # |> assign(:compositions, Sound.list_compositions())
+    # |> assign(:composers, Composers.list_composers())
+    # {:ok, socket}
+    if connected?(socket), do: Sound.subscribe()
+    {:ok, assign(socket, :compositions, Sound.list_compositions())}
   end
 
   @impl true
@@ -40,6 +46,9 @@ defmodule PipesineWeb.CompositionLive.Index do
     {:noreply, assign(socket, :compositions, list_compositions())}
   end
 
+  def handle_info({:composition_created, composition}, socket) do
+    {:noreply, update(socket, :compositions, fn compositions -> [composition | compositions] end)}
+  end
   defp list_compositions do
     Sound.list_compositions()
   end

@@ -1,0 +1,8 @@
+<%= if @current_composer do %>
+  <a><%= @current_composer.email %></a>
+  <a class="menu"><%= link "settings.", to: Routes.composer_settings_path(@conn, :edit) %></a>
+  <a class="menu"><%= link "log out.", to: Routes.composer_session_path(@conn, :delete), method: :delete %></a>
+<% else %>
+  <a><%= link "register.", to: Routes.composer_registration_path(@conn, :new) %></a>
+  <a class="menu"><%= link "log in.", to: Routes.composer_session_path(@conn, :new) %></a>
+<% end %>
