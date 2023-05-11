@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "monaco-editor": "^0.37.1"
+    "monaco-editor": "^0.37.1",
+    "tone": "^14.7.77"
   }
 }
