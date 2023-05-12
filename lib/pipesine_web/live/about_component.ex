@@ -14,7 +14,7 @@ defmodule PipesineWeb.PipesineLive.AboutComponent do
 
       <p class="">
       <br>
-      <h1>Pipesines. Code to music to.</h1>
+      <h1>Pipesines. Elixir as musical instrument.</h1>
       Pipesines (v0.1.0) is a web app that encourages Elixir developers to explore sound through code: general programming as a specific sonic experience.
 
       What do |> sound like? Which is more musical: if, case, or cond? Will Enum.filter actually filter a sound? And what about Enum.reduce?

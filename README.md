@@ -1,16 +1,14 @@
-# Pipesines. Code to music to.
-
-Pipesines. Code to music to.
+# Pipesines. ELixir as musical instrument.
 
 Pipesines (v0.1.0) is a web app that encourages Elixir developers to explore sound through code: general programming as a specific sonic experience.
 
 What do |> sound like? Which is more musical: if, case, or cond? Will Enum.filter actually filter a sound? And what about Enum.reduce?
 
-assert compose(Elixir) == compose(music)
+`assert compose(Elixir) == compose(music)`
 
 Paste existing code into the text editor, or write something from scratch. Type Alt+P to hear how it sounds. Initially it may seem like a chaotic mess. Type Alt+P again to pause. Adding, deleting, or refactoring may lead to more pleasant, harmonious, or musical output. Or not! What sounds "good" is a subjective judgment. What do your coder ears prefer?
 
-Create an account to add your code/compositions to the community database. Save an entire defmodule, or just one line!
+Create an account to add your code/compositions to the community database. Save an entire `defmodule`, or just one line!
 
 Pipesines is an open-source space where contributors are very much welcome. Future versions should improve on optimization, accessibility, and ideally, adding additional BEAM languages to the platform.
 
