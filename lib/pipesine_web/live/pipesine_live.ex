@@ -84,11 +84,8 @@ defmodule PipesineWeb.PipesineLive do
         # composer_username: socket.assigns.composer_username,
         # composer_email: socket.assigns.composer_email
       })
-    # else
-    #   live_flash(
-    #     :error,
-    #     "You must be logged in to save (also you must evaluate before attempting to save)"
-    #   )
+    else
+      put_flash(socket, :error, "You must be logged in to save (also you must evaluate before attempting to save)")
     end
     {:noreply, socket}
   end

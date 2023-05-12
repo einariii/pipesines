@@ -119,7 +119,7 @@ defmodule Pipesine.Sound do
         _ -> digits
       end
 
-    bits = abs(div(characters, 16))
+    bits = abs(rem(characters, 16))
 
     crusher =
       cond do
@@ -127,7 +127,7 @@ defmodule Pipesine.Sound do
         true -> 12
       end
 
-    chebyshev = (pipes * pchars + bits) |> rem(15) |> abs()
+    chebyshev = (pipes * pchars + bits) |> rem(17) |> abs()
 
     delay_time =
       cond do

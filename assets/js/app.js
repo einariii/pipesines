@@ -113,7 +113,7 @@ let Hooks = {
         const panner = new Tone.Panner(params.panner); // -1 to 1
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const phaser = new Tone.Phaser({ frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note6 })
-        // const pitchShift = new Tone.PitchShift(params.timeSignature);
+        const pitchShift = new Tone.PitchShift(params.timeSignature);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
         // const limiter2 = new Tone.Limiter(-36);
@@ -127,7 +127,7 @@ let Hooks = {
         var filter = new Tone.Filter(params.filterFrequency, "lowpass", -24);
         var filter2 = new Tone.Filter(params.filter2Frequency, "lowpass", -48);
         var filter3 = new Tone.Filter(params.filter3Frequency, "notch", -48);
-        var lfo = new Tone.LFO(params.timeSignature, 500, 600); // hertz, min, max
+        var lfo = new Tone.LFO(params.note4, 500, 700); // hertz, min, max
         var lfo2 = new Tone.LFO(params.hashes, 200, 1200); // hertz, min, max
         lfo.connect(filter.frequency);
         lfo.connect(reverb.wet);
@@ -170,7 +170,8 @@ let Hooks = {
         compressor.toDestination();
 
         synth3.connect(filter3);
-        filter3.connect(reverb);
+        filter3.connect(pitchShift);
+        pitchShift.connect(reverb);
         reverb.connect(phaser);
         phaser.connect(compressor);
         compressor.toDestination();
