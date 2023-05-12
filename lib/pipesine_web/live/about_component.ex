@@ -14,10 +14,8 @@ defmodule PipesineWeb.PipesineLive.AboutComponent do
 
       <p class="">
       <br>
-      <h1>About Pipesines</h1>
-      Pipesines (v0.1.0) is a web app that encourages Elixir developers to explore sound through code. Through magic* general programming becomes a specific sonic experience.
-
-      Code to music to.
+      <h1>Pipesines. Code to music to.</h1>
+      Pipesines (v0.1.0) is a web app that encourages Elixir developers to explore sound through code: general programming as a specific sonic experience.
 
       What do |> sound like? Which is more musical: if, case, or cond? Will Enum.filter actually filter a sound? And what about Enum.reduce?
 
@@ -34,8 +32,6 @@ defmodule PipesineWeb.PipesineLive.AboutComponent do
       Inspired by GEMS by @nbw, ElixirWPM by @tindrew, Max Mathews, Joan Miller, Laurie Spiegel, the monome community, Sonic Pi, SuperCollider, Tidal Cycles, algorave, ok all computer music programming ever, and all the sociotechnical wonders of the BEAM ecosystem.
 
       Special thanks to @brooklinjazz, @czrpb, @byronsalty, @IciaCarroBarallobre, @a-alhusaini, @BigSpaces, @w0rd-driven, and all my colleagues at DockYard Academy for their support and camaraderie.
-
-      *yeah, sorry, it's not actually magic. It's a bunch of custom regex...but the next version will summon the Elixir AST itself!
       </p>
 
     """

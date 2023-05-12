@@ -43,7 +43,7 @@ defmodule PipesineWeb.PipesineLive do
     <button class="krub">REGEX version</button>
     <div id="container" class="filtered" style="width: 1200px; height: 600px; border: 9px solid black" phx-hook="Editor"></div>
       <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
-    </div>
+      </div>
     <%= if @live_action == :about do %>
       <.modal>
         <.live_component module={PipesineWeb.PipesineLive.AboutComponent} id={@display_modal} />
