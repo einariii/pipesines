@@ -67,6 +67,7 @@ let Hooks = {
           '        pipesines v0.1.0 (REGEX version only)',
           '        software for writing music in pure Elixir', 
           '        alt + P to perform/pause',
+          '        click "save composition" below to add your code to the community database (must be logged in)',
           '        in the event of audio glitch, refresh the page',
           '        if desired, set scale on the first line.',
           '            options = {',

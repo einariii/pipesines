@@ -23,32 +23,30 @@ defmodule PipesineWeb.Router do
     live "/", PipesineLive, :index
     live "/about", PipesineLive, :about
     live "/manifesto", PipesineLive, :manifesto
+    live "/label", PipesineLive, :label
     live "/compositions", CompositionLive.Index, :index
-    live "/compositions/new", CompositionLive.Index, :new
-    live "/compositions/:id/edit", CompositionLive.Index, :edit
-    live "/instructions", CompositionLive.Index, :instructions
+    # live "/instructions", CompositionLive.Index, :instructions
 
     live "/compositions/:id", CompositionLive.Show, :show
-    live "/compositions/:id/show/edit", CompositionLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", PipesineWeb do
-  #   pipe_through :api
-  # end
+    #   pipe_through :api
+    # end
 
-  # Enables LiveDashboard only for development
-  #
-  # If you want to use the LiveDashboard in production, you should put
-  # it behind authentication and allow only admins to access it.
-  # If your application does not have an admins-only section yet,
-  # you can use Plug.BasicAuth to set up some basic authentication
-  # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
+    # Enables LiveDashboard only for development
+    #
+    # If you want to use the LiveDashboard in production, you should put
+    # it behind authentication and allow only admins to access it.
+    # If your application does not have an admins-only section yet,
+    # you can use Plug.BasicAuth to set up some basic authentication
+    # as long as you are also using SSL (which you should anyway).
+    if Mix.env() in [:dev, :test] do
+      import Phoenix.LiveDashboard.Router
 
-    scope "/" do
-      pipe_through :browser
+      scope "/" do
+        pipe_through :browser
 
       live_dashboard "/dashboard", metrics: PipesineWeb.Telemetry
     end
@@ -84,6 +82,9 @@ defmodule PipesineWeb.Router do
   scope "/", PipesineWeb do
     pipe_through [:browser, :require_authenticated_composer]
 
+    live "/compositions/new", CompositionLive.Index, :new
+    live "/compositions/:id/edit", CompositionLive.Index, :edit
+    live "/compositions/:id/show/edit", CompositionLive.Show, :edit
     get "/composers/settings", ComposerSettingsController, :edit
     put "/composers/settings", ComposerSettingsController, :update
     get "/composers/settings/confirm_email/:token", ComposerSettingsController, :confirm_email

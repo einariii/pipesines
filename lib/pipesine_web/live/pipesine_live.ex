@@ -1,27 +1,28 @@
 defmodule PipesineWeb.PipesineLive do
   use PipesineWeb, :live_view
+  import Plug.Conn
   import Pipesine.Composers
 
   def mount(params, session, socket) do
     composer_id =
       if session["composer_token"],
-      do:
-      get_composer_by_session_token(session["composer_token"]).id
+        do:
+          get_composer_by_session_token(session["composer_token"]).id
           |> IO.inspect(label: "COMPOSERID")
 
     composer_username =
       if session["composer_token"],
-      do:
-      get_composer_by_session_token(session["composer_token"]).username
-      |> IO.inspect(label: "USERNA<ME")
-
-      composer_email =
-        if session["composer_token"],
         do:
-        get_composer_by_session_token(session["composer_token"]).email
-        |> IO.inspect(label: "EMAIL")
+          get_composer_by_session_token(session["composer_token"]).username
+          |> IO.inspect(label: "USERNA<ME")
 
-        score = params["score"]
+    composer_email =
+      if session["composer_token"],
+        do:
+          get_composer_by_session_token(session["composer_token"]).email
+          |> IO.inspect(label: "EMAIL")
+
+    score = params["score"]
 
     {
       :ok,
@@ -53,6 +54,11 @@ defmodule PipesineWeb.PipesineLive do
         <.live_component module={PipesineWeb.PipesineLive.ManifestoComponent} id={@display_modal} />
       </.modal>
     <% end %>
+    <%= if @live_action == :label do %>
+      <.modal>
+        <.live_component module={PipesineWeb.PipesineLive.LabelComponent} id={@display_modal} />
+      </.modal>
+    <% end %>
     """
   end
 
@@ -63,6 +69,7 @@ defmodule PipesineWeb.PipesineLive do
 
   def handle_event("perform", params, socket) do
     score = Pipesine.Sound.compose_composition(params["score"])
+
     {:noreply,
      socket
      |> assign(score: params["score"])
@@ -77,8 +84,12 @@ defmodule PipesineWeb.PipesineLive do
         # composer_username: socket.assigns.composer_username,
         # composer_email: socket.assigns.composer_email
       })
+    # else
+    #   live_flash(
+    #     :error,
+    #     "You must be logged in to save (also you must evaluate before attempting to save)"
+    #   )
     end
-
     {:noreply, socket}
   end
 
