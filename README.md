@@ -1,4 +1,4 @@
-# Pipesines. ELixir as musical instrument.
+# Pipesines. Elixir as musical instrument.
 
 Pipesines (v0.1.0) is a web app that encourages Elixir developers to explore sound through code: general programming as a specific sonic experience.
 
