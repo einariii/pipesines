@@ -1,6 +1,5 @@
 defmodule PipesineWeb.PipesineLive do
   use PipesineWeb, :live_view
-  import Plug.Conn
   import Pipesine.Composers
 
   def mount(params, session, socket) do
@@ -85,7 +84,7 @@ defmodule PipesineWeb.PipesineLive do
         # composer_email: socket.assigns.composer_email
       })
     else
-      put_flash(socket, :error, "You must be logged in to save (also you must evaluate before attempting to save)")
+      put_flash(socket, :error, "You must be logged in to save (you must also evaluate before attempting to save!)")
     end
     {:noreply, socket}
   end

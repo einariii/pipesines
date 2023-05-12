@@ -1,19 +1,21 @@
-# Pipesine
+# Pipesines. Code to music to.
 
-To start your Phoenix server:
+Pipesines. Code to music to.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Pipesines (v0.1.0) is a web app that encourages Elixir developers to explore sound through code: general programming as a specific sonic experience.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+What do |> sound like? Which is more musical: if, case, or cond? Will Enum.filter actually filter a sound? And what about Enum.reduce?
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+assert compose(Elixir) == compose(music)
 
-## Learn more
+Paste existing code into the text editor, or write something from scratch. Type Alt+P to hear how it sounds. Initially it may seem like a chaotic mess. Type Alt+P again to pause. Adding, deleting, or refactoring may lead to more pleasant, harmonious, or musical output. Or not! What sounds "good" is a subjective judgment. What do your coder ears prefer?
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+Create an account to add your code/compositions to the community database. Save an entire defmodule, or just one line!
+
+Pipesines is an open-source space where contributors are very much welcome. Future versions should improve on optimization, accessibility, and ideally, adding additional BEAM languages to the platform.
+
+Built using Elixir, Phoenix LiveView, Ecto, PostgresQL, and the excellent Tone.js
+
+Inspired by GEMS by @nbw, ElixirWPM by @tindrew, Max Mathews, Joan Miller, Laurie Spiegel, the monome community, Sonic Pi, SuperCollider, Tidal Cycles, algorave, ok all computer music programming ever, and all the sociotechnical wonders of the BEAM ecosystem.
+
+Special thanks to @brooklinjazz, @czrpb, @byronsalty, @IciaCarroBarallobre, @a-alhusaini, @BigSpaces, @w0rd-driven, and all my colleagues at DockYard Academy for their support and camaraderie.
