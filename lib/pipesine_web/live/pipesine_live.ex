@@ -82,7 +82,7 @@ defmodule PipesineWeb.PipesineLive do
     {:noreply, socket}
   end
 
-  def handle_event("toggle_modal", params, socket) do
-    {:noreply, assign(socket, :display_modal, !socket.assigns.display_modal)}
-  end
+  # def handle_event("toggle_modal", params, socket) do
+  #   {:noreply, assign(socket, :display_modal, !socket.assigns.display_modal)}
+  # end
 end
