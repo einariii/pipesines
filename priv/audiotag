@@ -1,3 +1,13 @@
+# palette
+
+EFD9CE
+DEC0F1
+CB9CF2
+957FEF
+
+7161EF
+
+_____________________________________________________
 # binaural BEAM
 
 defmodule Pipesine.Example do
@@ -24,21 +34,7 @@ defmodule Pipesine.Example do
         # do something here, or start fresh
     end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+________________________________________________________________
 # a pipesine
 
 defmodule Pipesine.Example do
@@ -66,35 +62,7 @@ defmodule Pipesine.Example do
         end
     end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+_____________________________________________________
 # example pipesines paradigm
 
 defmodule APipeASine do
@@ -125,11 +93,7 @@ defmodule APipeASine do
     end
 end
 
-
-
-
-
-
+__________________________________________________________
 # test project
 
 defmodule Pipesines.paradigm do
@@ -141,3 +105,101 @@ defmodule Pipesines.paradigm do
         |> File.rename!("my_score")
     end
 end
+
+___________________________________________________________
+
+
+ROOT
+        <hr class="titleright" style="width:75%;margin-top:5px">
+
+INDEX dump
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.composition_index_path(@socket, :index)}>
+    <.live_component
+      module={PipesineWeb.CompositionLive.FormComponent}
+      id={@composition.id || :new}
+      title={@page_title}
+      action={@live_action}
+      composition={@composition}
+      return_to={Routes.composition_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table class="dotgothic16">
+  <thead>
+    <tr>
+      <th>score</th>
+      <th>username</th>
+      <th>actions</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="compositions">
+    <%= for composition <- @compositions do %>
+      <tr id={"composition-#{composition.id}"}>
+        <td><%= composition.score %></td>
+        <td><%= composition.composer.username %></td>
+
+        <td>
+          <span><%= live_redirect "show", to: Routes.composition_show_path(@socket, :show, composition) %></span>
+          <span><%= live_patch "edit", to: Routes.composition_index_path(@socket, :edit, composition) %></span>
+          <span><%= link "delete", to: "#", phx_click: "delete", phx_value_id: composition.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_redirect "back", to: Routes.pipesine_path(@socket, :index), class: "button" %></span>
+<span><%= live_patch "new composition", to: Routes.composition_index_path(@socket, :new), class: "button"  %></span>
+
+——————————————————————————————————————————————————————————
+COMPONEENT
+
+defmodule PipesineWeb.CompositionLive.CompositionComponent do
+  use PipesineWeb, :live_component
+
+  def render(assigns) do
+    ~H"""
+    <div id="" class="composition">
+      <div class="row">
+        <div class="column column-10">
+          <div class="composer-avatar"></div>
+        </div>
+        <div class="column column-90 composition-score dotgothic16">
+          <b><%= @composition.username %></b>
+          <br/>
+          <%= @composition.score %>
+          <br><br>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <i class="far fa-heart"></i>
+        </div>
+        <div class="column">
+          <%= live_redirect "show", to: Routes.composition_show_path(@socket, :show, composition) %>
+            <i class="far fa-edit"></i>
+          <% end %>
+          <%= link "delete", to: "#", phx_click: "delete", phx_value_id: composition.id, data: [confirm: "Are you sure?"] %>
+            <i class="far fa-trash-alt"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    """
+  end
+end
+
+
+
+
+MODAL
+
+
+ <.modal>
+      <.live_component id={assigns[:current_composer].composer_id} module={PipesineWeb.CompositionLive.InstructionsComponent}/>
+    </.modal>
