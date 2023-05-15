@@ -89,7 +89,12 @@ let Hooks = {
           '        # modify this code',
           '        # or write your own',
           '    end',
-          'end'
+          'end',
+          '',
+          '',
+          '',
+          '',
+          
         ].join('\n'),
         language: 'elixir',
         theme: "hc-black"
