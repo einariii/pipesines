@@ -396,7 +396,23 @@ defmodule Pipesine.Sound do
     indx = max(1, digits + atoms)
 
       # melody (synth)
-    phrase = Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> List.insert_at(indx, fundamental/8) |> Enum.shuffle()
+    phrase =
+      case rem(atoms, 2) do
+        0 ->
+          Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
+            |> List.insert_at(indx, fundamental/8)
+            |> Enum.shuffle()
+            |> Enum.map(fn each ->
+              each * 3/2
+              |> trunc()
+            end)
+        _ ->
+          Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
+          |> List.insert_at(indx, fundamental/8)
+          |> Enum.shuffle()
+      end
+
+      # Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> List.insert_at(indx, fundamental/8) |> Enum.shuffle()
 
     # harmony (synth)
     # phrase =
