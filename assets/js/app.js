@@ -41,7 +41,18 @@ let Hooks = {
     getSynth(instrument) {
       switch (instrument) {
         case "PolySynth":
-          return new Tone.PolySynth();
+          return new Tone.PolySynth(
+          //   {
+          //   options: {
+          //     envelope : {
+          //       attack : 0.1,
+          //       decay : 0.01,
+          //       sustain : 0.01,
+          //       release : 0.9
+          //     }
+          //   }
+          // }
+          );
         case "AMSynth":
           return new Tone.AMSynth();
         case "FMSynth":
@@ -122,7 +133,14 @@ let Hooks = {
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
         // const limiter2 = new Tone.Limiter(-36);
-        const vol = new Tone.Volume(-9);
+        // const env = new Tone.AmplitudeEnvelope({
+        //   attack: 0.9,
+        //   decay: 0.2,
+        //   sustain: 0.5,
+        //   release: 0.1,
+        // });
+        const vol = new Tone.Volume(-3);
+        const vol2 = new Tone.Volume(-6);
         const compressor = new Tone.Compressor(-18, 3);
         Tone.Transport.bpm.value = params.tempo;
         Tone.Transport.swing.value = params.swing;
@@ -150,13 +168,13 @@ let Hooks = {
         this.seq3 && this.seq3.dispose();
 
         this.seq = new Tone.Pattern((time, note) => {
-          synth.triggerAttackRelease(note, params.delayFeedback, time);
+          synth.triggerAttackRelease(note, params.swingSubdivision, time);
         }, params.phrase, params.pattern);
         this.seq2 = new Tone.Sequence((time, note) => {
-          synth2.triggerAttackRelease(note, params.reverbWet, time);
+          synth2.triggerAttackRelease(note, params.noteLength2, time);
         }, params.phrase2);
         this.seq3 = new Tone.Pattern((time, note) => {
-          synth3.triggerAttackRelease(note, params.reverbDecay, time);
+          synth3.triggerAttackRelease(note, params.noteLength3, time);
         }, params.phrase3, params.pattern3);
 
         synth.connect(panner)
@@ -164,14 +182,15 @@ let Hooks = {
         panner.connect(filter);
         filter.connect(crusher);
         crusher.connect(limiter);
-        limiter.connect(compressor);
+        limiter.connect(vol);
+        vol.connect(compressor);
         compressor.toDestination();
         
         synth2.connect(delay);
         delay.connect(chebyshev);
         chebyshev.connect(filter2);
-        filter2.connect(vol);
-        vol.connect(compressor);
+        filter2.connect(vol2);
+        vol2.connect(compressor);
         compressor.toDestination();
 
         synth3.connect(filter3);

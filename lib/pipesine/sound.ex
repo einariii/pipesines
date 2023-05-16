@@ -30,11 +30,15 @@ defmodule Pipesine.Sound do
     pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count() |> max(1)
 
     scale =
-      Regex.run(~r/bohlen_pierce|tonality-diamond|pentatonic|sa_murcchana|just_intonation|22_edo|\w/, score)
+      Regex.run(
+        ~r/bohlen_pierce|tonality-diamond|pentatonic|sa_murcchana|just_intonation|22_edo|\w/,
+        score
+      )
       |> List.first()
 
     touche =
-      (gens + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) / max(pchars, 1)
+      (gens + conds + cases + kernels + capts + defstructs + atoms + enums + pipes) /
+        max(pchars, 1)
 
     swing =
       Enum.filter([atoms, pipes, seq_length, digits, characters, defs, specs], fn int ->
@@ -50,6 +54,24 @@ defmodule Pipesine.Sound do
         touche > 0.3 -> "8n"
         touche > 0.2 -> "16n"
         true -> "32n"
+      end
+
+    note_length2 =
+      cond do
+        rem(digits, 9) == 0 -> "4n"
+        rem(digits, 7) == 0 -> "8n"
+        rem(digits, 5) == 0 -> "16n"
+        rem(digits, 3) == 0 -> "32n"
+        true -> "16n"
+      end
+
+    note_length3 =
+      cond do
+        rem(digits, 9) == 0 -> "32n"
+        rem(digits, 7) == 0 -> "16n"
+        rem(digits, 5) == 0 -> "8n"
+        rem(digits, 3) == 0 -> "4n"
+        true -> "8n"
       end
 
     time_signature =
@@ -148,9 +170,9 @@ defmodule Pipesine.Sound do
 
     panner = delay_feedback - 0.5
 
-    reverb_decay = abs(delay_feedback - delay_time) |> max(0.01)
+    reverb_decay = abs(delay_feedback - delay_time) |> max(0.1)
 
-    reverb_wet = abs(delay_feedback * delay_time) |> max(0.01) |> min(0.75)
+    reverb_wet = abs(delay_feedback * delay_time) |> max(0.1) |> min(0.75)
 
     pattern =
       cond do
@@ -243,7 +265,7 @@ defmodule Pipesine.Sound do
             end
           )
 
-          # https://bolprocessor.org/raga-intonation/
+        # https://bolprocessor.org/raga-intonation/
         "sa_murcchana" ->
           Enum.map(
             [
@@ -395,24 +417,25 @@ defmodule Pipesine.Sound do
 
     indx = max(1, digits + atoms)
 
-      # melody (synth)
+    # melody (synth)
     phrase =
       case rem(atoms, 2) do
         0 ->
           Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
-            |> List.insert_at(indx, fundamental/8)
-            |> Enum.shuffle()
-            |> Enum.map(fn each ->
-              each * 3/2
-              |> trunc()
-            end)
+          |> List.insert_at(indx, fundamental / 8)
+          |> Enum.shuffle()
+          |> Enum.map(fn each ->
+            (each * 3 / 2)
+            |> trunc()
+          end)
+
         _ ->
           Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
-          |> List.insert_at(indx, fundamental/8)
+          |> List.insert_at(indx, fundamental / 8)
           |> Enum.shuffle()
       end
 
-      # Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> List.insert_at(indx, fundamental/8) |> Enum.shuffle()
+    # Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> List.insert_at(indx, fundamental/8) |> Enum.shuffle()
 
     # harmony (synth)
     # phrase =
@@ -452,6 +475,8 @@ defmodule Pipesine.Sound do
     filter3_frequency = note9 * 2
 
     IO.inspect(indx, label: "INDX")
+    IO.inspect(pchars, label: "PCHARS")
+    IO.inspect(digits, label: "FIGITS")
 
     %{
       note4: note4,
@@ -475,6 +500,8 @@ defmodule Pipesine.Sound do
       instrument2: instrument2,
       instrument3: instrument3,
       kernels: kernels,
+      noteLength2: note_length2,
+      noteLength3: note_length3,
       panner: panner,
       pattern: pattern,
       pattern3: pattern3,
@@ -595,6 +622,7 @@ defmodule Pipesine.Sound do
   end
 
   defp broadcast({:error, _reason} = error, _event), do: error
+
   defp broadcast({:ok, composition}, event) do
     Phoenix.PubSub.broadcast(Pipesine.PubSub, "compositions", {event, composition})
     {:ok, composition}
