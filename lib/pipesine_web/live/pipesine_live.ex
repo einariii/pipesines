@@ -48,7 +48,7 @@ defmodule PipesineWeb.PipesineLive do
         <.live_component module={PipesineWeb.PipesineLive.AboutComponent} id={@display_modal} />
       </.modal>
     <% end %>
-    <%= if @live_action == :manifesto do %>
+    <%= if @live_action == :ethos do %>
       <.modal>
         <.live_component module={PipesineWeb.PipesineLive.ManifestoComponent} id={@display_modal} />
       </.modal>

@@ -1,4 +1,4 @@
-defmodule PipesineWeb.PipesineLive.ManifestoComponent do
+defmodule PipesineWeb.PipesineLive.EthosComponent do
   use PipesineWeb, :live_component
 
   @impl true
