@@ -413,7 +413,8 @@ defmodule Pipesine.Sound do
           )
       end
 
-    :rand.seed(:exsss, {4, 3, 5})
+    now = :erlang.timestamp
+    :rand.seed(:exsss, now)
 
     indx = max(1, digits + atoms)
 

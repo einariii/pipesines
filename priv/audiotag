@@ -7,6 +7,21 @@ CB9CF2
 
 7161EF
 
+# Description
+Let it glitch.
+
+
+
+:glitch ==
+  [:the, :tempreature]
+  |> %TheSystem{}
+  |>
+
+
+(a temporary feature
+or temporary creature)
+
+
 _____________________________________________________
 # binaural BEAM
 

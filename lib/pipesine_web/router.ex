@@ -22,7 +22,7 @@ defmodule PipesineWeb.Router do
 
     live "/", PipesineLive, :index
     live "/about", PipesineLive, :about
-    live "/manifesto", PipesineLive, :manifesto
+    live "/ethos", PipesineLive, :ethos
     live "/label", PipesineLive, :label
     live "/compositions", CompositionLive.Index, :index
     # live "/instructions", CompositionLive.Index, :instructions

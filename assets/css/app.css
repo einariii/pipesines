@@ -318,7 +318,7 @@
   filter: invert(1);
   transform: rotate(180deg);
   margin-top: 25px;
-  margin-left: 1175px;
+  margin-left: 1150px;
   scale: 250%;
 }
 
@@ -349,18 +349,30 @@
 
 .title {
   margin-left: 25px;
-  margin-right: 25px;
-  font-size: 450%;
+  margin-right: 0px;
+  font-size: 500%;
   display: inline-block;
   white-space: nowrap;
+}
+
+.title-decorate {
+  margin-left: 25px;
+  margin-right: 25px;
+  font-size: 500%;
+  font-family: 'dotgothic16';
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: wavy;
+  text-decoration: overline;
 }
 
 .titleright {
   margin-top: 70px;
   display: inline-block;
   font-family: 'dotgothic16';
-  font-size: 100%;
+  font-size: 120%;
   font-color: #957FEF;
+  text-decoration: underline;
 }
 
 h1 {

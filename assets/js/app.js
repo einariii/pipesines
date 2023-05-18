@@ -140,7 +140,7 @@ let Hooks = {
         //   release: 0.1,
         // });
         const vol = new Tone.Volume(-3);
-        const vol2 = new Tone.Volume(-6);
+        const vol2 = new Tone.Volume(-12);
         const compressor = new Tone.Compressor(-18, 3);
         Tone.Transport.bpm.value = params.tempo;
         Tone.Transport.swing.value = params.swing;
