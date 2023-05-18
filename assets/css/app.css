@@ -356,7 +356,7 @@
 }
 
 .title-decorate {
-  margin-left: 25px;
+  margin-left: 80px;
   margin-right: 25px;
   font-size: 500%;
   font-family: 'dotgothic16';
@@ -367,12 +367,12 @@
 }
 
 .titleright {
-  margin-top: 70px;
+  margin-left: 0px;
+  margin-top: 30px;
   display: inline-block;
   font-family: 'dotgothic16';
-  font-size: 120%;
+  font-size: 140%;
   font-color: #957FEF;
-  text-decoration: underline;
 }
 
 h1 {
