@@ -50,7 +50,7 @@ defmodule PipesineWeb.PipesineLive do
     <% end %>
     <%= if @live_action == :ethos do %>
       <.modal>
-        <.live_component module={PipesineWeb.PipesineLive.ManifestoComponent} id={@display_modal} />
+        <.live_component module={PipesineWeb.PipesineLive.EthosComponent} id={@display_modal} />
       </.modal>
     <% end %>
     <%= if @live_action == :label do %>
