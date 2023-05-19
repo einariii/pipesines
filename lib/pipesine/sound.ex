@@ -145,7 +145,7 @@ defmodule Pipesine.Sound do
 
     crusher =
       cond do
-        bits <= 16 && bits >= 4 -> bits
+        bits <= 16 && bits >= 6 -> bits
         true -> 12
       end
 

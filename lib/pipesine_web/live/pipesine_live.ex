@@ -38,11 +38,26 @@ defmodule PipesineWeb.PipesineLive do
   def render(assigns) do
     ~H"""
     <div>
-    <button class="krub">AST version</button>
-    <button class="krub">REGEX version</button>
-    <div id="container" class="filtered z-0" style="width: 1200px; height: 650px; border: 9px solid black" phx-hook="Editor"></div>
-      <button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
+    <div class="tooltip versions"><button class="krub">REGEX version</button>
+      <span class="tooltiptext">current default.</span>
+    </div>
+    <div class="tooltip versions"><button class="krub">AST version</button>
+      <span class="tooltiptext">future feature!</span>
+    </div>
+    <div class="tooltip versions"><button class="krub">ML version</button>
+      <span class="tooltiptext">future feature!</span>
+    </div>
+    <div id="container" class="filtered" style="width: 1200px; height: 650px; border: 9px solid black" phx-hook="Editor"></div>
+      <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">play code</button>
+        <span class="tooltiptext">type alt+p (option+p on mac) in the editor</span>
       </div>
+      <div class="tooltip versions"><button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
+        <span class="tooltiptext">registered users click here to persist your code in the community database</span>
+      </div>
+    </div>
+    <div>
+
+    </div>
     <%= if @live_action == :about do %>
       <.modal>
         <.live_component module={PipesineWeb.PipesineLive.AboutComponent} id={@display_modal} />
@@ -60,11 +75,6 @@ defmodule PipesineWeb.PipesineLive do
     <% end %>
     """
   end
-
-  # <.modal>
-  #         <.live_component module={PipesineWeb.CompositionLive.InstructionsComponent} id={@composer_id} />
-  #       </.modal>
-  # <span><%= live_patch "New Message", to: Routes.composition_index_path(@socket, :new) %></span>
 
   def handle_event("perform", params, socket) do
     score = Pipesine.Sound.compose_composition(params["score"])
@@ -88,8 +98,4 @@ defmodule PipesineWeb.PipesineLive do
     end
     {:noreply, socket}
   end
-
-  # def handle_event("toggle_modal", params, socket) do
-  #   {:noreply, assign(socket, :display_modal, !socket.assigns.display_modal)}
-  # end
 end
