@@ -108,7 +108,7 @@ let Hooks = {
           
         ].join('\n'),
         language: 'elixir',
-        theme: "hc-black"
+        theme: "vs-dark"
       });
 
       editor.onKeyUp((event) => {
