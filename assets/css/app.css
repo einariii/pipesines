@@ -82,8 +82,8 @@
 
 .menuright {
   position: fixed;
-  padding-left: 1250px;
-  font-size: 110%;
+  padding-left: 1240px;
+  font-size: 100%;
   white-space: normal;
   flex: initial;
 }
@@ -353,6 +353,7 @@
 .title {
   margin-left: 25px;
   margin-right: 0px;
+  margin-top: 10px;
   font-size: 435%;
   display: inline-block;
   white-space: nowrap;
@@ -373,6 +374,16 @@
   margin-left: 0px;
   margin-top: 30px;
   display: inline-block;
+  font-family: 'dotgothic16';
+  font-size: 140%;
+  font-color: #957FEF;
+}
+
+.semanticversion {
+  float: left;
+  margin-left: -30px;
+  margin-right: -140px;
+  margin-top: -10px;
   font-family: 'dotgothic16';
   font-size: 140%;
   font-color: #957FEF;
@@ -533,7 +544,7 @@ hr {
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 1240px;
+  width: 240px;
   background-color: #957FEF;
   font-family: 'Krub';
   color: #EFD9CE;
@@ -543,7 +554,7 @@ hr {
   border: 1px solid #EFD9CE;
   position: absolute;
   bottom: 50%;
-  left: 40%;
+  left: 10%;
   z-index: 1;
 }
 

@@ -24,6 +24,7 @@ defmodule PipesineWeb.Router do
     live "/about", PipesineLive, :about
     live "/ethos", PipesineLive, :ethos
     live "/label", PipesineLive, :label
+    live "/technique", PipesineLive, :technique
     live "/compositions", CompositionLive.Index, :index
     # live "/instructions", CompositionLive.Index, :instructions
 

@@ -10,19 +10,21 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body class="background justify-items-stretch">
-    <div class="dotgothic16">
+    <div class="krub">
       <nav class="menuright">
         <PipesineWeb.Components.link href="/about">:about</PipesineWeb.Components.link>
-        <PipesineWeb.Components.link href="/compositions">:compositions</PipesineWeb.Components.link>
         <PipesineWeb.Components.link href="/ethos">:ethos</PipesineWeb.Components.link>
+        <PipesineWeb.Components.link href="/technique">:technique</PipesineWeb.Components.link>
         <PipesineWeb.Components.link href="/label">:label</PipesineWeb.Components.link>
+        <PipesineWeb.Components.link href="/compositions">:compositions</PipesineWeb.Components.link>
         <a class=""><%= render "_composer_menu.html", assigns %></a>
       </nav>
     </div>
     <div>
     </div>
+        <p class="semanticversion scaled">&emsp;%{version: 0.1.0}</p>
         <a href="/">
-          <p class="dotgothic16 xxlfont title">p i p e s i n e s</p><p class="titleright scaled">&emsp;%{version: 0.1.0}</p>
+          <p class="dotgothic16 xxlfont title">pipesines&emsp;|> |> |> |> |> |> |></p>
         </a>
     <%= @inner_content %>
     <div>
