@@ -39,20 +39,28 @@ defmodule PipesineWeb.PipesineLive do
     ~H"""
     <div>
     <div class="tooltip versions"><button class="krub">REGEX version</button>
-      <span class="tooltiptext">current default.</span>
+      <span class="tooltiptext">current default:<br>PCRE regular expressions!</span>
     </div>
     <div class="tooltip versions"><button class="krub">AST version</button>
-      <span class="tooltiptext">future feature!</span>
+      <span class="tooltiptext">future feature:<br>ABSTRACT SYNTAX TREE!</span>
     </div>
     <div class="tooltip versions"><button class="krub">ML version</button>
-      <span class="tooltiptext">future feature!</span>
+      <span class="tooltiptext">future feature:<br>MACHINE LEARNING!</span>
     </div>
     <div id="container" class="filtered" style="width: 1200px; height: 650px; border: 9px solid black" phx-hook="Editor"></div>
       <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">play code</button>
-        <span class="tooltiptext">type alt+p (option+p on mac) in the editor</span>
+        <span class="tooltiptext">type alt+p (option+p on mac) in the editor!</span>
       </div>
       <div class="tooltip versions"><button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
-        <span class="tooltiptext">registered users click here to persist your code in the community database</span>
+        <span class="tooltiptext">registered users click here to persist your code in the community database!</span>
+      </div>
+      <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">the sound sounds broken</button>
+        <span class="tooltiptext">LET IT GLITCH<br>
+        The glitch is
+        a <i>tempreature</i>
+        (temporary feature/
+        temporary creature)<br>
+        of the system. </span>
       </div>
     </div>
     <div>
@@ -71,6 +79,11 @@ defmodule PipesineWeb.PipesineLive do
     <%= if @live_action == :label do %>
       <.modal>
         <.live_component module={PipesineWeb.PipesineLive.LabelComponent} id={@display_modal} />
+      </.modal>
+    <% end %>
+    <%= if @live_action == :technique do %>
+      <.modal>
+        <.live_component module={PipesineWeb.PipesineLive.TechniqueComponent} id={@display_modal} />
       </.modal>
     <% end %>
     """
