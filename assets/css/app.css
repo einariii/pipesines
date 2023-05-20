@@ -82,8 +82,8 @@
 
 .menuright {
   position: fixed;
-  padding-left: 1240px;
-  font-size: 100%;
+  padding-left: 1180px;
+  font-size: 105%;
   white-space: normal;
   flex: initial;
 }
