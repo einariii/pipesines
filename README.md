@@ -17,3 +17,8 @@ Built using Elixir, Phoenix LiveView, Ecto, PostgresQL, and the excellent Tone.j
 Inspired by GEMS by @nbw, ElixirWPM by @tindrew, Max Mathews, Joan Miller, Laurie Spiegel, the monome community, Sonic Pi, SuperCollider, Tidal Cycles, algorave, ok all computer music programming ever, and all the sociotechnical wonders of the BEAM ecosystem.
 
 Special thanks to @brooklinjazz, @czrpb, @byronsalty, @IciaCarroBarallobre, @a-alhusaini, @BigSpaces, @w0rd-driven, and all my colleagues at DockYard Academy for their support and camaraderie.
+
+# Open source contributions
+
+Please consider joining the effort to port more of Elixir and the BEAM ecosystem into the world of computer music. You may find a healthy list of issues [here](https://github.com/einariii/pipesines/issues) on the GitHub.  
+
