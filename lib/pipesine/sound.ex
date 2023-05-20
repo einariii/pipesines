@@ -26,8 +26,8 @@ defmodule Pipesine.Sound do
     gens = Regex.scan(~r/Genserver/, score) |> Enum.count()
     conds = Regex.scan(~r/cond/, score) |> Enum.count()
     cases = Regex.scan(~r/case/, score) |> Enum.count()
-    capts = Regex.scan(~r/(?:&\()/, score) |> Enum.count()
-    pchars = Regex.scan(~r/[!?@#$~%^&*_0-9]/, score) |> Enum.count() |> max(1)
+    capts = Regex.scan(~r/&/, score) |> Enum.count()
+    pchars = Regex.scan(~r/[!?@#$~%^*_0-9]/, score) |> Enum.count() |> max(1)
 
     scale =
       Regex.run(
@@ -413,7 +413,7 @@ defmodule Pipesine.Sound do
           )
       end
 
-    now = :erlang.timestamp
+    now = :erlang.timestamp()
     :rand.seed(:exsss, now)
 
     indx = max(1, digits + atoms)
@@ -422,13 +422,19 @@ defmodule Pipesine.Sound do
     phrase =
       case rem(atoms, 2) do
         0 ->
-          Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
-          |> List.insert_at(indx, fundamental / 8)
-          |> Enum.shuffle()
-          |> Enum.map(fn each ->
-            (each * 3 / 2)
-            |> trunc()
-          end)
+          if instrument1 == "PolySynth" do
+            Enum.shuffle(all_notes)
+            |> Enum.filter(fn note -> rem(note, 2) == 0 end)
+            |> Enum.chunk_every(3, 2)
+          else
+            Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
+            |> List.insert_at(indx, fundamental / 8)
+            |> Enum.shuffle()
+            |> Enum.map(fn each ->
+              (each * 3 / 2)
+              |> trunc()
+            end)
+          end
 
         _ ->
           Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
@@ -446,7 +452,19 @@ defmodule Pipesine.Sound do
 
     phrase2 = Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end) |> Enum.shuffle()
 
-    phrase3 = Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
+    phrase3 =
+      case rem(capts, 3) do
+        0 ->
+          Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
+            |> List.insert_at(indx, fundamental / 8)
+            |> Enum.shuffle()
+            |> Enum.map(fn each ->
+              (each * 15 / 8)
+              |> trunc()
+            end)
+        _ ->
+          Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
+      end
 
     tempo = min(abs(fundamental) / max(reduces + oks, 3), 400)
 
@@ -486,6 +504,7 @@ defmodule Pipesine.Sound do
       note11: note11,
       all_notes: all_notes,
       atoms: atoms,
+      capts: capts,
       conds: conds,
       crusher: crusher,
       chebyshev: chebyshev,

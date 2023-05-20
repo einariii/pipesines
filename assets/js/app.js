@@ -77,7 +77,7 @@ let Hooks = {
           '    @moduledoc """',
           '        pipesines v0.1.0 (REGEX version only)',
           '        software for writing music in pure Elixir',
-          '        written in Phoenix LiveView, interoperation with Tone.js', 
+          '        written in Phoenix LiveView, sound synthesized via Tone.js', 
           '        alt + P to perform/pause',
           '        click "save composition" below to add your code to the community database (must be logged in)',
           '        in the event of audio glitch, refresh the page',
@@ -130,7 +130,7 @@ let Hooks = {
         const panner = new Tone.Panner(params.panner); // -1 to 1
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const phaser = new Tone.Phaser({ frequency: params.atoms, octaves: params.atoms, baseFrequency: params.note6 })
-        const pitchShift = new Tone.PitchShift(params.timeSignature);
+        const pitchShift = new Tone.PitchShift(params.capts);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
         // const limiter2 = new Tone.Limiter(-36);
