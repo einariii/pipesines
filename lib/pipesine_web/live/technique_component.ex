@@ -14,7 +14,7 @@ defmodule PipesineWeb.PipesineLive.TechniqueComponent do
       <p>
         <br><br>
         <h1>WITH RESPECT TO TECHNIQUE</h1>
-        Pipesines is designed for unusual or unfamiliar inspection of phenomena that may seem familiar to you (code and music, among other things). We want use to feel weird and confused. There is no guide, no user manual. Loosen your worries about understanding the system, and feel it, instead.
+        Pipesines is designed for unfamiliar interaction with familiar phenomena (code and music, among other things). We want you to feel weird or confused. There is no user manual. Loosen your worries about understanding the system, and feel it, instead.
 
         That said, a few breadcrumbs and caveats:
 
@@ -26,9 +26,13 @@ defmodule PipesineWeb.PipesineLive.TechniqueComponent do
 
         Try other programming languages!
 
-        Try other human languages
+        Try other human languages.
 
-        Be careful with numbers!
+        Try find & replace!
+
+        <code class="coded">:atoms</code> are fine conductors. <code class="coded">\n</code> hold much sway. and of course you can <code class="coded">&</code> sound.
+
+        Have fun. Be careful with numbers!
       </p>
     """
   end

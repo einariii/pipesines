@@ -81,6 +81,11 @@ defmodule PipesineWeb.PipesineLive do
         <.live_component module={PipesineWeb.PipesineLive.LabelComponent} id={@display_modal} />
       </.modal>
     <% end %>
+    <%= if @live_action == :technique do %>
+      <.modal>
+        <.live_component module={PipesineWeb.PipesineLive.TechniqueComponent} id={@display_modal} />
+      </.modal>
+    <% end %>
     """
   end
 

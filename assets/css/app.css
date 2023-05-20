@@ -463,7 +463,7 @@ hr {
 }
 
 .phx-modal-close {
-  color: #aaa;
+  color: #EFD9CE;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -471,7 +471,7 @@ hr {
 
 .phx-modal-close:hover,
 .phx-modal-close:focus {
-  color: black;
+  color: #7161EF;
   text-decoration: none;
   cursor: pointer;
 }
