@@ -7,6 +7,15 @@ CB9CF2
 
 7161EF
 
+
+
+
+<div class="timestamp"><%= "{:erlang.timestamp}" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %></div>
+
+
+
+
+
 # Description
 Let it glitch.
 

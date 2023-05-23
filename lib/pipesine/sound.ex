@@ -156,7 +156,7 @@ defmodule Pipesine.Sound do
         pipes >= 100 -> pipes * 0.001
         pipes >= 10 -> pipes * 0.01
         pipes >= 1 -> pipes * 0.1
-        true -> 0.0
+        true -> 0
       end
 
     # does this need its own defp? so that it can reset first?
@@ -165,7 +165,7 @@ defmodule Pipesine.Sound do
         chebyshev >= 10 -> chebyshev * 0.04
         chebyshev >= 5 -> chebyshev * 0.03
         chebyshev >= 1 -> chebyshev * 0.02
-        true -> 0.05
+        true -> 0
       end
 
     panner = delay_feedback - 0.5
@@ -466,21 +466,7 @@ defmodule Pipesine.Sound do
           Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
       end
 
-    tempo = min(abs(fundamental) / max(reduces + oks, 3), 400)
-
-    vibrato_depth =
-      if fundamental > 435 do
-        0.99
-      else
-        0.0
-      end
-
-    vibrato_frequency =
-      if fundamental > 770 do
-        770
-      else
-        0.99
-      end
+    tempo = min(abs(fundamental) / max(reduces + oks + capts, 3), 400)
 
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 
@@ -535,8 +521,6 @@ defmodule Pipesine.Sound do
       tempo: tempo,
       touche: touche,
       timeSignature: time_signature,
-      vibratoFrequency: vibrato_frequency,
-      vibratoDepth: vibrato_depth
     }
     |> IO.inspect(label: "DATA 4 JS")
   end
