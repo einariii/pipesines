@@ -351,6 +351,7 @@
 }
 
 .timestamp {
+  margin-left: -5px;
   font-size: 80%;
   font-family: 'dotgothic16';
   display: inline-block;

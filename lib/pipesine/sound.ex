@@ -156,7 +156,7 @@ defmodule Pipesine.Sound do
         pipes >= 100 -> pipes * 0.001
         pipes >= 10 -> pipes * 0.01
         pipes >= 1 -> pipes * 0.1
-        true -> 0.0
+        true -> 0
       end
 
     # does this need its own defp? so that it can reset first?
@@ -165,7 +165,7 @@ defmodule Pipesine.Sound do
         chebyshev >= 10 -> chebyshev * 0.04
         chebyshev >= 5 -> chebyshev * 0.03
         chebyshev >= 1 -> chebyshev * 0.02
-        true -> 0.05
+        true -> 0
       end
 
     panner = delay_feedback - 0.5
@@ -466,7 +466,7 @@ defmodule Pipesine.Sound do
           Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
       end
 
-    tempo = min(abs(fundamental) / max(reduces + oks, 3), 400)
+    tempo = min(abs(fundamental) / max(reduces + oks + capts, 3), 400)
 
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 

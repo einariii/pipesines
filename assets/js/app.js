@@ -163,9 +163,9 @@ let Hooks = {
         // console.log(this.seq2)
         // console.log(this.seq3)
         
-        this.seq && this.seq.dispose();
-        this.seq2 && this.seq2.dispose();
-        this.seq3 && this.seq3.dispose();
+        // this.seq && this.seq.dispose();
+        // this.seq2 && this.seq2.dispose();
+        // this.seq3 && this.seq3.dispose();
 
         this.seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, params.swingSubdivision, time);
@@ -201,6 +201,14 @@ let Hooks = {
         if (Tone.Transport.state == "started") {
           Tone.Transport.stop();
           Tone.Transport.cancel();
+          synth.dispose();
+          synth2.dispose();
+          synth3.dispose();
+          lfo.dispose();
+          lfo2.dispose();
+          this.seq.dispose();
+          this.seq2.dispose();
+          this.seq3.dispose();
         } else {
           /* allow users to toggle? */
           // Tone.Transport.clear();

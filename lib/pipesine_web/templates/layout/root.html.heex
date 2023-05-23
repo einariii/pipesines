@@ -22,7 +22,7 @@
     </div>
     <div>
     </div>
-        <p class="semanticversion scaled">&emsp;%{version: 0.1.0}</p><div class="timestamp"><%= "# {:erlang.timestamp}" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %></div>
+        <p class="semanticversion scaled">&emsp;%{version: 0.1.0}</p><div class="timestamp"><%= ":erlang.timestamp = {" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %><%= "}" %></div>
         <a href="/">
           <p class="dotgothic16 xxlfont title">P I P E S I N E S</p>
         </a>

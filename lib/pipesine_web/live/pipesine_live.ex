@@ -38,29 +38,29 @@ defmodule PipesineWeb.PipesineLive do
   def render(assigns) do
     ~H"""
     <div>
-    <div class="tooltip versions"><button class="krub">REGEX version</button>
-      <span class="tooltiptext">current default:<br>PCRE regular expressions!</span>
+    <div class="tooltip versions"><button class="krub">REGEX mode</button>
+      <span class="tooltiptext">current_default =<br>PCRE regular expressions!</span>
     </div>
-    <div class="tooltip versions"><button class="krub">AST version</button>
-      <span class="tooltiptext">future feature:<br>ABSTRACT SYNTAX TREE!</span>
+    <div class="tooltip versions"><button class="krub">AST mode</button>
+      <span class="tooltiptext">future_implement =<br>ABSTRACT SYNTAX TREE!</span>
     </div>
-    <div class="tooltip versions"><button class="krub">ML version</button>
-      <span class="tooltiptext">future feature:<br>MACHINE LEARNING!</span>
+    <div class="tooltip versions"><button class="krub">ML mode</button>
+      <span class="tooltiptext">future_implement =<br>MACHINE LEARNING!</span>
       </div>
     <div id="container" class="filtered" style="width: 1200px; height: 650px; border: 9px solid black" phx-hook="Editor"></div>
       <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">play code</button>
-        <span class="tooltiptext">type alt+p (option+p on mac) in the editor!</span>
+        <span class="tooltiptext">TO HEAR YOUR ELIXIR<br>type alt+p (option+p on mac) in the editor!</span>
       </div>
       <div class="tooltip versions"><button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
-        <span class="tooltiptext">registered users click here to persist your code in the community database!</span>
+        <span class="tooltiptext"><i>registered users click here to persist your code in the community database!</i></span>
       </div>
-      <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">the sound sounds broken</button>
+      <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">it sounds glitchy :(</button>
         <span class="tooltiptext">LET IT GLITCH<br>
-        The glitch is
-        a <i>tempreature</i>
-        (temporary feature/
+        to glitch is to take<br>
+        the <i>tempreature</i><br>
+        (temporary feature/<br>
         temporary creature)<br>
-        of the system. </span>
+        of the system </span>
       </div>
     </div>
     <div>

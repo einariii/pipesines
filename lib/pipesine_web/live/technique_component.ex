@@ -20,7 +20,7 @@ defmodule PipesineWeb.PipesineLive.TechniqueComponent do
 
         You only need a small number of characters to start getting sound—but too few, and the LiveView may crash.
 
-        Extremely short "programs" (at least two lines and several characters) can be extremely vibrant. Unsurprisingly, the larger your codebase, the less effects tiny changes will have. Curiously, programs somewhere in the middle—say, a few dozen lines in length—may maintain recognizabilty after several changes large or small.
+        Extremely short "programs" (at least two lines and several characters) can be quite vibrant. Extremely long programs can be quite resistent. Programs somewhere in the middle—say, a few dozen lines in length—may seem harder to predict.
 
         In the REGEX version of the software, Tone.js reacts to a specific set of Elixir syntax and semantics, but broadly speaking it's just reacting to text input, so...
 
