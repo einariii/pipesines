@@ -46,7 +46,7 @@ defmodule PipesineWeb.PipesineLive do
     </div>
     <div class="tooltip versions"><button class="krub">ML version</button>
       <span class="tooltiptext">future feature:<br>MACHINE LEARNING!</span>
-    </div>
+      </div>
     <div id="container" class="filtered" style="width: 1200px; height: 650px; border: 9px solid black" phx-hook="Editor"></div>
       <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">play code</button>
         <span class="tooltiptext">type alt+p (option+p on mac) in the editor!</span>
@@ -66,28 +66,28 @@ defmodule PipesineWeb.PipesineLive do
     <div>
 
     </div>
-    <%= if @live_action == :about do %>
-      <.modal>
-        <.live_component module={PipesineWeb.PipesineLive.AboutComponent} id={@display_modal} />
-      </.modal>
-    <% end %>
-    <%= if @live_action == :ethos do %>
-      <.modal>
-        <.live_component module={PipesineWeb.PipesineLive.EthosComponent} id={@display_modal} />
-      </.modal>
-    <% end %>
-    <%= if @live_action == :label do %>
-      <.modal>
-        <.live_component module={PipesineWeb.PipesineLive.LabelComponent} id={@display_modal} />
-      </.modal>
-    <% end %>
-    <%= if @live_action == :technique do %>
-      <.modal>
-        <.live_component module={PipesineWeb.PipesineLive.TechniqueComponent} id={@display_modal} />
-      </.modal>
-    <% end %>
-    """
-  end
+      <%= if @live_action == :about do %>
+        <.modal>
+          <.live_component module={PipesineWeb.PipesineLive.AboutComponent} id={@display_modal} />
+        </.modal>
+      <% end %>
+      <%= if @live_action == :ethos do %>
+        <.modal>
+          <.live_component module={PipesineWeb.PipesineLive.EthosComponent} id={@display_modal} />
+        </.modal>
+      <% end %>
+      <%= if @live_action == :label do %>
+        <.modal>
+          <.live_component module={PipesineWeb.PipesineLive.LabelComponent} id={@display_modal} />
+        </.modal>
+      <% end %>
+      <%= if @live_action == :technique do %>
+        <.modal>
+          <.live_component module={PipesineWeb.PipesineLive.TechniqueComponent} id={@display_modal} />
+        </.modal>
+      <% end %>
+      """
+    end
 
   def handle_event("perform", params, socket) do
     score = Pipesine.Sound.compose_composition(params["score"])

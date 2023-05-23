@@ -468,20 +468,6 @@ defmodule Pipesine.Sound do
 
     tempo = min(abs(fundamental) / max(reduces + oks, 3), 400)
 
-    vibrato_depth =
-      if fundamental > 435 do
-        0.99
-      else
-        0.0
-      end
-
-    vibrato_frequency =
-      if fundamental > 770 do
-        770
-      else
-        0.99
-      end
-
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 
     note4 = Enum.fetch!(all_notes, 7)
@@ -535,8 +521,6 @@ defmodule Pipesine.Sound do
       tempo: tempo,
       touche: touche,
       timeSignature: time_signature,
-      vibratoFrequency: vibrato_frequency,
-      vibratoDepth: vibrato_depth
     }
     |> IO.inspect(label: "DATA 4 JS")
   end

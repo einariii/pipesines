@@ -1,0 +1,16 @@
+# ERROR LOGS
+
+
+# Uncaught RangeError: Value must be within [-3.4028234663852886e+38, 3.4028234663852886e+38], got: 3.174834483372356e+41
+
+CODE: 
+https://raw.githubusercontent.com/datafruits/hotdog_lounge/main/web/channels/room_channel.ex
+
+
+*****************************************************************************************************************************
+
+
+# The connection to wss://pipesines.fly.dev/live/websocket?_csrf_token=fwAgcAZ4AiITNiBzY2I7HUAjFHpiGUEi5roCl2ReUlL22Txw1pzKVP5t&_track_static%5B0%5D=https%3A%2F%2Fpipesines.fly.dev%2Fassets%2Fapp-782d5cf647c977c1fa05da87d703e847.css%3Fvsn%3Dd&_track_static%5B1%5D=https%3A%2F%2Fpipesines.fly.dev%2Fassets%2Fapp-b6401f2dd0e02de88159433edc1a2704.js%3Fvsn%3Dd&_mounts=0&vsn=2.0.0 was interrupted while the page was loading.
+
+
+ app-b6401f2dd0e02de88159433edc1a2704.js:1196:21149

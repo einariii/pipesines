@@ -141,7 +141,7 @@
 
 .background {
   background: url("/images/dotgrid-23G12-693820.svg"), url("/images/dotgrid-23G12-703496.svg"), linear-gradient(.75turn, #CB9CF2, 83%, #1A002F);
-  /* background: url("/images/dotgrid-23G12-693820.svg"), url("/images/dotgrid-23G12-703496.svg"), linear-gradient(.75turn, #DEC0F1, 80%, #1A002F); */
+  /* background: url("/images/dotgrid-23G12-693820.svg"), url("/images/dotgrid-23G12-703496.svg"), linear-gradient(.75turn, #DEC0F1, #CB9CF2 80%, #1A002F); */
   /* background: #000000; */
   /* background: #EFD9CE; */
   background-blend-mode: soft-light;
@@ -350,8 +350,15 @@
   transform: scale(0.65);
 }
 
+.timestamp {
+  font-size: 80%;
+  font-family: 'dotgothic16';
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .title {
-  margin-left: 25px;
+  margin-left: 70px;
   margin-right: 0px;
   margin-top: 10px;
   font-size: 435%;
@@ -387,6 +394,7 @@
   font-family: 'dotgothic16';
   font-size: 140%;
   font-color: #957FEF;
+  display: inline-block;
 }
 
 .zbottom {
@@ -556,6 +564,7 @@ hr {
   bottom: 50%;
   left: 10%;
   z-index: 1;
+  display: inline-block;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
