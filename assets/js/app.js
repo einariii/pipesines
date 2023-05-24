@@ -41,18 +41,7 @@ let Hooks = {
     getSynth(instrument) {
       switch (instrument) {
         case "PolySynth":
-          return new Tone.PolySynth(
-          //   {
-          //   options: {
-          //     envelope : {
-          //       attack : 0.1,
-          //       decay : 0.01,
-          //       sustain : 0.01,
-          //       release : 0.9
-          //     }
-          //   }
-          // }
-          );
+          return new Tone.PolySynth();
         case "AMSynth":
           return new Tone.AMSynth();
         case "FMSynth":
@@ -71,13 +60,13 @@ let Hooks = {
     mounted() {
       let editor = monaco.editor.create(this.el, {
         value: [
-          '# binaural BEAM', 
+          '# binaural BEAM',
           '',
           'defmodule Pipesine.Example do',
           '    @moduledoc """',
           '        pipesines v0.1.0 (REGEX version only)',
           '        software for writing music in pure Elixir',
-          '        written in Phoenix LiveView, sound synthesized via Tone.js', 
+          '        written in Phoenix LiveView, sound synthesized via Tone.js',
           '        alt + P to perform/pause',
           '        click "save composition" below to add your code to the community database (must be logged in)',
           '        in the event of audio glitch, refresh the page',
@@ -106,7 +95,7 @@ let Hooks = {
           '',
           '',
           '',
-          
+
         ].join('\n'),
         language: 'elixir',
         theme: "vs-dark"
@@ -121,6 +110,9 @@ let Hooks = {
       });
 
       this.handleEvent("update_score", (params) => {
+        // const context = new Tone.Context({ latencyHint: "playback" });
+        // Tone.setContext(context);
+        // Tone.Context.lookAhead = 0;
         const synth = this.getSynth(params.instrument1);
         const synth2 = this.getSynth(params.instrument2);
         const synth3 = this.getSynth(params.instrument3);
@@ -132,13 +124,6 @@ let Hooks = {
         const pitchShift = new Tone.PitchShift(params.capts);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
-        // const limiter2 = new Tone.Limiter(-36);
-        // const env = new Tone.AmplitudeEnvelope({
-        //   attack: 0.9,
-        //   decay: 0.2,
-        //   sustain: 0.5,
-        //   release: 0.1,
-        // });
         const vol = new Tone.Volume(-3);
         const vol2 = new Tone.Volume(-12);
         const compressor = new Tone.Compressor(-18, 3);
@@ -146,23 +131,25 @@ let Hooks = {
         Tone.Transport.swing.value = params.swing;
         Tone.Transport.swingSubdivision.value = params.swingSubdivision;
         Tone.Transport.timeSignature = params.timeSignature;
-        Tone.Context.lookAhead = 0;
         var filter = new Tone.Filter(params.filterFrequency, "lowpass", -24);
         var filter2 = new Tone.Filter(params.filter2Frequency, "lowpass", -48);
-        var filter3 = new Tone.Filter(params.filter3Frequency, "notch", -48);
-        var lfo = new Tone.LFO(params.note4, 500, 5000); // hertz, min, max
+        // var filter3 = new Tone.Filter(params.filter3Frequency, "notch", -48);
+        var lfo = new Tone.LFO(params.capts, 500, 5000); // hertz, min, max
         var lfo2 = new Tone.LFO(params.hashes, 200, 1200); // hertz, min, max
         lfo.connect(filter2.frequency);
         lfo.connect(reverb.wet);
-        lfo.start();
         lfo2.connect(phaser.frequency);
-        lfo2.start();
+        
+        let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, pitchShift, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo, lfo2];
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
-        // console.log(this.seq)
-        // console.log(this.seq2)
-        // console.log(this.seq3)
-        
+        console.log(this.seq)
+        console.log(this.seq2)
+        console.log(this.seq3)
+        console.log(lfo)
+        console.log(synth)
+        console.log(delay)
+
         // this.seq && this.seq.dispose();
         // this.seq2 && this.seq2.dispose();
         // this.seq3 && this.seq3.dispose();
@@ -184,7 +171,7 @@ let Hooks = {
         limiter.connect(vol);
         vol.connect(compressor);
         compressor.toDestination();
-        
+
         synth2.connect(delay);
         delay.connect(chebyshev);
         chebyshev.connect(filter2);
@@ -201,17 +188,16 @@ let Hooks = {
         if (Tone.Transport.state == "started") {
           Tone.Transport.stop();
           Tone.Transport.cancel();
-          synth.dispose();
-          synth2.dispose();
-          synth3.dispose();
-          lfo.dispose();
-          lfo2.dispose();
+          // Tone.Context.close();
           this.seq.dispose();
           this.seq2.dispose();
           this.seq3.dispose();
+          for (let i = 0; i < synthsAndEffects.length; i++) {
+            synthsAndEffects[i].dispose();
+          };
         } else {
-          /* allow users to toggle? */
-          // Tone.Transport.clear();
+          lfo.start(0);
+          lfo2.start(0);
           this.seq.start(0);
           this.seq2.start(0);
           this.seq3.start(0);

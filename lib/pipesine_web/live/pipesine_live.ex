@@ -56,11 +56,11 @@ defmodule PipesineWeb.PipesineLive do
       </div>
       <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">it sounds glitchy :(</button>
         <span class="tooltiptext">LET IT GLITCH<br>
-        to glitch is to take<br>
-        the <i>tempreature</i><br>
-        (temporary feature/<br>
-        temporary creature)<br>
-        of the system </span>
+        glitch is the<br>
+        <i>tempreature</i><br>
+        a temporary feature<br>
+        a temporary creature<br>
+        of the system</span>
       </div>
     </div>
     <div>
