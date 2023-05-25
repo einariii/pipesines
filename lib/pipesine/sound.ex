@@ -90,7 +90,7 @@ defmodule Pipesine.Sound do
           "PolySynth"
 
         hashes >= 15 ->
-          "PluckSynth"
+          "AMSynth"
 
         hashes >= 10 ->
           "FMSynth"

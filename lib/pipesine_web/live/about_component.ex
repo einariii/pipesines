@@ -27,7 +27,7 @@ defmodule PipesineWeb.PipesineLive.AboutComponent do
 
       Pipesines is an open-source space where contributors are very much welcome. Future versions should improve on optimization, accessibility, and ideally, adding additional BEAM languages to the platform.
 
-      Built using Elixir, Phoenix LiveView, Ecto, PostgresQL, and the excellent Tone.js
+      Built using Elixir, Phoenix LiveView, Ecto, PostgresQL, and the excellent <a href="https://tonejs.github.io/">Tone.js</a>
 
       Inspired by GEMS by @nbw, ElixirWPM by @tindrew, Max Mathews, Joan Miller, Laurie Spiegel, the monome community, Sonic Pi, SuperCollider, Tidal Cycles, algorave, ok all computer music programming ever, and all the sociotechnical wonders of the BEAM ecosystem.
 
