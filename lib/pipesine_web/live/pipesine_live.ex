@@ -39,28 +39,25 @@ defmodule PipesineWeb.PipesineLive do
     ~H"""
     <div>
     <div class="tooltip versions"><button class="krub">REGEX mode</button>
-      <span class="tooltiptext">current_default =<br>PCRE regular expressions!</span>
+      <span class="tooltiptext">current default<br>PCRE regular expressions!</span>
     </div>
     <div class="tooltip versions"><button class="krub">AST mode</button>
-      <span class="tooltiptext">future_implement =<br>ABSTRACT SYNTAX TREE!</span>
+      <span class="tooltiptext">future implementation<br>ABSTRACT SYNTAX TREE!</span>
     </div>
     <div class="tooltip versions"><button class="krub">ML mode</button>
-      <span class="tooltiptext">future_implement =<br>MACHINE LEARNING!</span>
+      <span class="tooltiptext">future implementation<br>MACHINE LEARNING!</span>
       </div>
     <div id="container" class="filtered" style="width: 1200px; height: 650px; border: 9px solid black" phx-hook="Editor"></div>
       <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">play code</button>
-        <span class="tooltiptext">TO HEAR YOUR ELIXIR<br>type alt+p (option+p on mac) in the editor!</span>
+        <span class="tooltiptext">TO HEAR YOUR ELIXIR<br>type alt+p (opt+p on mac)<br>in the editor!</span>
       </div>
       <div class="tooltip versions"><button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
         <span class="tooltiptext"><i>registered users click here to persist your code in the community database!</i></span>
       </div>
       <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">it sounds glitchy :(</button>
         <span class="tooltiptext">LET IT GLITCH<br>
-        glitch is the<br>
-        <i>tempreature</i><br>
-        a temporary feature<br>
-        a temporary creature<br>
-        of the system</span>
+        <br>
+        ...or refresh the page</span>
       </div>
     </div>
     <div>

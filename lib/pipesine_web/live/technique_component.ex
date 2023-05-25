@@ -20,17 +20,15 @@ defmodule PipesineWeb.PipesineLive.TechniqueComponent do
 
         You only need a small number of characters to start getting sound—but too few, and the LiveView may crash.
 
-        Extremely short "programs" (at least two lines and several characters) can be quite vibrant. Extremely long programs can be quite resistent. Programs somewhere in the middle—say, a few dozen lines in length—may seem harder to predict.
+        Extremely short "programs" (at least two lines and several characters) can be quite vibrant. Extremely long programs can be resilient to change. Programs somewhere in the middle—say, a few dozen lines in length—may seem harder to predict.
 
-        In the REGEX version of the software, Tone.js reacts to a specific set of Elixir syntax and semantics, but broadly speaking it's just reacting to text input, so...
-
-        Try other programming languages!
-
-        Try other human languages.
-
-        Try find & replace!
-
-        <code class="coded">:atoms</code> are fine conductors. <code class="coded">\n</code> hold much sway. and of course you can <code class="coded">&</code> sound.
+        <ul><i>Some suggestions to get you started:</i><br><br>
+        <li>&emsp;Paste in code you are already familiar with!</li>
+        <li>&emsp;Try find & replace!</li>
+        <li>&emsp;Write garbage!</li>
+        <li>&emsp;Listen to code smells.</li>
+        <li>&emsp;Experiment with "Elixir-y" modules and syntax</li></ul>
+        In the REGEX version of the software, Tone.js reacts to a specific set of Elixir syntax and semantics, but on the back-end Elixir is just analyzing text input, so you can play with other programming or written languages.
 
         Have fun. Be careful with numbers!
       </p>

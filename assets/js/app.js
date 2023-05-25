@@ -112,7 +112,7 @@ let Hooks = {
       this.handleEvent("update_score", (params) => {
         // const context = new Tone.Context({ latencyHint: "playback" });
         // Tone.setContext(context);
-        // Tone.Context.lookAhead = 0;
+        Tone.Context.lookAhead = 0;
         const synth = this.getSynth(params.instrument1);
         const synth2 = this.getSynth(params.instrument2);
         const synth3 = this.getSynth(params.instrument3);
@@ -143,12 +143,18 @@ let Hooks = {
         let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, pitchShift, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo, lfo2];
 
         // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
-        console.log(this.seq)
-        console.log(this.seq2)
-        console.log(this.seq3)
-        console.log(lfo)
-        console.log(synth)
-        console.log(delay)
+        // console.log(this.seq)
+        // console.log(this.seq2)
+        // console.log(this.seq3)
+        // console.log(lfo)
+        // console.log(synth)
+        // console.log(delay)
+        // console.log(reverb)
+        // console.log(panner)
+        // console.log(pitchShift)
+        // console.log(crusher)
+        // console.log(phaser)
+        // console.log(limiter)
 
         // this.seq && this.seq.dispose();
         // this.seq2 && this.seq2.dispose();
@@ -189,12 +195,12 @@ let Hooks = {
           Tone.Transport.stop();
           Tone.Transport.cancel();
           // Tone.Context.close();
-          this.seq.dispose();
-          this.seq2.dispose();
-          this.seq3.dispose();
           for (let i = 0; i < synthsAndEffects.length; i++) {
             synthsAndEffects[i].dispose();
           };
+          this.seq.dispose();
+          this.seq2.dispose();
+          this.seq3.dispose();
         } else {
           lfo.start(0);
           lfo2.start(0);

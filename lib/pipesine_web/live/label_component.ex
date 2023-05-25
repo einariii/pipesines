@@ -14,9 +14,9 @@ defmodule PipesineWeb.PipesineLive.LabelComponent do
       <p>
         <br><br>
         <h1> The Pipesines record label</h1>
-          Pipesines is more than mere software. It is also an ethical project: it empowers users who have no musical experience to suddenly engage in music-making activity.
+          Pipesines is more than "mere" software. It has an ethical premise: to empower users who have no musical experience to suddenly engage in music-making activity.
 
-          But what happens after they close the browser? Can we allow our musical moments to persist beyond in time?
+          But what happens after they close the browser? Can we formalize our music-making to persist in time?
 
           Thinking in this spirit, we have initiated a record label for users to formally share their code-compositions as express musical works. Housed at <a href="https://pipesines.bandcamp.com">pipesines.bandcamp.com</a>, Pipesines Records welcomes contributions from the Elixir community and beyond.
 
