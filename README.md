@@ -1,4 +1,5 @@
 # Pipesines. Elixir as musical instrument.
+![Screenshot_77](https://github.com/einariii/pipesines/assets/90233563/4c43d3a2-40b9-4e6e-9400-4b1fc3340095)
 
 Pipesines (v0.1.0) is a web app that encourages Elixir developers to explore sound through code: general programming as a specific sonic experience.
 
