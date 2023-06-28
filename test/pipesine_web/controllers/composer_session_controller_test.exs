@@ -82,7 +82,9 @@ defmodule PipesineWeb.ComposerSessionControllerTest do
 
   describe "DELETE /composers/log_out" do
     test "logs the composer out", %{conn: conn, composer: composer} do
-      conn = conn |> log_in_composer(composer) |> delete(Routes.composer_session_path(conn, :delete))
+      conn =
+        conn |> log_in_composer(composer) |> delete(Routes.composer_session_path(conn, :delete))
+
       assert redirected_to(conn) == "/"
       refute get_session(conn, :composer_token)
       assert get_flash(conn, :info) =~ "Logged out successfully"

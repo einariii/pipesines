@@ -31,7 +31,10 @@ defmodule Pipesine.ComposersTest do
       %{id: id} = composer = composer_fixture()
 
       assert %Composer{id: ^id} =
-               Composers.get_composer_by_email_and_password(composer.email, valid_composer_password())
+               Composers.get_composer_by_email_and_password(
+                 composer.email,
+                 valid_composer_password()
+               )
     end
   end
 
@@ -59,7 +62,8 @@ defmodule Pipesine.ComposersTest do
     end
 
     test "validates email and password when given" do
-      {:error, changeset} = Composers.register_composer(%{email: "not valid", password: "not valid"})
+      {:error, changeset} =
+        Composers.register_composer(%{email: "not valid", password: "not valid"})
 
       assert %{
                email: ["must have the @ sign and no spaces"],
@@ -130,7 +134,9 @@ defmodule Pipesine.ComposersTest do
     end
 
     test "requires email to change", %{composer: composer} do
-      {:error, changeset} = Composers.apply_composer_email(composer, valid_composer_password(), %{})
+      {:error, changeset} =
+        Composers.apply_composer_email(composer, valid_composer_password(), %{})
+
       assert %{email: ["did not change"]} = errors_on(changeset)
     end
 
@@ -168,7 +174,10 @@ defmodule Pipesine.ComposersTest do
 
     test "applies the email without persisting it", %{composer: composer} do
       email = unique_composer_email()
-      {:ok, composer} = Composers.apply_composer_email(composer, valid_composer_password(), %{email: email})
+
+      {:ok, composer} =
+        Composers.apply_composer_email(composer, valid_composer_password(), %{email: email})
+
       assert composer.email == email
       assert Composers.get_composer!(composer.id).email != email
     end
@@ -200,7 +209,11 @@ defmodule Pipesine.ComposersTest do
 
       token =
         extract_composer_token(fn url ->
-          Composers.deliver_update_email_instructions(%{composer | email: email}, composer.email, url)
+          Composers.deliver_update_email_instructions(
+            %{composer | email: email},
+            composer.email,
+            url
+          )
         end)
 
       %{composer: composer, token: token, email: email}
@@ -223,7 +236,9 @@ defmodule Pipesine.ComposersTest do
     end
 
     test "does not update email if composer email changed", %{composer: composer, token: token} do
-      assert Composers.update_composer_email(%{composer | email: "current@example.com"}, token) == :error
+      assert Composers.update_composer_email(%{composer | email: "current@example.com"}, token) ==
+               :error
+
       assert Repo.get!(Composer, composer.id).email == composer.email
       assert Repo.get_by(ComposerToken, composer_id: composer.id)
     end
@@ -276,14 +291,18 @@ defmodule Pipesine.ComposersTest do
       too_long = String.duplicate("db", 100)
 
       {:error, changeset} =
-        Composers.update_composer_password(composer, valid_composer_password(), %{password: too_long})
+        Composers.update_composer_password(composer, valid_composer_password(), %{
+          password: too_long
+        })
 
       assert "should be at most 72 character(s)" in errors_on(changeset).password
     end
 
     test "validates current password", %{composer: composer} do
       {:error, changeset} =
-        Composers.update_composer_password(composer, "invalid", %{password: valid_composer_password()})
+        Composers.update_composer_password(composer, "invalid", %{
+          password: valid_composer_password()
+        })
 
       assert %{current_password: ["is not valid"]} = errors_on(changeset)
     end
@@ -488,7 +507,9 @@ defmodule Pipesine.ComposersTest do
     end
 
     test "updates the password", %{composer: composer} do
-      {:ok, updated_composer} = Composers.reset_composer_password(composer, %{password: "new valid password"})
+      {:ok, updated_composer} =
+        Composers.reset_composer_password(composer, %{password: "new valid password"})
+
       assert is_nil(updated_composer.password)
       assert Composers.get_composer_by_email_and_password(composer.email, "new valid password")
     end

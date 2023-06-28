@@ -17,25 +17,6 @@ import * as Tone from "../vendor/tone.js"
 // import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
 import * as monaco from 'monaco-editor';
 
-
-// self.MonacoEnvironment = {
-// 	getWorkerUrl: function (moduleId, label) {
-// 		if (label === 'json') {
-// 			return './vs/language/json/json.worker.js';
-// 		}
-// 		if (label === 'css' || label === 'scss' || label === 'less') {
-// 			return './vs/language/css/css.worker.js';
-// 		}
-// 		if (label === 'html' || label === 'handlebars' || label === 'razor') {
-// 			return './vs/language/html/html.worker.js';
-// 		}
-// 		if (label === 'typescript' || label === 'javascript') {
-// 			return './vs/language/typescript/ts.worker.js';
-// 		}
-// 		return './vs/editor/editor.worker.js';
-// 	}
-// };
-
 let Hooks = {
   Editor: {
     getSynth(instrument) {
@@ -121,7 +102,7 @@ let Hooks = {
         const panner = new Tone.Panner(params.panner); // -1 to 1
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
         const phaser = new Tone.Phaser({ frequency: params.atoms, octaves: params.capts, baseFrequency: params.note6 })
-        const pitchShift = new Tone.PitchShift(params.capts);
+        // const pitchShift = new Tone.PitchShift(params.capts);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
         const vol = new Tone.Volume(-3);
@@ -133,7 +114,7 @@ let Hooks = {
         Tone.Transport.timeSignature = params.timeSignature;
         var filter = new Tone.Filter(params.filterFrequency, "lowpass", -24);
         var filter2 = new Tone.Filter(params.filter2Frequency, "lowpass", -48);
-        // var filter3 = new Tone.Filter(params.filter3Frequency, "notch", -48);
+        var filter3 = new Tone.Filter(params.filter3Frequency, "notch", -48);
         var lfo = new Tone.LFO(params.capts, 500, 5000); // hertz, min, max
         var lfo2 = new Tone.LFO(params.hashes, 200, 1200); // hertz, min, max
         lfo.connect(filter2.frequency);
@@ -141,24 +122,6 @@ let Hooks = {
         lfo2.connect(phaser.frequency);
         
         let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, pitchShift, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo, lfo2];
-
-        // const latency = Tone.setContext(new Tone.Context({ latencyHint : "playback" }));
-        // console.log(this.seq)
-        // console.log(this.seq2)
-        // console.log(this.seq3)
-        // console.log(lfo)
-        // console.log(synth)
-        // console.log(delay)
-        // console.log(reverb)
-        // console.log(panner)
-        // console.log(pitchShift)
-        // console.log(crusher)
-        // console.log(phaser)
-        // console.log(limiter)
-
-        // this.seq && this.seq.dispose();
-        // this.seq2 && this.seq2.dispose();
-        // this.seq3 && this.seq3.dispose();
 
         this.seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, params.swingSubdivision, time);
@@ -182,11 +145,11 @@ let Hooks = {
         delay.connect(chebyshev);
         chebyshev.connect(filter2);
         filter2.connect(vol2);
-        vol2.connect(compressor);
+        vol2.connect(compressor);     
         compressor.toDestination();
 
-        synth3.connect(pitchShift);
-        pitchShift.connect(reverb);
+        synth3.connect(filter3);
+        filter3.connect(reverb);
         reverb.connect(phaser);
         phaser.connect(compressor);
         compressor.toDestination();
@@ -218,7 +181,7 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken }, hooks: Hooks })
 
 // Show progress bar on live navigation and form submits
-topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" })
+topbar.config({ barColors: { 0: "#71617EF" }, shadowColor: "rgba(0, 0, 0, .3)" })
 window.addEventListener("phx:page-loading-start", info => topbar.show())
 window.addEventListener("phx:page-loading-stop", info => topbar.hide())
 // window.addEventListener("phx:perform", event => {

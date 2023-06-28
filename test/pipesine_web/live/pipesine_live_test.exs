@@ -8,8 +8,6 @@ defmodule PipesineWeb.PipesineLiveTest do
   # @update_attrs %{composer: "some updated composer", score: "some updated score"}
   # @invalid_attrs %{composer: nil, score: nil}
 
-
-
   describe "Main View" do
     # setup [:create_composition]
 

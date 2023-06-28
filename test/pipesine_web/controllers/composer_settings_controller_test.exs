@@ -95,13 +95,22 @@ defmodule PipesineWeb.ComposerSettingsControllerTest do
 
       token =
         extract_composer_token(fn url ->
-          Composers.deliver_update_email_instructions(%{composer | email: email}, composer.email, url)
+          Composers.deliver_update_email_instructions(
+            %{composer | email: email},
+            composer.email,
+            url
+          )
         end)
 
       %{token: token, email: email}
     end
 
-    test "updates the composer email once", %{conn: conn, composer: composer, token: token, email: email} do
+    test "updates the composer email once", %{
+      conn: conn,
+      composer: composer,
+      token: token,
+      email: email
+    } do
       conn = get(conn, Routes.composer_settings_path(conn, :confirm_email, token))
       assert redirected_to(conn) == Routes.composer_settings_path(conn, :edit)
       assert get_flash(conn, :info) =~ "Email changed successfully"

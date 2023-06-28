@@ -149,7 +149,7 @@ defmodule Pipesine.Sound do
         true -> 12
       end
 
-    chebyshev = (pipes * pchars + bits) |> rem(17) |> abs()
+    chebyshev = (pipes * pchars + bits) |> rem(13) |> abs()
 
     delay_time =
       cond do
@@ -159,7 +159,6 @@ defmodule Pipesine.Sound do
         true -> 0
       end
 
-    # does this need its own defp? so that it can reset first?
     delay_feedback =
       cond do
         chebyshev >= 10 -> chebyshev * 0.04
@@ -470,18 +469,14 @@ defmodule Pipesine.Sound do
 
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 
-    note4 = Enum.fetch!(all_notes, 7)
-    note6 = Enum.fetch!(all_notes, 9)
-    note9 = Enum.fetch!(all_notes, 12)
-    note11 = Enum.fetch!(all_notes, 14)
+    note4 = Enum.fetch!(all_notes, 3)
+    note6 = Enum.fetch!(all_notes, 5)
+    note9 = Enum.fetch!(all_notes, 7)
+    note11 = Enum.fetch!(all_notes, 9)
 
     filter_frequency = note4
     filter2_frequency = note11
-    filter3_frequency = note9 * 2
-
-    IO.inspect(indx, label: "INDX")
-    IO.inspect(pchars, label: "PCHARS")
-    IO.inspect(digits, label: "FIGITS")
+    filter3_frequency = note9
 
     %{
       note4: note4,
