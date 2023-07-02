@@ -101,7 +101,7 @@ let Hooks = {
         const crusher = new Tone.BitCrusher(params.crusher); // range 1-16
         const panner = new Tone.Panner(params.panner); // -1 to 1
         const delay = new Tone.PingPongDelay(params.delayTime, params.delayFeedback); // time and delay both 0 to 1
-        const phaser = new Tone.Phaser({ frequency: params.atoms, octaves: params.capts, baseFrequency: params.note6 })
+        const phaser = new Tone.Phaser({ frequency: params.atoms, octaves: params.capts, baseFrequency: params.note6 });
         // const pitchShift = new Tone.PitchShift(params.capts);
         const reverb = new Tone.Reverb(params.reverbDecay, params.reverbWet);
         const limiter = new Tone.Limiter(-36);
@@ -120,7 +120,9 @@ let Hooks = {
         lfo.connect(filter2.frequency);
         lfo.connect(reverb.wet);
         lfo2.connect(phaser.frequency);
-        
+
+        // const kick = new Tone.Player("https://tonejs.github.io/audio/casio/A1.mp3");
+
         let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo, lfo2];
 
         this.seq = new Tone.Pattern((time, note) => {
@@ -132,6 +134,9 @@ let Hooks = {
         this.seq3 = new Tone.Pattern((time, note) => {
           synth3.triggerAttackRelease(note, params.noteLength3, time);
         }, params.phrase3, params.pattern3);
+        // this.riddim = new Tone.Sequence((time, note) => {
+        //   kick.start(time);
+        // }, params.drum1);
 
         synth.connect(panner)
         panner.connect(filter);
@@ -145,7 +150,7 @@ let Hooks = {
         delay.connect(chebyshev);
         chebyshev.connect(filter2);
         filter2.connect(vol2);
-        vol2.connect(compressor);     
+        vol2.connect(compressor);
         compressor.toDestination();
 
         synth3.connect(filter3);
@@ -153,6 +158,10 @@ let Hooks = {
         reverb.connect(phaser);
         phaser.connect(compressor);
         compressor.toDestination();
+
+        // kick.connect(phaser);
+        // phaser.connect(compressor);
+        // compressor.toDestination();
 
         if (Tone.Transport.state == "started") {
           Tone.Transport.stop();
@@ -164,12 +173,14 @@ let Hooks = {
           this.seq.dispose();
           this.seq2.dispose();
           this.seq3.dispose();
+          // this.riddim.dispose();
         } else {
           lfo.start(0);
           lfo2.start(0);
           this.seq.start(0);
           this.seq2.start(0);
           this.seq3.start(0);
+          // this.riddim.start(0);
           Tone.Transport.start("+0.1");
         }
       })

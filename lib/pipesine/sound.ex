@@ -465,6 +465,8 @@ defmodule Pipesine.Sound do
           Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
       end
 
+    drum1 = Enum.filter(phrase2, fn note -> rem(note, 3) == 0 end) |> Enum.shuffle()
+
     tempo = min(abs(fundamental) / max(reduces + oks + capts, 3), 400)
 
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
@@ -509,6 +511,7 @@ defmodule Pipesine.Sound do
       phrase: phrase,
       phrase2: phrase2,
       phrase3: phrase3,
+      drum1: drum1,
       reverbDecay: reverb_decay,
       reverbWet: reverb_wet,
       swing: swing,
