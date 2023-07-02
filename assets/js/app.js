@@ -121,7 +121,7 @@ let Hooks = {
         lfo.connect(reverb.wet);
         lfo2.connect(phaser.frequency);
         
-        let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, pitchShift, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo, lfo2];
+        let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo, lfo2];
 
         this.seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, params.swingSubdivision, time);
@@ -181,7 +181,7 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken }, hooks: Hooks })
 
 // Show progress bar on live navigation and form submits
-topbar.config({ barColors: { 0: "#71617EF" }, shadowColor: "rgba(0, 0, 0, .3)" })
+topbar.config({ barColors: { 0: "rgb(113, 97, 126, 0.6)" }, shadowColor: "rgba(0, 0, 0, .3)" })
 window.addEventListener("phx:page-loading-start", info => topbar.show())
 window.addEventListener("phx:page-loading-stop", info => topbar.hide())
 // window.addEventListener("phx:perform", event => {
