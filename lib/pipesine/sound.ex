@@ -195,14 +195,25 @@ defmodule Pipesine.Sound do
 
     fundamental =
       cond do
-        fundamental_init > 6000 -> fundamental_init / 12
-        fundamental_init > 5000 -> fundamental_init / 10
-        fundamental_init > 4000 -> fundamental_init / 8
-        fundamental_init > 3000 -> fundamental_init / 6
-        fundamental_init > 2000 -> fundamental_init / 4
-        fundamental_init > 1000 -> fundamental_init / 2
+        fundamental_init > 6000 -> 220.0
+        fundamental_init > 5000 -> 246.94
+        fundamental_init > 4000 -> 466.16
+        fundamental_init > 3000 -> 783.99
+        fundamental_init > 2000 -> 987.77
+        fundamental_init > 1000 -> 698.46
         true -> fundamental_init / 1
       end
+
+    # fundamental =
+    #   cond do
+    #     fundamental_init > 6000 -> fundamental_init / 12
+    #     fundamental_init > 5000 -> fundamental_init / 10
+    #     fundamental_init > 4000 -> fundamental_init / 8
+    #     fundamental_init > 3000 -> fundamental_init / 6
+    #     fundamental_init > 2000 -> fundamental_init / 4
+    #     fundamental_init > 1000 -> fundamental_init / 2
+    #     true -> fundamental_init / 1
+    #   end
 
     all_notes =
       case scale do
