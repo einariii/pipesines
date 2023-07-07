@@ -29,7 +29,7 @@ defmodule PipesineWeb.PipesineLive.AboutComponent do
 
       Built using Elixir, Phoenix LiveView, Ecto, PostgresQL, and the excellent <a href="https://tonejs.github.io/">Tone.js</a>
 
-      Inspired by GEMS by @nbw, ElixirWPM by @tindrew, Max Mathews, Joan Miller, Laurie Spiegel, the monome community, Sonic Pi, SuperCollider, Tidal Cycles, algorave, ok all computer music programming ever, and all the sociotechnical wonders of the BEAM ecosystem.
+      Inspired by GEMS by @nbw, Beats by @mtrudel, Max Mathews, Joan Miller, Laurie Spiegel, the monome community, Sonic Pi, SuperCollider, Tidal Cycles, algorave, ok all computer music programming ever, and all the sociotechnical wonders of the BEAM ecosystem.
 
       Special thanks to @brooklinjazz, @czrpb, @byronsalty, @IciaCarroBarallobre, @a-alhusaini, @BigSpaces, @w0rd-driven, and all my colleagues at DockYard Academy for their support and camaraderie.
       </p>

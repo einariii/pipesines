@@ -54,7 +54,7 @@ defmodule PipesineWeb.PipesineLive do
     <div class="tooltip versions"><button class="krub" phx-click="save" style="margin-top: 8px">save composition</button>
       <span class="tooltiptext"><i>registered users click here to persist your code in the community database!</i></span>
     </div>
-    <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">it sounds glitchy :(</button>
+    <div class="tooltip versions"><button class="krub" phx-click="perform" style="margin-top: 8px">it sounds glitchy</button>
       <span class="tooltiptext">LET IT GLITCH<br>
       <br>
       ...or refresh the page</span>
