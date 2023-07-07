@@ -114,7 +114,7 @@ let Hooks = {
         Tone.Transport.timeSignature = params.timeSignature;
         var filter = new Tone.Filter(params.filterFrequency, "lowpass", -24);
         var filter2 = new Tone.Filter(params.filter2Frequency, "lowpass", -48);
-        var filter3 = new Tone.Filter(params.filter3Frequency, "notch", -48);
+        var filter3 = new Tone.Filter(params.filter3Frequency, "bandpass", -48);
         var lfo = new Tone.LFO(params.capts, 500, 5000); // hertz, min, max
         var lfo2 = new Tone.LFO(params.hashes, 200, 1200); // hertz, min, max
         lfo.connect(filter2.frequency);
@@ -146,12 +146,11 @@ let Hooks = {
         vol.connect(compressor);
         compressor.toDestination();
 
-        synth2.connect(delay);
-        delay.connect(chebyshev);
-        chebyshev.connect(filter2);
-        filter2.connect(vol2);
-        vol2.connect(compressor);
-        compressor.toDestination();
+        // synth2.connect(delay);
+        // delay.connect(filter2);
+        // filter2.connect(vol2);
+        // vol2.connect(compressor);
+        // compressor.toDestination();
 
         synth3.connect(filter3);
         filter3.connect(reverb);

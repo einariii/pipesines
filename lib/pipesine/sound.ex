@@ -156,7 +156,7 @@ defmodule Pipesine.Sound do
         pipes >= 100 -> pipes * 0.001
         pipes >= 10 -> pipes * 0.01
         pipes >= 1 -> pipes * 0.1
-        true -> 0
+        true -> 0.2
       end
 
     delay_feedback =
@@ -164,7 +164,7 @@ defmodule Pipesine.Sound do
         chebyshev >= 10 -> chebyshev * 0.04
         chebyshev >= 5 -> chebyshev * 0.03
         chebyshev >= 1 -> chebyshev * 0.02
-        true -> 0
+        true -> 0.1
       end
 
     panner = delay_feedback - 0.5
