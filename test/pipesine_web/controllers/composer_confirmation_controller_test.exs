@@ -30,7 +30,10 @@ defmodule PipesineWeb.ComposerConfirmationControllerTest do
       assert Repo.get_by!(Composers.ComposerToken, composer_id: composer.id).context == "confirm"
     end
 
-    test "does not send confirmation token if Composer is confirmed", %{conn: conn, composer: composer} do
+    test "does not send confirmation token if Composer is confirmed", %{
+      conn: conn,
+      composer: composer
+    } do
       Repo.update!(Composers.Composer.confirm_changeset(composer))
 
       conn =

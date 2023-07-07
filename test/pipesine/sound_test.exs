@@ -38,7 +38,9 @@ defmodule Pipesine.SoundTest do
       composition = composition_fixture()
       update_attrs = %{composer: "some updated composer", score: "some updated score"}
 
-      assert {:ok, %Composition{} = composition} = Sound.update_composition(composition, update_attrs)
+      assert {:ok, %Composition{} = composition} =
+               Sound.update_composition(composition, update_attrs)
+
       assert composition.composer == "some updated composer"
       assert composition.score == "some updated score"
     end

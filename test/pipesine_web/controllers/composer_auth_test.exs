@@ -20,23 +20,36 @@ defmodule PipesineWeb.ComposerAuthTest do
     test "stores the composer token in the session", %{conn: conn, composer: composer} do
       conn = ComposerAuth.log_in_composer(conn, composer)
       assert token = get_session(conn, :composer_token)
-      assert get_session(conn, :live_socket_id) == "composers_sessions:#{Base.url_encode64(token)}"
+
+      assert get_session(conn, :live_socket_id) ==
+               "composers_sessions:#{Base.url_encode64(token)}"
+
       assert redirected_to(conn) == "/"
       assert Composers.get_composer_by_session_token(token)
     end
 
     test "clears everything previously stored in the session", %{conn: conn, composer: composer} do
-      conn = conn |> put_session(:to_be_removed, "value") |> ComposerAuth.log_in_composer(composer)
+      conn =
+        conn |> put_session(:to_be_removed, "value") |> ComposerAuth.log_in_composer(composer)
+
       refute get_session(conn, :to_be_removed)
     end
 
     test "redirects to the configured path", %{conn: conn, composer: composer} do
-      conn = conn |> put_session(:composer_return_to, "/hello") |> ComposerAuth.log_in_composer(composer)
+      conn =
+        conn
+        |> put_session(:composer_return_to, "/hello")
+        |> ComposerAuth.log_in_composer(composer)
+
       assert redirected_to(conn) == "/hello"
     end
 
     test "writes a cookie if remember_me is configured", %{conn: conn, composer: composer} do
-      conn = conn |> fetch_cookies() |> ComposerAuth.log_in_composer(composer, %{"remember_me" => "true"})
+      conn =
+        conn
+        |> fetch_cookies()
+        |> ComposerAuth.log_in_composer(composer, %{"remember_me" => "true"})
+
       assert get_session(conn, :composer_token) == conn.cookies[@remember_me_cookie]
 
       assert %{value: signed_token, max_age: max_age} = conn.resp_cookies[@remember_me_cookie]
@@ -85,13 +98,20 @@ defmodule PipesineWeb.ComposerAuthTest do
   describe "fetch_current_composer/2" do
     test "authenticates composer from session", %{conn: conn, composer: composer} do
       composer_token = Composers.generate_composer_session_token(composer)
-      conn = conn |> put_session(:composer_token, composer_token) |> ComposerAuth.fetch_current_composer([])
+
+      conn =
+        conn
+        |> put_session(:composer_token, composer_token)
+        |> ComposerAuth.fetch_current_composer([])
+
       assert conn.assigns.current_composer.id == composer.id
     end
 
     test "authenticates composer from cookies", %{conn: conn, composer: composer} do
       logged_in_conn =
-        conn |> fetch_cookies() |> ComposerAuth.log_in_composer(composer, %{"remember_me" => "true"})
+        conn
+        |> fetch_cookies()
+        |> ComposerAuth.log_in_composer(composer, %{"remember_me" => "true"})
 
       composer_token = logged_in_conn.cookies[@remember_me_cookie]
       %{value: signed_token} = logged_in_conn.resp_cookies[@remember_me_cookie]
@@ -115,7 +135,11 @@ defmodule PipesineWeb.ComposerAuthTest do
 
   describe "redirect_if_composer_is_authenticated/2" do
     test "redirects if composer is authenticated", %{conn: conn, composer: composer} do
-      conn = conn |> assign(:current_composer, composer) |> ComposerAuth.redirect_if_composer_is_authenticated([])
+      conn =
+        conn
+        |> assign(:current_composer, composer)
+        |> ComposerAuth.redirect_if_composer_is_authenticated([])
+
       assert conn.halted
       assert redirected_to(conn) == "/"
     end
@@ -162,7 +186,11 @@ defmodule PipesineWeb.ComposerAuthTest do
     end
 
     test "does not redirect if composer is authenticated", %{conn: conn, composer: composer} do
-      conn = conn |> assign(:current_composer, composer) |> ComposerAuth.require_authenticated_composer([])
+      conn =
+        conn
+        |> assign(:current_composer, composer)
+        |> ComposerAuth.require_authenticated_composer([])
+
       refute conn.halted
       refute conn.status
     end

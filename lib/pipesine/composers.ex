@@ -158,7 +158,10 @@ defmodule Pipesine.Composers do
 
     Ecto.Multi.new()
     |> Ecto.Multi.update(:composer, changeset)
-    |> Ecto.Multi.delete_all(:tokens, ComposerToken.composer_and_contexts_query(composer, [context]))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      ComposerToken.composer_and_contexts_query(composer, [context])
+    )
   end
 
   @doc """
@@ -170,12 +173,21 @@ defmodule Pipesine.Composers do
       {:ok, %{to: ..., body: ...}}
 
   """
-  def deliver_update_email_instructions(%Composer{} = composer, current_email, update_email_url_fun)
+  def deliver_update_email_instructions(
+        %Composer{} = composer,
+        current_email,
+        update_email_url_fun
+      )
       when is_function(update_email_url_fun, 1) do
-    {encoded_token, composer_token} = ComposerToken.build_email_token(composer, "change:#{current_email}")
+    {encoded_token, composer_token} =
+      ComposerToken.build_email_token(composer, "change:#{current_email}")
 
     Repo.insert!(composer_token)
-    ComposerNotifier.deliver_update_email_instructions(composer, update_email_url_fun.(encoded_token))
+
+    ComposerNotifier.deliver_update_email_instructions(
+      composer,
+      update_email_url_fun.(encoded_token)
+    )
   end
 
   @doc """
@@ -267,7 +279,11 @@ defmodule Pipesine.Composers do
     else
       {encoded_token, composer_token} = ComposerToken.build_email_token(composer, "confirm")
       Repo.insert!(composer_token)
-      ComposerNotifier.deliver_confirmation_instructions(composer, confirmation_url_fun.(encoded_token))
+
+      ComposerNotifier.deliver_confirmation_instructions(
+        composer,
+        confirmation_url_fun.(encoded_token)
+      )
     end
   end
 
@@ -290,7 +306,10 @@ defmodule Pipesine.Composers do
   defp confirm_composer_multi(composer) do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:composer, Composer.confirm_changeset(composer))
-    |> Ecto.Multi.delete_all(:tokens, ComposerToken.composer_and_contexts_query(composer, ["confirm"]))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      ComposerToken.composer_and_contexts_query(composer, ["confirm"])
+    )
   end
 
   ## Reset password
@@ -308,7 +327,11 @@ defmodule Pipesine.Composers do
       when is_function(reset_password_url_fun, 1) do
     {encoded_token, composer_token} = ComposerToken.build_email_token(composer, "reset_password")
     Repo.insert!(composer_token)
-    ComposerNotifier.deliver_reset_password_instructions(composer, reset_password_url_fun.(encoded_token))
+
+    ComposerNotifier.deliver_reset_password_instructions(
+      composer,
+      reset_password_url_fun.(encoded_token)
+    )
   end
 
   @doc """

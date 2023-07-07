@@ -49,6 +49,7 @@ defmodule PipesineWeb.CompositionLive.Index do
   def handle_info({:composition_created, composition}, socket) do
     {:noreply, update(socket, :compositions, fn compositions -> [composition | compositions] end)}
   end
+
   defp list_compositions do
     Sound.list_compositions()
   end

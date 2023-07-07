@@ -149,23 +149,22 @@ defmodule Pipesine.Sound do
         true -> 12
       end
 
-    chebyshev = (pipes * pchars + bits) |> rem(17) |> abs()
+    chebyshev = (pipes * pchars + bits) |> rem(13) |> abs()
 
     delay_time =
       cond do
         pipes >= 100 -> pipes * 0.001
         pipes >= 10 -> pipes * 0.01
         pipes >= 1 -> pipes * 0.1
-        true -> 0
+        true -> 0.2
       end
 
-    # does this need its own defp? so that it can reset first?
     delay_feedback =
       cond do
         chebyshev >= 10 -> chebyshev * 0.04
         chebyshev >= 5 -> chebyshev * 0.03
         chebyshev >= 1 -> chebyshev * 0.02
-        true -> 0
+        true -> 0.1
       end
 
     panner = delay_feedback - 0.5
@@ -196,14 +195,25 @@ defmodule Pipesine.Sound do
 
     fundamental =
       cond do
-        fundamental_init > 6000 -> fundamental_init / 12
-        fundamental_init > 5000 -> fundamental_init / 10
-        fundamental_init > 4000 -> fundamental_init / 8
-        fundamental_init > 3000 -> fundamental_init / 6
-        fundamental_init > 2000 -> fundamental_init / 4
-        fundamental_init > 1000 -> fundamental_init / 2
+        fundamental_init > 6000 -> 220.0
+        fundamental_init > 5000 -> 246.94
+        fundamental_init > 4000 -> 466.16
+        fundamental_init > 3000 -> 783.99
+        fundamental_init > 2000 -> 987.77
+        fundamental_init > 1000 -> 698.46
         true -> fundamental_init / 1
       end
+
+    # fundamental =
+    #   cond do
+    #     fundamental_init > 6000 -> fundamental_init / 12
+    #     fundamental_init > 5000 -> fundamental_init / 10
+    #     fundamental_init > 4000 -> fundamental_init / 8
+    #     fundamental_init > 3000 -> fundamental_init / 6
+    #     fundamental_init > 2000 -> fundamental_init / 4
+    #     fundamental_init > 1000 -> fundamental_init / 2
+    #     true -> fundamental_init / 1
+    #   end
 
     all_notes =
       case scale do
@@ -466,22 +476,20 @@ defmodule Pipesine.Sound do
           Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
       end
 
+    drum1 = Enum.filter(phrase2, fn note -> rem(note, 3) == 0 end) |> Enum.shuffle()
+
     tempo = min(abs(fundamental) / max(reduces + oks + capts, 3), 400)
 
     # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 
-    note4 = Enum.fetch!(all_notes, 7)
-    note6 = Enum.fetch!(all_notes, 9)
-    note9 = Enum.fetch!(all_notes, 12)
-    note11 = Enum.fetch!(all_notes, 14)
+    note4 = Enum.fetch!(all_notes, 3)
+    note6 = Enum.fetch!(all_notes, 5)
+    note9 = Enum.fetch!(all_notes, 7)
+    note11 = Enum.fetch!(all_notes, 9)
 
     filter_frequency = note4
     filter2_frequency = note11
-    filter3_frequency = note9 * 2
-
-    IO.inspect(indx, label: "INDX")
-    IO.inspect(pchars, label: "PCHARS")
-    IO.inspect(digits, label: "FIGITS")
+    filter3_frequency = note9
 
     %{
       note4: note4,
@@ -514,6 +522,7 @@ defmodule Pipesine.Sound do
       phrase: phrase,
       phrase2: phrase2,
       phrase3: phrase3,
+      drum1: drum1,
       reverbDecay: reverb_decay,
       reverbWet: reverb_wet,
       swing: swing,
