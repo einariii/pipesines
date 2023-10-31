@@ -10,24 +10,25 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body class="background justify-items-stretch">
-    <div class="dotgothic16">
-      <nav class="menuright">
-        <PipesineWeb.Components.link href="/about">:about</PipesineWeb.Components.link>
-        <PipesineWeb.Components.link href="/ethos">:ethos</PipesineWeb.Components.link>
-        <PipesineWeb.Components.link href="/technique">:technique</PipesineWeb.Components.link>
-        <PipesineWeb.Components.link href="/label">:label</PipesineWeb.Components.link>
-        <PipesineWeb.Components.link href="/compositions">:compositions</PipesineWeb.Components.link>
-        <a class=""><%= render "_composer_menu.html", assigns %></a>
-      </nav>
-    </div>
-    <div>
-    </div>
-        <p class="semanticversion scaled">&emsp;%{version: 0.1.0}</p><div class="timestamp"><%= ":erlang.timestamp = {" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %><%= "}" %></div>
-        <a href="/">
-          <p class="dotgothic16 xxlfont title">P I P E S I N E S</p>
-        </a>
+    <header class="topbar">
+      <div class="dotgothic16">
+        <nav class="menuright">
+          <PipesineWeb.Components.link href="/about">:about</PipesineWeb.Components.link>
+          <PipesineWeb.Components.link href="/ethos">:ethos</PipesineWeb.Components.link>
+          <PipesineWeb.Components.link href="/technique">:technique</PipesineWeb.Components.link>
+          <PipesineWeb.Components.link href="/label">:label</PipesineWeb.Components.link>
+          <%# <PipesineWeb.Components.link href="/compositions">:compositions</PipesineWeb.Components.link>
+          <a class=""><%= render "_composer_menu.html", assigns </a> %> 
+        </nav>
+      </div>
+      <p class="timestamp"><%= ":erlang.timestamp = {" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %><%= "}" %></p>
+    </header>
+    <a href="/">
+      <p class="krub italic title">p i p e s i n e s</p>
+    </a>
+    <p class="semanticversion scaled">&emsp;%{version: 0.1.0}</p>
     <%= @inner_content %>
-    <div>
+    <div class="waves">
       <img class="imgfilter" src="/images/sinewave.gif">
       <img class="imgfilter2" src="/images/sinewave.gif">
       <img class="imgfilter18" src="/images/sinewave.gif">
