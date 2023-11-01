@@ -83,10 +83,10 @@
 .menuright {
   position: fixed;
   /* padding-left: 1180px; */
-  right: 5%;
+  right: 2%;
   /* top: 8%; */
-  font-size: 105%;
-  white-space: normal;
+  /* font-size: 105%; */
+  /* white-space: normal; */
   /* flex: initial; */
 
 }
@@ -143,13 +143,22 @@
 }
 
 .background {
-  background: url("/images/dotgrid-23G12-693820.svg"), url("/images/dotgrid-23G12-703496.svg"), #CB9CF2;
+  background: url("/images/dotgrid-23G12-693820.svg"), url("/images/dotgrid-23G12-703496.svg"), #0b0212;
   /* background: url("/images/dotgrid-23G12-693820.svg"), url("/images/dotgrid-23G12-703496.svg"), linear-gradient(.75turn, #CB9CF2, 13%, #1A002F); */
   /* background: url("/images/dotgrid-23G12-693820.svg"), url("/images/dotgrid-23G12-703496.svg"), linear-gradient(.75turn, #DEC0F1, #CB9CF2 80%, #1A002F); */
   /* background: #000000; */
   /* background: #EFD9CE; */
-  background-blend-mode: hard-light;
+  background-blend-mode: soft-light;
   background-size: 174%;
+}
+
+button {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: 'vt323';
+  text-align: center;
+  align-items: center;
+  display: flex;
 }
 
 button:hover {
@@ -158,6 +167,7 @@ button:hover {
 
 button:disabled {
   opacity: 100%;
+  /* color: #fff; */
   background-color: #EFD9CE;
   color: #000;
 }
@@ -173,6 +183,7 @@ button:disabled {
 
 .filtered {
   filter: hue-rotate(-0.75turn);
+  opacity: 55%;
 }
 /* background: url("/images/pipesine_logo_main.png"), url("/images/dotgrid-23G12-703496.svg"), #CB9CF2; */
 /* .menu {
@@ -189,7 +200,7 @@ button:disabled {
   bottom: 0;
   width: 185%;
   text-align: center;
-  font-family: 'dotgothic16';
+  font-family: 'vt323';
   font-size: 120%;
 }
 
@@ -378,7 +389,7 @@ button:disabled {
 .timestamp {
   /* margin-left: -5px; */
   /* font-size: 80%; */
-  font-family: 'dotgothic16';
+  font-family: 'vt323';
   display: inline-block;
   white-space: nowrap;
 }
@@ -389,12 +400,14 @@ button:disabled {
   margin-top: 10px; */
   /* margin-right: auto; */
   margin-left: 50%;
-  font-size: 300%;
+  font-size: 550%;
   display: inline-block;
   white-space: nowrap;
   /* text-decoration: wavy;
   text-decoration: overline; */
-  /* text-shadow: 1px 1px 24px white; */
+  text-shadow: -1px 6px 1px white;
+  transform: skew(.614rad);
+  transform-origin: 20%;
 }
 
 .title-decorate {
@@ -520,8 +533,10 @@ hr {
 }
 
 header {
-  background-color: #957FEF;
+  /* background-color: #957FEF; */
   min-width: screen;
+  border-width: 8px;
+  border-color: white;
 }
 
 .fade-in-scale {
@@ -591,16 +606,16 @@ header {
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 240px;
+  width: 300px;
   background-color: #957FEF;
   font-family: 'Krub';
   color: #EFD9CE;
   text-align: center;
   padding: 8px 8px;
   border-radius: 6px;
-  /* border: 1px solid #000; */
   position: absolute;
-  /* bottom: 50%; */
+  bottom: 50%;
+  /* border: 1px solid #000; */
   left: 10%;
   z-index: 1;
   display: inline-block;

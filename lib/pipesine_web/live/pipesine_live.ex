@@ -50,7 +50,7 @@ defmodule PipesineWeb.PipesineLive do
         </div>
       </div>
 
-      <div id="container" class="filtered" style="width: 1200px; height: 650px; border: 9px solid black" phx-hook="Editor"></div>
+      <div id="container" class="filtered" style="width: 1400px; height: 650px; border: 3px solid #957FEF" phx-hook="Editor"></div>
 
       <div class="fake-buttons">
         <div class="tooltip versions"><button class="krub" style="margin-top: 8px" disabled>play code</button>

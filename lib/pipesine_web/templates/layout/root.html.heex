@@ -9,26 +9,37 @@
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
-  <body class="background justify-items-stretch">
-    <header class="topbar">
-      <div class="dotgothic16">
+  <body class="background">
+    <div class="topbar">
+      <div class="vt323">
         <nav class="menuright">
-          <PipesineWeb.Components.link href="/about">:about</PipesineWeb.Components.link>
-          <PipesineWeb.Components.link href="/ethos">:ethos</PipesineWeb.Components.link>
-          <PipesineWeb.Components.link href="/technique">:technique</PipesineWeb.Components.link>
-          <PipesineWeb.Components.link href="/label">:label</PipesineWeb.Components.link>
+          <button phx-click="toggle_about_modal">:about</button>
+          <button phx-click="toggle_ethos_modal">:ethos</button>
+          <button phx-click="toggle_technique_modal">:technique</button>
+          <button phx-click="toggle_label_modal">:label</button>
+
+          <%# <PipesineWeb.Components.link href="/about">:about</PipesineWeb.Components.link> %>
+          <%# <PipesineWeb.Components.link href="/ethos">:ethos</PipesineWeb.Components.link> %>
+          <%# <PipesineWeb.Components.link href="/technique">:technique</PipesineWeb.Components.link> %>
+          <%# <PipesineWeb.Components.link href="/label">:label</PipesineWeb.Components.link> %>
           <%# <PipesineWeb.Components.link href="/compositions">:compositions</PipesineWeb.Components.link>
           <a class=""><%= render "_composer_menu.html", assigns </a> %> 
         </nav>
       </div>
       <p class="timestamp"><%= ":erlang.timestamp = {" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %><%= "}" %></p>
-    </header>
+    </div>
     <a href="/">
-      <p class="krub italic title">p i p e s i n e s</p>
+      <p class="vt323 italic title">p i p e s i n e s</p>
     </a>
-    <p class="semanticversion scaled">&emsp;%{version: 0.1.0}</p>
+    <p class="semanticversion scaled">&emsp;%{version: 0.1.1}</p>
     <%= @inner_content %>
-    <div class="waves">
+  </body>
+  <p class="footer">elegantly <a href="https://elixir-lang.org/">:elixir </a> + <a href="https://tonejs.github.io/">:tone.js</a></p>
+</html>
+
+
+
+<%# <div class="waves">
       <img class="imgfilter" src="/images/sinewave.gif">
       <img class="imgfilter2" src="/images/sinewave.gif">
       <img class="imgfilter18" src="/images/sinewave.gif">
@@ -48,6 +59,4 @@
       <img class="imgfilter10 zbottom" src="/images/sinewave.gif">
       <img class="imgfilter17" src="/images/sinewave.gif">
     </div>
-  </body>
-  <p class="footer scaled">elegantly <a href="https://elixir-lang.org/">:elixir </a> + <a href="https://tonejs.github.io/">:tone.js</a></p>
-</html>
+     %>

@@ -79,7 +79,7 @@ let Hooks = {
 
         ].join('\n'),
         language: 'elixir',
-        theme: "vs-dark"
+        theme: "vs-light"
       });
 
       editor.onKeyUp((event) => {
