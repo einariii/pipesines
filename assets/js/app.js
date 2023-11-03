@@ -38,49 +38,52 @@ let Hooks = {
       }
     },
 
-    mounted() {
-      let editor = monaco.editor.create(this.el, {
-        value: [
-          '# binaural BEAM',
-          '',
-          'defmodule Pipesine.Example do',
-          '    @moduledoc """',
-          '        pipesines v0.1.0 (REGEX version only)',
-          '        software for writing music in pure Elixir',
-          '        written in Phoenix LiveView, sound synthesized via Tone.js',
-          '        alt + P to perform/pause',
-          '        click "save composition" below to add your code to the community database (must be logged in)',
-          '        in the event of audio glitch, refresh the page',
-          '        if desired, set scale on the first line.',
-          '            options = {',
-          '                22_edo,',
-          '                bohlen_pierce,',
-          '                sa_murcchana,',
-          '                tonality_diamond,',
-          '                just_intonation,',
-          '                pentatonic',
-          '            }',
-          '            default =',
-          '                superpyth',
-          '        sound is stereo. use headphones',
-          '        may contain high frequencies. exercise caution',
-          '        spend time exploring small changes!',
-          '    """',
-          '',
-          '    def a_pipesine do',
-          '        # modify this code',
-          '        # or write your own',
-          '    end',
-          'end',
-          '',
-          '',
-          '',
-          '',
+      mounted() {
+        let editor = monaco.editor.create(this.el, {
+          value: this.el.dataset.intialValue || [
+            '# binaural BEAM',
+            '',
+            'defmodule Pipesine.Example do',
+            '    @moduledoc """',
+            '        pipesines v0.1.0 (REGEX version only)',
+            '        software for writing music in pure Elixir',
+            '        written in Phoenix LiveView, sound synthesized via Tone.js',
+            '        alt + P to perform/pause',
+            '        click "save composition" below to add your code to the community database (must be logged in)',
+            '        in the event of audio glitch, refresh the page',
+            '        if desired, set scale on the first line.',
+            '            options = {',
+            '                22_edo,',
+            '                bohlen_pierce,',
+            '                sa_murcchana,',
+            '                tonality_diamond,',
+            '                just_intonation,',
+            '                pentatonic',
+            '            }',
+            '            default =',
+            '                superpyth',
+            '        sound is stereo. use headphones',
+            '        may contain high frequencies. exercise caution',
+            '        spend time exploring small changes!',
+            '    """',
+            '',
+            '    def a_pipesine do',
+            '        # modify this code',
+            '        # or write your own',
+            '    end',
+            'end',
+            '',
+            '',
+            '',
+            '',
 
-        ].join('\n'),
-        language: 'elixir',
-        theme: "vs-light"
-      });
+          ].join('\n'),
+          language: 'elixir',
+          theme: "vs-light"
+        });
+        editor.onDidChangeModelContent(() => {
+          this.pushEventTo("#editor", "update_editor", editor.getValue());
+        });
 
       editor.onKeyUp((event) => {
         event.preventDefault();
