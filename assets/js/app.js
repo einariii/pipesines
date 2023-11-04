@@ -13,11 +13,13 @@ import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import * as Tone from "../vendor/tone.js"
+import Modal from "modalHook.js"
 
 // import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
 import * as monaco from 'monaco-editor';
 
 let Hooks = {
+  Modal: Modal,
   Editor: {
     getSynth(instrument) {
       switch (instrument) {
@@ -38,52 +40,67 @@ let Hooks = {
       }
     },
 
-      mounted() {
-        let editor = monaco.editor.create(this.el, {
-          value: this.el.dataset.intialValue || [
-            '# binaural BEAM',
-            '',
-            'defmodule Pipesine.Example do',
-            '    @moduledoc """',
-            '        pipesines v0.1.0 (REGEX version only)',
-            '        software for writing music in pure Elixir',
-            '        written in Phoenix LiveView, sound synthesized via Tone.js',
-            '        alt + P to perform/pause',
-            '        click "save composition" below to add your code to the community database (must be logged in)',
-            '        in the event of audio glitch, refresh the page',
-            '        if desired, set scale on the first line.',
-            '            options = {',
-            '                22_edo,',
-            '                bohlen_pierce,',
-            '                sa_murcchana,',
-            '                tonality_diamond,',
-            '                just_intonation,',
-            '                pentatonic',
-            '            }',
-            '            default =',
-            '                superpyth',
-            '        sound is stereo. use headphones',
-            '        may contain high frequencies. exercise caution',
-            '        spend time exploring small changes!',
-            '    """',
-            '',
-            '    def a_pipesine do',
-            '        # modify this code',
-            '        # or write your own',
-            '    end',
-            'end',
-            '',
-            '',
-            '',
-            '',
+    mounted() {
+      let editor = monaco.editor.create(this.el, {
+        value: this.el.dataset.intialValue || [
+          '# binaural BEAM',
+          '',
+          'defmodule Pipesine.Example do',
+          '    @moduledoc """',
+          '        pipesines v0.1.1 (REGEX version only)',
+          '        software for writing music in pure Elixir',
+          '        written in Phoenix LiveView, sound synthesized via Tone.js',
+          '        alt + P to perform/pause',
+          '        click "save composition" below to add your code to the community database (must be logged in)',
+          '        in the event of audio glitch, refresh the page',
+          '        if desired, set scale on the first line.',
+          '            options = {',
+          '                22_edo,',
+          '                bohlen_pierce,',
+          '                sa_murcchana,',
+          '                tonality_diamond,',
+          '                just_intonation,',
+          '                pentatonic',
+          '            }',
+          '            default =',
+          '                superpyth',
+          '        sound is stereo. use headphones',
+          '        may contain high frequencies. exercise caution',
+          '        spend time exploring small changes!',
+          '    """',
+          '',
+          '    def a_pipesine do',
+          '        # modify this code',
+          '        # or write your own',
+          '    end',
+          'end',
+          '',
+          '',
+          '',
+          '',
 
-          ].join('\n'),
-          language: 'elixir',
-          theme: "vs-light"
-        });
-        editor.onDidChangeModelContent(() => {
-          this.pushEventTo("#editor", "update_editor", editor.getValue());
-        });
+        ].join('\n'),
+        language: 'elixir',
+        theme: "vs-light"
+      });
+
+      self.MonacoEnvironment = {
+        getWorkerUrl: function (moduleId, label) {
+          if (label === 'json') {
+            return './json.worker.bundle.js';
+          }
+          if (label === 'css' || label === 'scss' || label === 'less') {
+            return './css.worker.bundle.js';
+          }
+          if (label === 'html' || label === 'handlebars' || label === 'razor') {
+            return './html.worker.bundle.js';
+          }
+          if (label === 'typescript' || label === 'javascript') {
+            return './ts.worker.bundle.js';
+          }
+          return './editor.worker.bundle.js';
+        }
+      }
 
       editor.onKeyUp((event) => {
         event.preventDefault();

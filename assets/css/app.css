@@ -88,6 +88,10 @@ a:hover {
   color: #fff
 }
 
+.hidden {
+  display: none;
+}
+
 .menu {
   display: inline-block;
   /* padding-right: 8px;

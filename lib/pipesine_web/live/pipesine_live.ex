@@ -3,24 +3,6 @@ defmodule PipesineWeb.PipesineLive do
   import Pipesine.Composers
 
   def mount(params, _session, socket) do
-    # composer_id =
-    #   if session["composer_token"],
-    #     do:
-    #       get_composer_by_session_token(session["composer_token"]).id
-    # |> IO.inspect(label: "COMPOSERID")
-
-    # composer_username =
-    #   if session["composer_token"],
-    #     do:
-    #       get_composer_by_session_token(session["composer_token"]).username
-    #       |> IO.inspect(label: "USERNA<ME")
-    #
-    # composer_email =
-    #   if session["composer_token"],
-    #     do:
-    #       get_composer_by_session_token(session["composer_token"]).email
-    #       |> IO.inspect(label: "EMAIL")
-
     score = params["score"]
 
     {
@@ -28,10 +10,6 @@ defmodule PipesineWeb.PipesineLive do
       socket
       |> assign(toggle_modal: nil)
       |> assign(score: score)
-      |> assign(editor_value: "")
-      # |> assign(composer_id: composer_id)
-      # |> assign(composer_username: composer_username)
-      # |> assign(composer_email: composer_email)
     }
   end
 
@@ -68,7 +46,7 @@ defmodule PipesineWeb.PipesineLive do
         </div>
       </div>
 
-      <div id="editor" data-initial-value={@editor_value} class="filtered" style="width: 120rem; height: 60rem; border: 3px solid #000" phx-hook="Editor"></div>
+      <div id="editor" class="filtered" style="width: 120rem; height: 60rem; border: 3px solid #000" phx-hook="Editor"></div>
 
       <div class="fake-buttons">
         <div class="tooltip versions"><button class="vt323" style="margin-top: 8px" disabled>play code</button>
@@ -88,7 +66,7 @@ defmodule PipesineWeb.PipesineLive do
     </div>
 
       <%= if @toggle_modal == :about do %>
-        <.modal >
+        <.modal>
           <.live_component
             module={PipesineWeb.PipesineLive.AboutComponent}
             id="about_modal"
@@ -96,29 +74,26 @@ defmodule PipesineWeb.PipesineLive do
         </.modal>
       <% end %>
     <%= if @toggle_modal == :ethos do %>
-      <.modal return_to={Routes.pipesine_path(@socket, :index)}>
+      <.modal>
         <.live_component
           module={PipesineWeb.PipesineLive.EthosComponent}
           id="ethos_modal"
-          return_to={Routes.pipesine_path(@socket, :index)}
         />
       </.modal>
     <% end %>
     <%= if @toggle_modal == :label do %>
-      <.modal return_to={Routes.pipesine_path(@socket, :index)}>
+      <.modal>
         <.live_component
           module={PipesineWeb.PipesineLive.LabelComponent}
           id="tekne_modal"
-          return_to={Routes.pipesine_path(@socket, :index)}
         />
       </.modal>
     <% end %>
     <%= if @toggle_modal== :tekne do %>
-      <.modal return_to={Routes.pipesine_path(@socket, :index)}>
+      <.modal>
         <.live_component
           module={PipesineWeb.PipesineLive.TechniqueComponent}
           id="label_modal"
-          return_to={Routes.pipesine_path(@socket, :index)}
         />
       </.modal>
     <% end %>
@@ -171,9 +146,5 @@ defmodule PipesineWeb.PipesineLive do
 
   def handle_event("close_modal", _value, socket) do
     {:noreply, assign(socket, toggle_modal: nil)}
-  end
-
-  def handle_event("update_editor", %{"value" => value}, socket) do
-    {:noreply, assign(socket, editor_value: value)}
   end
 end
