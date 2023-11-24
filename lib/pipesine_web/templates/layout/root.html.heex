@@ -10,6 +10,16 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body class="background flexy">
+    <%= if @is_mobile == true do %>
+      <center>
+        <p class="timestamp"><%= ":erlang.timestamp = {" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %><%= "}" %></p>
+      </center>
+      <div class="mobile-alert">
+        <h1>Pipesines.</h1>
+        <h2>Elixir as musical instrument.</h2>
+        <h3>Key components of this app are not functional on mobile.<br /><br />Please visit on your laptop or desktop!</h3>
+      </div>
+    <% else %>
     <div class="">
       <p class="timestamp"><%= ":erlang.timestamp = {" %><%= Tuple.to_list(:erlang.timestamp) |> Enum.map(fn each -> Integer.to_string(each) end) %><%= "}" %></p>
     </div>
@@ -17,31 +27,9 @@
       <p class="dotgothic16 title">p i p e s i n e s</p>
     </a>
     <p class="semanticversion scaled">&emsp;%{version: 0.1.1}</p>
-    <%= @inner_content %>
+      <%= @inner_content %>
+    <p class="footer">elegantly <a href="https://elixir-lang.org/" style="color: black">:elixir </a> + <a href="https://tonejs.github.io/" style="color: black">:tone.js</a></p>
+    <% end %>
   </body>
-  <p class="footer">elegantly <a href="https://elixir-lang.org/" style="color: black">:elixir </a> + <a href="https://tonejs.github.io/" style="color: black">:tone.js</a></p>
 </html>
 
-
-
-<%# <div class="waves">
-      <img class="imgfilter" src="/images/sinewave.gif">
-      <img class="imgfilter2" src="/images/sinewave.gif">
-      <img class="imgfilter18" src="/images/sinewave.gif">
-      <img class="imgfilter4" src="/images/sinewave.gif">
-      <img class="imgfilter5" src="/images/sinewave.gif">
-      <img class="imgfilter6" src="/images/sinewave.gif">
-      <img class="imgfilter7" src="/images/sinewave.gif">
-      <img class="imgfilter8" src="/images/sinewave.gif">
-      <img class="imgfilter9" src="/images/sinewave.gif">
-      <img class="imgfilter13" src="/images/sinewave.gif">
-      <img class="imgfilter12" src="/images/sinewave.gif">
-      <img class="imgfilter11 zbottom" src="/images/sinewave.gif">
-      <img class="imgfilter3" src="/images/sinewave.gif">
-      <img class="imgfilter8" src="/images/sinewave.gif">
-      <img class="imgfilter15" src="/images/sinewave.gif">
-      <img class="imgfilter16" src="/images/sinewave.gif">
-      <img class="imgfilter10 zbottom" src="/images/sinewave.gif">
-      <img class="imgfilter17" src="/images/sinewave.gif">
-    </div>
-     %>

@@ -17,8 +17,12 @@ defmodule PipesineWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :is_mobile do
+    plug PipesineWeb.Plugs.IsMobile
+  end
+
   scope "/", PipesineWeb do
-    pipe_through :browser
+    pipe_through [:browser, :is_mobile]
 
     live "/", PipesineLive, :index
     live "/about", PipesineLive, :about

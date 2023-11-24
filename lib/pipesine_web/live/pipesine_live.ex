@@ -1,15 +1,17 @@
 defmodule PipesineWeb.PipesineLive do
   use PipesineWeb, :live_view
-  import Pipesine.Composers
+  # import Pipesine.Composers
 
-  def mount(params, _session, socket) do
+  def mount(params, session, socket) do
     score = params["score"]
+    is_mobile = Map.get(session, "is_mobile", false)
 
     {
       :ok,
       socket
       |> assign(toggle_modal: nil)
       |> assign(score: score)
+      |> assign(is_mobile: is_mobile)
     }
   end
 
@@ -58,8 +60,8 @@ defmodule PipesineWeb.PipesineLive do
           ...or refresh the page</span>
         </div>
         <div class="tooltip versions"><button class="vt323" style="margin-top: 8px" disabled>scales</button>
-          <span class="tooltiptext">set scale on the first line.
-          options = 22_edo, bohlen_pierce, sa_murcchana, tonality_diamond, just_intonation, pentatonic.
+          <span class="tooltiptext">set scale on the first line.<br />
+          options = 22_edo, bohlen_pierce, sa_murcchana, tonality_diamond, just_intonation, pentatonic.<br />
           default = superpyth</span>
         </div>
       </div>
