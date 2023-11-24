@@ -255,7 +255,7 @@ button:disabled {
   color: #CB9CF2;
   display: inline-block;
   white-space: nowrap;
-  text-shadow: -6px 3px 3px black;
+  /* text-shadow: -6px 3px 3px black; */
   transform: skew(.614rad);
   transform-origin: 20%;
 }
