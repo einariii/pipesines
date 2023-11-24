@@ -466,12 +466,13 @@ defmodule Pipesine.Sound do
       case rem(capts, 3) do
         0 ->
           Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
-            |> List.insert_at(indx, fundamental / 8)
-            |> Enum.shuffle()
-            |> Enum.map(fn each ->
-              (each * 15 / 8)
-              |> trunc()
-            end)
+          |> List.insert_at(indx, fundamental / 8)
+          |> Enum.shuffle()
+          |> Enum.map(fn each ->
+            (each * 15 / 8)
+            |> trunc()
+          end)
+
         _ ->
           Enum.filter(all_notes, fn note -> rem(note, 5) == 0 end) |> Enum.shuffle()
       end
@@ -529,7 +530,7 @@ defmodule Pipesine.Sound do
       swingSubdivision: swing_subdivision,
       tempo: tempo,
       touche: touche,
-      timeSignature: time_signature,
+      timeSignature: time_signature
     }
     |> IO.inspect(label: "DATA 4 JS")
   end

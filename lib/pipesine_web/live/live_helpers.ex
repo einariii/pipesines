@@ -29,7 +29,6 @@ defmodule PipesineWeb.LiveHelpers do
     ~H"""
     <div id="modal" class="phx-modal fade-in" phx-remove={hide_modal()}>
       <div
-        id="modal-content"
         class="phx-modal-content fade-in-scale"
         phx-click-away={JS.dispatch("click", to: "#close")}
         phx-window-keydown={JS.dispatch("click", to: "#close")}
@@ -43,7 +42,7 @@ defmodule PipesineWeb.LiveHelpers do
             phx_click: hide_modal()
           %>
         <% else %>
-          <a id="close" href="#" class="phx-modal-close" phx-click={hide_modal()}>⋈</a>
+          <a id="close" href="#" class="phx-modal-close" phx-click="close_modal">⋈</a>
         <% end %>
 
         <%= render_slot(@inner_block) %>
