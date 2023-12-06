@@ -136,14 +136,12 @@ let Hooks = {
         var filter2 = new Tone.Filter(params.filter2Frequency, "lowpass", -48);
         var filter3 = new Tone.Filter(params.filter3Frequency, "bandpass", -48);
         var lfo = new Tone.LFO(params.capts, 500, 5000); // hertz, min, max
-        var lfo2 = new Tone.LFO(params.hashes, 200, 1200); // hertz, min, max
         lfo.connect(filter2.frequency);
         lfo.connect(reverb.wet);
-        lfo2.connect(phaser.frequency);
 
         // const kick = new Tone.Player("https://tonejs.github.io/audio/casio/A1.mp3");
 
-        let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo, lfo2];
+        let synthsAndEffects = [synth, synth2, synth3, chebyshev, crusher, panner, delay, phaser, reverb, limiter, vol, vol2, compressor, filter, filter2, lfo];
 
         this.seq = new Tone.Pattern((time, note) => {
           synth.triggerAttackRelease(note, params.swingSubdivision, time);
@@ -166,14 +164,14 @@ let Hooks = {
         vol.connect(compressor);
         compressor.toDestination();
 
-        // synth2.connect(delay);
-        // delay.connect(filter2);
-        // filter2.connect(vol2);
-        // vol2.connect(compressor);
-        // compressor.toDestination();
+        synth2.connect(delay);
+        delay.connect(filter2);
+        filter2.connect(vol2);
+        vol2.connect(compressor);
+        compressor.toDestination();
 
-        synth3.connect(filter3);
-        filter3.connect(reverb);
+        synth3.connect(delay);
+        delay.connect(reverb);
         reverb.connect(phaser);
         phaser.connect(compressor);
         compressor.toDestination();
@@ -195,7 +193,6 @@ let Hooks = {
           // this.riddim.dispose();
         } else {
           lfo.start(0);
-          lfo2.start(0);
           this.seq.start(0);
           this.seq2.start(0);
           this.seq3.start(0);
