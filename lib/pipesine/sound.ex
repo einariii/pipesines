@@ -161,9 +161,9 @@ defmodule Pipesine.Sound do
 
     delay_feedback =
       cond do
-        chebyshev >= 10 -> chebyshev * 0.04
-        chebyshev >= 5 -> chebyshev * 0.03
-        chebyshev >= 1 -> chebyshev * 0.02
+        chebyshev >= 10 -> 0.8
+        chebyshev >= 5 -> 0.5
+        chebyshev >= 1 -> 0.2
         true -> 0.1
       end
 
@@ -203,17 +203,6 @@ defmodule Pipesine.Sound do
         fundamental_init > 1000 -> 698.46
         true -> fundamental_init / 1
       end
-
-    # fundamental =
-    #   cond do
-    #     fundamental_init > 6000 -> fundamental_init / 12
-    #     fundamental_init > 5000 -> fundamental_init / 10
-    #     fundamental_init > 4000 -> fundamental_init / 8
-    #     fundamental_init > 3000 -> fundamental_init / 6
-    #     fundamental_init > 2000 -> fundamental_init / 4
-    #     fundamental_init > 1000 -> fundamental_init / 2
-    #     true -> fundamental_init / 1
-    #   end
 
     all_notes =
       case scale do
@@ -429,36 +418,28 @@ defmodule Pipesine.Sound do
     indx = max(1, digits + atoms)
 
     # melody (synth)
-    phrase =
-      case rem(atoms, 2) do
-        0 ->
-          if instrument1 == "PolySynth" do
-            Enum.shuffle(all_notes)
-            |> Enum.filter(fn note -> rem(note, 2) == 0 end)
-            |> Enum.chunk_every(3, 2)
-          else
+      phrase =
+        case rem(atoms, 2) do
+          0 ->
+            if instrument1 == "PolySynth" do
+              Enum.shuffle(all_notes)
+              |> Enum.filter(fn note -> rem(note, 2) == 0 end)
+              |> Enum.chunk_every(3, 2)
+            else
+              Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
+              |> List.insert_at(indx, fundamental / 8)
+              |> Enum.shuffle()
+              |> Enum.map(fn each ->
+                (each * 3 / 2)
+                |> trunc()
+              end)
+            end
+
+          _ ->
             Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
             |> List.insert_at(indx, fundamental / 8)
             |> Enum.shuffle()
-            |> Enum.map(fn each ->
-              (each * 3 / 2)
-              |> trunc()
-            end)
-          end
-
-        _ ->
-          Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end)
-          |> List.insert_at(indx, fundamental / 8)
-          |> Enum.shuffle()
-      end
-
-    # Enum.filter(all_notes, fn note -> rem(note, 2) == 0 end) |> List.insert_at(indx, fundamental/8) |> Enum.shuffle()
-
-    # harmony (synth)
-    # phrase =
-    #   Enum.shuffle(all_notes)
-    #   |> Enum.filter(fn note -> rem(note, 2) == 0 end)
-    #   |> Enum.chunk_every(3, 2)
+        end
 
     phrase2 = Enum.filter(all_notes, fn note -> rem(note, 3) == 0 end) |> Enum.shuffle()
 
@@ -480,8 +461,6 @@ defmodule Pipesine.Sound do
     drum1 = Enum.filter(phrase2, fn note -> rem(note, 3) == 0 end) |> Enum.shuffle()
 
     tempo = min(abs(fundamental) / max(reduces + oks + capts, 3), 400)
-
-    # filter_frequency = 100 * atoms + 2 * characters |> min(2000)
 
     note4 = Enum.fetch!(all_notes, 3)
     note6 = Enum.fetch!(all_notes, 5)
@@ -532,7 +511,6 @@ defmodule Pipesine.Sound do
       touche: touche,
       timeSignature: time_signature
     }
-    |> IO.inspect(label: "DATA 4 JS")
   end
 
   @doc """

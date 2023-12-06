@@ -18,7 +18,6 @@ defmodule PipesineWeb.PipesineLiveTest do
 
     test "loads mounted page", %{conn: conn} do
       {:ok, _live, html} = live(conn, Routes.pipesine_path(conn, :index))
-      IO.inspect(html)
       assert html =~ "monaco-editor"
     end
 

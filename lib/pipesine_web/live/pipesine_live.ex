@@ -18,8 +18,6 @@ defmodule PipesineWeb.PipesineLive do
 
   @spec render(any) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
-    IO.inspect(assigns, label: "ASSINGS IN LV")
-
     ~H"""
     <div class="vt323">
       <nav class="menuright">
